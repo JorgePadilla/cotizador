@@ -21,4 +21,6 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* Database diagram
+  
+<img width="1258" alt="Screenshot 2025-01-29 at 11 54 10 PM" src="https://github.com/user-attachments/assets/a5de79d5-b4c4-4c1c-8278-aa0a46bfc8df" />
