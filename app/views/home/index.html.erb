@@ -1,0 +1,12 @@
+<div class="w-full max-w-4xl mx-auto text-center py-16">
+  <%= render(HeaderComponent.new(title: "Welcome to Cotizador", subtitle: "This is the Home Page")) %>
+  
+  <div class="border-t border-gray-300 w-1/2 mx-auto my-8"></div>
+  
+  <p class="text-xl text-gray-600 mb-12">Your quotation system is ready to use.</p>
+  
+  <div class="space-x-4">
+    <%= render(ButtonComponent.new(text: "Get Started", type: :primary, classes: "py-3 px-6 shadow-lg transform hover:scale-105")) %>
+    <%= render(ButtonComponent.new(text: "Learn More", type: :secondary, classes: "py-3 px-6 shadow-lg transform hover:scale-105")) %>
+  </div>
+</div>
