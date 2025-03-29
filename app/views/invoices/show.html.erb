@@ -1,0 +1,113 @@
+<div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">Invoice <%= @invoice.invoice_number %></h1>
+    <div class="flex space-x-3">
+      <%= link_to "Back to Invoices", invoices_path, class: "text-blue-600 hover:text-blue-800" %>
+      <%= link_to "Edit", edit_invoice_path(@invoice), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
+    <div class="px-4 py-5 sm:px-6 flex justify-between">
+      <div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Invoice Information</h3>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">Details about the invoice and client.</p>
+      </div>
+      <% status_class = case @invoice.status 
+         when 'draft' then 'bg-gray-100 text-gray-800'
+         when 'pending' then 'bg-yellow-100 text-yellow-800'
+         when 'paid' then 'bg-green-100 text-green-800'
+         when 'cancelled' then 'bg-red-100 text-red-800'
+         else 'bg-gray-100 text-gray-800'
+         end %>
+      <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full <%= status_class %>">
+        <%= @invoice.status.titleize %>
+      </span>
+    </div>
+    <div class="border-t border-gray-200">
+      <dl>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Invoice Number</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @invoice.invoice_number %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Client</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <%= link_to @invoice.client.name, client_path(@invoice.client), class: "text-blue-600 hover:text-blue-800" %>
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Date</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @invoice.created_at.strftime("%B %d, %Y") %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Payment Method</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @invoice.payment_method&.titleize || 'Not specified' %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <h3 class="text-lg font-medium text-gray-900 mb-4">Invoice Items</h3>
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Price</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% if @invoice_items.any? %>
+          <% @invoice_items.each do |item| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= link_to item.product.name, product_path(item.product), class: "text-blue-600 hover:text-blue-800" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= item.quantity %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= number_to_currency(item.unit_price) %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= number_to_currency(item.total) %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No items added to this invoice</td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot class="bg-gray-50">
+        <tr>
+          <td colspan="3" class="px-6 py-4 text-right text-sm font-medium text-gray-500">Subtotal:</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= number_to_currency(@invoice.subtotal) %></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="px-6 py-4 text-right text-sm font-medium text-gray-500">Tax:</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= number_to_currency(@invoice.tax) %></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="px-6 py-4 text-right text-sm font-medium text-gray-900">Total:</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900"><%= number_to_currency(@invoice.total) %></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="flex justify-between">
+    <%= button_to "Delete Invoice", invoice_path(@invoice), method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", form: { data: { turbo_confirm: "Are you sure you want to delete this invoice?" } } %>
+    
+    <div class="flex space-x-3">
+      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="window.print()">
+        Print Invoice
+      </button>
+      <%= link_to "Edit Invoice", edit_invoice_path(@invoice), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+  </div>
+</div>
