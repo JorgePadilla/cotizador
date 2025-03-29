@@ -1,12 +1,252 @@
-<div class="w-full max-w-4xl mx-auto text-center py-16">
-  <%= render(HeaderComponent.new(title: "Welcome to Cotizador", subtitle: "This is the Home Page")) %>
+<div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  <%= render(HeaderComponent.new(title: "Cotizador Dashboard", subtitle: "Manage your quotations and invoices")) %>
   
-  <div class="border-t border-gray-300 w-1/2 mx-auto my-8"></div>
-  
-  <p class="text-xl text-gray-600 mb-12">Your quotation system is ready to use.</p>
-  
-  <div class="space-x-4">
-    <%= render(ButtonComponent.new(text: "Get Started", type: :primary, classes: "py-3 px-6 shadow-lg transform hover:scale-105")) %>
-    <%= render(ButtonComponent.new(text: "Learn More", type: :secondary, classes: "py-3 px-6 shadow-lg transform hover:scale-105")) %>
+  <!-- Stats Cards -->
+  <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Clients Card -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Total Clients</dt>
+              <dd class="flex items-baseline">
+                <div class="text-2xl font-semibold text-gray-900"><%= @clients_count %></div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-4 sm:px-6">
+        <%= link_to clients_path, class: "text-sm font-medium text-blue-600 hover:text-blue-900" do %>
+          View all clients
+          <span class="ml-1">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Products Card -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
+            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Total Products</dt>
+              <dd class="flex items-baseline">
+                <div class="text-2xl font-semibold text-gray-900"><%= @products_count %></div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-4 sm:px-6">
+        <%= link_to products_path, class: "text-sm font-medium text-blue-600 hover:text-blue-900" do %>
+          View all products
+          <span class="ml-1">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Suppliers Card -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
+            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Total Suppliers</dt>
+              <dd class="flex items-baseline">
+                <div class="text-2xl font-semibold text-gray-900"><%= @suppliers_count %></div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-4 sm:px-6">
+        <%= link_to suppliers_path, class: "text-sm font-medium text-blue-600 hover:text-blue-900" do %>
+          View all suppliers
+          <span class="ml-1">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Invoices Card -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
+            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Total Invoices</dt>
+              <dd class="flex items-baseline">
+                <div class="text-2xl font-semibold text-gray-900"><%= @invoices_count %></div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-4 sm:px-6">
+        <%= link_to invoices_path, class: "text-sm font-medium text-blue-600 hover:text-blue-900" do %>
+          View all invoices
+          <span class="ml-1">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity Section -->
+  <div class="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2">
+    <!-- Recent Invoices -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Invoices</h3>
+      </div>
+      <div class="px-4 py-3 sm:p-6">
+        <% if @recent_invoices.any? %>
+          <div class="flow-root">
+            <ul class="-my-5 divide-y divide-gray-200">
+              <% @recent_invoices.each do |invoice| %>
+                <li class="py-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 truncate">
+                        Invoice #<%= invoice.invoice_number %>
+                      </p>
+                      <p class="text-sm text-gray-500 truncate">
+                        <%= invoice.client&.name || 'No client' %> - <%= number_to_currency(invoice.total) %>
+                      </p>
+                    </div>
+                    <div>
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= invoice.status == 'paid' ? 'bg-green-100 text-green-800' : (invoice.status == 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800') %>">
+                        <%= invoice.status&.capitalize %>
+                      </span>
+                    </div>
+                    <div>
+                      <%= link_to "View", invoice, class: "inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50" %>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% else %>
+          <p class="text-sm text-gray-500">No invoices created yet.</p>
+        <% end %>
+      </div>
+      <div class="bg-gray-50 px-4 py-4 sm:px-6">
+        <%= link_to new_invoice_path, class: "text-sm font-medium text-blue-600 hover:text-blue-900" do %>
+          Create new invoice
+          <span class="ml-1">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Recent Clients -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Clients</h3>
+      </div>
+      <div class="px-4 py-3 sm:p-6">
+        <% if @recent_clients.any? %>
+          <div class="flow-root">
+            <ul class="-my-5 divide-y divide-gray-200">
+              <% @recent_clients.each do |client| %>
+                <li class="py-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 truncate">
+                        <%= client.name %>
+                      </p>
+                      <p class="text-sm text-gray-500 truncate">
+                        <%= client.email.present? ? client.email : 'No email' %>
+                      </p>
+                    </div>
+                    <div>
+                      <%= link_to "View", client, class: "inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50" %>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% else %>
+          <p class="text-sm text-gray-500">No clients created yet.</p>
+        <% end %>
+      </div>
+      <div class="bg-gray-50 px-4 py-4 sm:px-6">
+        <%= link_to new_client_path, class: "text-sm font-medium text-blue-600 hover:text-blue-900" do %>
+          Add new client
+          <span class="ml-1">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="mt-12">
+    <h2 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h2>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+      <%= link_to new_client_path, class: "relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500" do %>
+        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center">
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <span class="block text-sm font-medium text-gray-900">New Client</span>
+        </div>
+      <% end %>
+
+      <%= link_to new_product_path, class: "relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500" do %>
+        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-500 flex items-center justify-center">
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <span class="block text-sm font-medium text-gray-900">New Product</span>
+        </div>
+      <% end %>
+
+      <%= link_to new_supplier_path, class: "relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500" do %>
+        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-500 flex items-center justify-center">
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <span class="block text-sm font-medium text-gray-900">New Supplier</span>
+        </div>
+      <% end %>
+
+      <%= link_to new_invoice_path, class: "relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500" do %>
+        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-yellow-500 flex items-center justify-center">
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <span class="block text-sm font-medium text-gray-900">New Invoice</span>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

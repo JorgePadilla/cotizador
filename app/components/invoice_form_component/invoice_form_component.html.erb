@@ -1,0 +1,270 @@
+<%= form_with(model: invoice, class: "space-y-6") do |form| %>
+  <% if invoice.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+      <strong class="font-bold">Error:</strong>
+      <span class="block sm:inline"><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</span>
+      <ul class="list-disc list-inside mt-2">
+        <% invoice.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <%= form.label :invoice_number, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :invoice_number, class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+      </div>
+
+      <div>
+        <%= form.label :client_id, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.collection_select :client_id, clients, :id, :name, 
+                                  { include_blank: "Select a client" }, 
+                                  { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+      </div>
+
+      <div>
+        <%= form.label :status, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :status, 
+                        [['Draft', 'draft'], ['Pending', 'pending'], ['Paid', 'paid'], ['Cancelled', 'cancelled']], 
+                        { include_blank: false }, 
+                        { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+      </div>
+
+      <div>
+        <%= form.label :payment_method, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :payment_method, 
+                        [['Cash', 'cash'], ['Credit Card', 'credit_card'], ['Bank Transfer', 'bank_transfer'], ['Check', 'check']], 
+                        { include_blank: "Select payment method" }, 
+                        { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="text-lg font-medium text-gray-900 mt-8 mb-4">Invoice Items</h3>
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+    <div class="mb-4">
+      <template id="invoice-item-template">
+        <div class="invoice-item-fields grid grid-cols-1 md:grid-cols-5 gap-4 border-b pb-4 mb-4">
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700">Product</label>
+            <select name="invoice[invoice_items_attributes][__INDEX__][product_id]" class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+              <option value="">Select a product</option>
+              <% Product.all.each do |product| %>
+                <option value="<%= product.id %>" data-price="<%= product.price %>"><%= product.name %> - <%= number_to_currency(product.price) %></option>
+              <% end %>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Quantity</label>
+            <input type="number" name="invoice[invoice_items_attributes][__INDEX__][quantity]" min="1" value="1" class="quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Unit Price</label>
+            <input type="number" step="0.01" name="invoice[invoice_items_attributes][__INDEX__][unit_price]" class="price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          </div>
+          <div class="flex items-end">
+            <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Remove
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <div id="invoice-items-container">
+        <% if invoice.invoice_items.empty? %>
+          <div class="invoice-item-fields grid grid-cols-1 md:grid-cols-5 gap-4 border-b pb-4 mb-4">
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700">Product</label>
+              <select name="invoice[invoice_items_attributes][0][product_id]" class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="">Select a product</option>
+                <% Product.all.each do |product| %>
+                  <option value="<%= product.id %>" data-price="<%= product.price %>"><%= product.name %> - <%= number_to_currency(product.price) %></option>
+                <% end %>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Quantity</label>
+              <input type="number" name="invoice[invoice_items_attributes][0][quantity]" min="1" value="1" class="quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Unit Price</label>
+              <input type="number" step="0.01" name="invoice[invoice_items_attributes][0][unit_price]" class="price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+            <div class="flex items-end">
+              <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Remove
+              </button>
+            </div>
+          </div>
+        <% else %>
+          <% invoice.invoice_items.each_with_index do |item, index| %>
+            <div class="invoice-item-fields grid grid-cols-1 md:grid-cols-5 gap-4 border-b pb-4 mb-4">
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Product</label>
+                <%= select_tag "invoice[invoice_items_attributes][#{index}][product_id]", 
+                              options_from_collection_for_select(Product.all, :id, :name, item.product_id),
+                              class: "product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+                <%= hidden_field_tag "invoice[invoice_items_attributes][#{index}][id]", item.id if item.persisted? %>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Quantity</label>
+                <%= number_field_tag "invoice[invoice_items_attributes][#{index}][quantity]", 
+                                    item.quantity, 
+                                    min: 1, 
+                                    class: "quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Unit Price</label>
+                <%= number_field_tag "invoice[invoice_items_attributes][#{index}][unit_price]", 
+                                    item.unit_price, 
+                                    step: "0.01", 
+                                    class: "price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+              </div>
+              <div class="flex items-end">
+                <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                  Remove
+                </button>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <button type="button" id="add-item-btn" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        Add Item
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+      <div>
+        <%= form.label :subtotal, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.number_field :subtotal, step: "0.01", class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", readonly: true %>
+      </div>
+
+      <div>
+        <%= form.label :tax, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.number_field :tax, step: "0.01", class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+      </div>
+
+      <div>
+        <%= form.label :total, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.number_field :total, step: "0.01", class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", readonly: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-3 mt-8">
+    <%= link_to "Cancel", invoices_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" %>
+    <%= form.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('invoice-items-container');
+    const template = document.getElementById('invoice-item-template');
+    const addButton = document.getElementById('add-item-btn');
+    
+    // Function to update totals
+    function updateTotals() {
+      let subtotal = 0;
+      const items = container.querySelectorAll('.invoice-item-fields');
+      
+      items.forEach(item => {
+        const quantity = parseFloat(item.querySelector('.quantity-input').value) || 0;
+        const price = parseFloat(item.querySelector('.price-input').value) || 0;
+        subtotal += quantity * price;
+      });
+      
+      document.getElementById('invoice_subtotal').value = subtotal.toFixed(2);
+      
+      const tax = parseFloat(document.getElementById('invoice_tax').value) || 0;
+      const total = subtotal + tax;
+      document.getElementById('invoice_total').value = total.toFixed(2);
+    }
+    
+    // Function to handle product selection
+    function handleProductSelect(select) {
+      select.addEventListener('change', function() {
+        const option = this.options[this.selectedIndex];
+        const price = option.getAttribute('data-price');
+        const priceInput = this.closest('.invoice-item-fields').querySelector('.price-input');
+        
+        if (price) {
+          priceInput.value = price;
+        } else {
+          priceInput.value = '';
+        }
+        
+        updateTotals();
+      });
+    }
+    
+    // Function to handle quantity change
+    function handleQuantityChange(input) {
+      input.addEventListener('input', updateTotals);
+    }
+    
+    // Function to handle price change
+    function handlePriceChange(input) {
+      input.addEventListener('input', updateTotals);
+    }
+    
+    // Function to handle remove button
+    function handleRemoveButton(button) {
+      button.addEventListener('click', function() {
+        const items = container.querySelectorAll('.invoice-item-fields');
+        if (items.length > 1) {
+          this.closest('.invoice-item-fields').remove();
+          updateTotals();
+        } else {
+          alert('At least one item is required.');
+        }
+      });
+    }
+    
+    // Initialize event handlers for existing items
+    container.querySelectorAll('.product-select').forEach(handleProductSelect);
+    container.querySelectorAll('.quantity-input').forEach(handleQuantityChange);
+    container.querySelectorAll('.price-input').forEach(handlePriceChange);
+    container.querySelectorAll('.remove-item-btn').forEach(handleRemoveButton);
+    
+    // Handle add item button
+    addButton.addEventListener('click', function() {
+      const items = container.querySelectorAll('.invoice-item-fields');
+      const newIndex = items.length;
+      
+      const newItem = template.content.cloneNode(true);
+      const selects = newItem.querySelectorAll('select');
+      const inputs = newItem.querySelectorAll('input');
+      
+      selects.forEach(select => {
+        select.name = select.name.replace('__INDEX__', newIndex);
+        handleProductSelect(select);
+      });
+      
+      inputs.forEach(input => {
+        input.name = input.name.replace('__INDEX__', newIndex);
+        if (input.classList.contains('quantity-input')) {
+          handleQuantityChange(input);
+        } else if (input.classList.contains('price-input')) {
+          handlePriceChange(input);
+        }
+      });
+      
+      const removeButton = newItem.querySelector('.remove-item-btn');
+      handleRemoveButton(removeButton);
+      
+      container.appendChild(newItem);
+    });
+    
+    // Initialize totals
+    updateTotals();
+    
+    // Update totals when tax changes
+    document.getElementById('invoice_tax').addEventListener('input', updateTotals);
+  });
+</script>
