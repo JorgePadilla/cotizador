@@ -4,12 +4,20 @@ Rails.application.routes.draw do
   post "users", to: "users#create"
   resource :session
   resources :passwords, param: :token
+
+  # Main resources
   resources :clients
   resources :suppliers
   resources :products
 
+  # Invoices and invoice items
   resources :invoices do
     resources :invoice_items, shallow: true
+  end
+
+  # Quotes and quote items
+  resources :quotes do
+    resources :quote_items, shallow: true
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   belongs_to :supplier
   has_many :invoice_items, dependent: :destroy
   has_many :invoices, through: :invoice_items
+  has_many :quote_items, dependent: :destroy
+  has_many :quotes, through: :quote_items
 
   validates :name, presence: true
   validates :sku, presence: true, uniqueness: true
