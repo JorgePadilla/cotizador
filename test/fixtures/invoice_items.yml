@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: <%= SecureRandom.uuid %>
+  invoice: one
+  product: one
+  description: Invoice item one
+  quantity: 1
+  unit_price: 100.00
+  total: 100.00
+
+two:
+  id: <%= SecureRandom.uuid %>
+  invoice: two
+  product: two
+  description: Invoice item two
+  quantity: 2
+  unit_price: 100.00
+  total: 200.00

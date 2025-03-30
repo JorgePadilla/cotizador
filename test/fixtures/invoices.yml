@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: <%= SecureRandom.uuid %>
+  invoice_number: INV12345
+  client: one
+  subtotal: 100.00
+  tax: 15.00
+  total: 115.00
+  status: pending
+  payment_method: cash
+
+two:
+  id: <%= SecureRandom.uuid %>
+  invoice_number: INV67890
+  client: two
+  subtotal: 200.00
+  tax: 30.00
+  total: 230.00
+  status: paid
+  payment_method: credit_card
