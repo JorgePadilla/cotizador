@@ -1,6 +1,6 @@
 class InvoiceItemsController < ApplicationController
-  before_action :set_invoice, only: [:index, :new, :create]
-  before_action :set_invoice_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_invoice, only: [ :index, :new, :create ]
+  before_action :set_invoice_item, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @invoice_items = @invoice.invoice_items
