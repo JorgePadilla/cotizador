@@ -50,6 +50,8 @@ class InvoiceTest < ActiveSupport::TestCase
       status: "pending",
       payment_method: "cash"
     )
+    # Force total to be nil to test the validation
+    invoice.total = nil
     assert_not invoice.valid?
   end
 
