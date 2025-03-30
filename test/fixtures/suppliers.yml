@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: <%= SecureRandom.uuid %>
+  id: 33333333-3333-3333-3333-333333333333
   name: Supplier One
   rtn: SUP12345
   contact_name: Contact Person One
@@ -9,7 +9,7 @@ one:
   email: supplier1@example.com
 
 two:
-  id: <%= SecureRandom.uuid %>
+  id: 44444444-4444-4444-4444-444444444444
   name: Supplier Two
   rtn: SUP67890
   contact_name: Contact Person Two
