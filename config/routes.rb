@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   # Quotes and quote items
   resources :quotes do
     resources :quote_items, shallow: true
+    member do
+      get :pdf
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
