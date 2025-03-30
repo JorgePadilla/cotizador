@@ -30,7 +30,8 @@ class QuotesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    quote = Quote.last
+    # Get the newly created quote and assert the redirect to its URL
+    quote = Quote.order(created_at: :desc).first
     assert_redirected_to quote_url(quote)
     assert_equal @client.id, quote.client_id
     assert_equal "draft", quote.status
