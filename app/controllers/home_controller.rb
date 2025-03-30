@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-
   def index
     @clients_count = Client.count
     @suppliers_count = Supplier.count
