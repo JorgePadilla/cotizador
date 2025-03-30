@@ -1,3 +1,6 @@
+require 'prawn'
+require 'prawn/measurement_extensions'
+
 class QuotePdf < Prawn::Document
   def initialize(quote)
     super(page_size: "LETTER", margin: 50)
