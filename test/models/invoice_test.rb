@@ -40,18 +40,17 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_not invoice.valid?
   end
 
-  test "invoice without total is invalid" do
+  test "invoice with negative total is invalid" do
     client = clients(:one)
     invoice = Invoice.new(
       invoice_number: "INV001",
       client: client,
       subtotal: 100.00,
       tax: 15.00,
+      total: -10.00,
       status: "pending",
       payment_method: "cash"
     )
-    # Force total to be nil to test the validation
-    invoice.total = nil
     assert_not invoice.valid?
   end
 
