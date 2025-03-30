@@ -1,6 +1,6 @@
-# Cotizador - Invoice Management System
+# Cotizador - Quotation and Invoice Management System
 
-Cotizador is a comprehensive invoice management system built with Ruby on Rails. It allows businesses to manage clients, suppliers, products, and invoices in a single application with a modern, responsive interface.
+Cotizador is a comprehensive quotation and invoice management system built with Ruby on Rails. It allows businesses to manage clients, suppliers, products, quotes, and invoices in a single application with a modern, responsive interface. The system streamlines the sales process from initial quote to final invoice, helping businesses maintain professional client relationships.
 
 ## Features
 
