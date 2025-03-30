@@ -1,38 +1,46 @@
 require "test_helper"
 
 class SuppliersControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @supplier = suppliers(:one)
+  end
+  
   test "should get index" do
-    get suppliers_index_url
+    get suppliers_url
     assert_response :success
   end
 
   test "should get show" do
-    get suppliers_show_url
+    get supplier_url(@supplier)
     assert_response :success
   end
 
   test "should get new" do
-    get suppliers_new_url
+    get new_supplier_url
     assert_response :success
   end
 
   test "should get edit" do
-    get suppliers_edit_url
+    get edit_supplier_url(@supplier)
     assert_response :success
   end
 
-  test "should get create" do
-    get suppliers_create_url
-    assert_response :success
+  test "should create supplier" do
+    assert_difference("Supplier.count") do
+      post suppliers_url, params: { supplier: { name: "New Supplier", email: "supplier@example.com", contact_name: "Contact Person" } }
+    end
+    assert_redirected_to supplier_url(Supplier.last)
   end
 
-  test "should get update" do
-    get suppliers_update_url
-    assert_response :success
+  test "should update supplier" do
+    patch supplier_url(@supplier), params: { supplier: { name: "Updated Supplier" } }
+    assert_redirected_to supplier_url(@supplier)
   end
 
-  test "should get destroy" do
-    get suppliers_destroy_url
-    assert_response :success
+  test "should destroy supplier" do
+    assert_difference("Supplier.count", -1) do
+      delete supplier_url(@supplier)
+    end
+    assert_redirected_to suppliers_url
   end
 end
