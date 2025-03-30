@@ -5,7 +5,7 @@ class Invoice < ApplicationRecord
   
   validates :invoice_number, presence: true, uniqueness: true
   validates :subtotal, :tax, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :total, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :total, numericality: { greater_than_or_equal_to: 0 }, allow_nil: false
   validates :status, inclusion: { in: %w[draft pending paid cancelled] }, allow_nil: true
   
   before_validation :set_defaults, on: :create
