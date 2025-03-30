@@ -3,7 +3,7 @@
 
 # Clear existing data to avoid duplicates
 puts "Cleaning database..."
-[InvoiceItem, Invoice, Product, Client, Supplier].each(&:delete_all)
+[ InvoiceItem, Invoice, Product, Client, Supplier ].each(&:delete_all)
 
 # Create Clients
 puts "Creating clients..."
@@ -166,7 +166,7 @@ Invoice.all.each do |invoice|
   subtotal = invoice.invoice_items.sum(&:total)
   tax = subtotal * 0.15  # 15% tax rate
   total = subtotal + tax
-  
+
   invoice.update(
     subtotal: subtotal.round(2),
     tax: tax.round(2),

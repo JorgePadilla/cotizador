@@ -1,7 +1,7 @@
 class CreateProducts < ActiveRecord::Migration[8.0]
   def change
     enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
-    
+
     create_table :products, id: :uuid do |t|
       t.string :name
       t.string :sku

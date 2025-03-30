@@ -1,5 +1,5 @@
 class SuppliersController < ApplicationController
-  before_action :set_supplier, only: [:show, :edit, :update, :destroy]
+  before_action :set_supplier, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @suppliers = Supplier.all.order(created_at: :desc)
@@ -19,7 +19,7 @@ class SuppliersController < ApplicationController
     @supplier = Supplier.new(supplier_params)
 
     if @supplier.save
-      redirect_to @supplier, notice: 'Supplier was successfully created.'
+      redirect_to @supplier, notice: "Supplier was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class SuppliersController < ApplicationController
 
   def update
     if @supplier.update(supplier_params)
-      redirect_to @supplier, notice: 'Supplier was successfully updated.'
+      redirect_to @supplier, notice: "Supplier was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class SuppliersController < ApplicationController
 
   def destroy
     @supplier.destroy
-    redirect_to suppliers_url, notice: 'Supplier was successfully deleted.'
+    redirect_to suppliers_url, notice: "Supplier was successfully deleted."
   end
 
   private

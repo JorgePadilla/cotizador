@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :clients
   resources :suppliers
   resources :products
-  
+
   resources :invoices do
     resources :invoice_items, shallow: true
   end
