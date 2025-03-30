@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 55555555-5555-5555-5555-555555555555
+  name: Product One
+  sku: SKU12345
+  description: This is product one
+  price: 100.00
+  cost: 50.00
+  stock: 10
+  supplier_id: 33333333-3333-3333-3333-333333333333
+
+two:
+  id: 66666666-6666-6666-6666-666666666666
+  name: Product Two
+  sku: SKU67890
+  description: This is product two
+  price: 200.00
+  cost: 100.00
+  stock: 20
+  supplier_id: 44444444-4444-4444-4444-444444444444

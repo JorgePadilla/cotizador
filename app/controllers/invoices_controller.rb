@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
-  before_action :load_clients_and_products, only: [:new, :edit, :create, :update]
+  before_action :set_invoice, only: [ :show, :edit, :update, :destroy ]
+  before_action :load_clients_and_products, only: [ :new, :edit, :create, :update ]
 
   def index
     @invoices = Invoice.includes(:client).order(created_at: :desc)
@@ -13,10 +13,10 @@ class InvoicesController < ApplicationController
   def new
     @invoice = Invoice.new
     @invoice.invoice_number = generate_invoice_number
-    
+
     # Pre-select client if provided in params
     @invoice.client_id = params[:client_id] if params[:client_id].present?
-    
+
     # Initialize with one empty invoice item
     @invoice.invoice_items.build
   end
@@ -28,7 +28,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
 
     if @invoice.save
-      redirect_to @invoice, notice: 'Invoice was successfully created.'
+      redirect_to @invoice, notice: "Invoice was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class InvoicesController < ApplicationController
 
   def update
     if @invoice.update(invoice_params)
-      redirect_to @invoice, notice: 'Invoice was successfully updated.'
+      redirect_to @invoice, notice: "Invoice was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class InvoicesController < ApplicationController
 
   def destroy
     @invoice.destroy
-    redirect_to invoices_url, notice: 'Invoice was successfully destroyed.'
+    redirect_to invoices_url, notice: "Invoice was successfully destroyed."
   end
 
   private
@@ -60,14 +60,14 @@ class InvoicesController < ApplicationController
 
   def invoice_params
     params.require(:invoice).permit(
-      :invoice_number, 
-      :client_id, 
-      :subtotal, 
-      :tax, 
-      :total, 
-      :status, 
+      :invoice_number,
+      :client_id,
+      :subtotal,
+      :tax,
+      :total,
+      :status,
       :payment_method,
-      invoice_items_attributes: [:id, :product_id, :description, :quantity, :unit_price, :total, :_destroy]
+      invoice_items_attributes: [ :id, :product_id, :description, :quantity, :unit_price, :total, :_destroy ]
     )
   end
 

@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
+  # Authentication routes
+  get "signup", to: "users#new", as: :signup
+  post "users", to: "users#create"
+  resource :session
+  resources :passwords, param: :token
   resources :clients
   resources :suppliers
   resources :products
-  
+
   resources :invoices do
     resources :invoice_items, shallow: true
   end
