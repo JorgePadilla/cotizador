@@ -130,6 +130,7 @@ class QuotePdf < Prawn::Document
   end
 
   def format_currency(amount)
+    return "$0.00" if amount.nil?
     "$#{sprintf('%.2f', amount)}"
   end
 end

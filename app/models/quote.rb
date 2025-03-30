@@ -11,7 +11,12 @@ class Quote < ApplicationRecord
   before_validation :calculate_totals
 
   def calculate_totals
-    return if quote_items.empty?
+    if quote_items.empty?
+      self.subtotal = 0
+      self.tax = 0
+      self.total = 0
+      return
+    end
 
     self.subtotal = quote_items.sum(&:total)
     self.tax = subtotal * 0.15 # Assuming 15% tax rate
