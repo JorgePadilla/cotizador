@@ -3,8 +3,10 @@ require "test_helper"
 class SuppliersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @supplier = suppliers(:one)
+    @user = users(:one)
+    sign_in_as(@user)
   end
-  
+
   test "should get index" do
     get suppliers_url
     assert_response :success
@@ -27,9 +29,11 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create supplier" do
     assert_difference("Supplier.count") do
-      post suppliers_url, params: { supplier: { name: "New Supplier", email: "supplier@example.com", contact_name: "Contact Person" } }
+      post suppliers_url, params: { supplier: { name: "New Supplier", rtn: "12345678", email: "supplier@example.com", contact_name: "Contact Person", phone: "12345678" } }
     end
-    assert_redirected_to supplier_url(Supplier.last)
+    # Get the actual supplier that was created
+    new_supplier = Supplier.find_by(rtn: "12345678")
+    assert_redirected_to supplier_url(new_supplier)
   end
 
   test "should update supplier" do

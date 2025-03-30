@@ -4,8 +4,10 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @invoice = invoices(:one)
     @client = clients(:one)
+    @user = users(:one)
+    sign_in_as(@user)
   end
-  
+
   test "should get index" do
     get invoices_url
     assert_response :success
@@ -28,9 +30,11 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create invoice" do
     assert_difference("Invoice.count") do
-      post invoices_url, params: { invoice: { invoice_number: "INV-001", client_id: @client.id, subtotal: 100.0, tax: 15.0, total: 115.0 } }
+      post invoices_url, params: { invoice: { invoice_number: "INV-001", client_id: @client.id, subtotal: 100.0, tax: 15.0, total: 115.0, status: "draft", payment_method: "cash" } }
     end
-    assert_redirected_to invoice_url(Invoice.last)
+    # Get the actual invoice that was created
+    new_invoice = Invoice.find_by(invoice_number: "INV-001")
+    assert_redirected_to invoice_url(new_invoice)
   end
 
   test "should update invoice" do
