@@ -1,5 +1,6 @@
 class Client < ApplicationRecord
   has_many :invoices, dependent: :destroy
+  has_many :quotes, dependent: :destroy
 
   validates :name, presence: true
   validates :rtn, presence: true, uniqueness: true

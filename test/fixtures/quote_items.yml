@@ -1,0 +1,37 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: <%= SecureRandom.uuid %>
+  quote: one
+  product: one
+  description: Premium Widget
+  quantity: 2
+  unit_price: 250.00
+  total: 500.00
+
+two:
+  id: <%= SecureRandom.uuid %>
+  quote: two
+  product: one
+  description: Premium Widget
+  quantity: 3
+  unit_price: 250.00
+  total: 750.00
+
+three:
+  id: <%= SecureRandom.uuid %>
+  quote: two
+  product: two
+  description: Deluxe Gadget
+  quantity: 2
+  unit_price: 225.00
+  total: 450.00
+
+expired_item:
+  id: <%= SecureRandom.uuid %>
+  quote: expired
+  product: two
+  description: Deluxe Gadget
+  quantity: 4
+  unit_price: 200.00
+  total: 800.00

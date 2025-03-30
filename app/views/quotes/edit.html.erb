@@ -1,0 +1,71 @@
+<div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  <%= render(HeaderComponent.new(title: "Edit Quote", subtitle: "Update quote details")) %>
+
+  <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Quote Details</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">Update the details for this quote.</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+      <%= form_with(model: @quote, local: true, class: "space-y-6") do |form| %>
+        <% if @quote.errors.any? %>
+          <div class="rounded-md bg-red-50 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800">There were <%= pluralize(@quote.errors.count, "error") %> with your submission</h3>
+                <div class="mt-2 text-sm text-red-700">
+                  <ul class="list-disc pl-5 space-y-1">
+                    <% @quote.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <%= form.label :client_id, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.collection_select :client_id, Client.all, :id, :name, { include_blank: "Select a client" }, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <%= form.label :status, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.select :status, [['Draft', 'draft'], ['Sent', 'sent'], ['Accepted', 'accepted']], {}, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <%= form.label :valid_until, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.date_field :valid_until, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <%= form.label :quote_number, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.text_field :quote_number, disabled: true, class: "bg-gray-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+            </div>
+            <p class="mt-1 text-xs text-gray-500">Quote number cannot be changed</p>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-3">
+          <%= link_to "Cancel", quote_path(@quote), class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+          <%= form.submit "Update Quote", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

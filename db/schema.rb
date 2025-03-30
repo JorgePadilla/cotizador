@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_30_174411) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_30_214452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -71,6 +71,33 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_174411) do
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
+  create_table "quote_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "quote_id", null: false
+    t.uuid "product_id", null: false
+    t.text "description"
+    t.integer "quantity"
+    t.decimal "unit_price", precision: 10, scale: 2
+    t.decimal "total", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_quote_items_on_product_id"
+    t.index ["quote_id"], name: "index_quote_items_on_quote_id"
+  end
+
+  create_table "quotes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "quote_number"
+    t.uuid "client_id", null: false
+    t.decimal "subtotal", precision: 10, scale: 2
+    t.decimal "tax", precision: 10, scale: 2
+    t.decimal "total", precision: 10, scale: 2
+    t.string "status", default: "draft"
+    t.date "valid_until"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_quotes_on_client_id"
+    t.index ["quote_number"], name: "index_quotes_on_quote_number", unique: true
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "ip_address"
@@ -105,5 +132,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_174411) do
   add_foreign_key "invoice_items", "products"
   add_foreign_key "invoices", "clients"
   add_foreign_key "products", "suppliers"
+  add_foreign_key "quote_items", "products"
+  add_foreign_key "quote_items", "quotes"
+  add_foreign_key "quotes", "clients"
   add_foreign_key "sessions", "users"
 end
