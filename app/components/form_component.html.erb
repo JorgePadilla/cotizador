@@ -1,0 +1,29 @@
+<%= form_with(**form_with_options) do |form| %>
+  <% if @resource&.errors&.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+      <strong class="font-bold">Error:</strong>
+      <span class="block sm:inline"><%= pluralize(@resource.errors.count, "error") %> prohibited this record from being saved:</span>
+      <ul class="list-disc list-inside mt-2">
+        <% @resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if header %>
+    <div class="mb-4">
+      <%= header %>
+    </div>
+  <% end %>
+
+  <div class="form-content">
+    <%= form_content %>
+  </div>
+
+  <% if footer %>
+    <div class="mt-6">
+      <%= footer %>
+    </div>
+  <% end %>
+<% end %>

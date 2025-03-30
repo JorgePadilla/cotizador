@@ -1,0 +1,38 @@
+<%= render(AuthComponent.new(title_text: "Reset your password")) do |auth| %>
+  <% if alert = flash[:alert] %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+      <span class="block sm:inline"><%= alert %></span>
+    </div>
+  <% end %>
+
+  <% auth.with_main_content do %>
+    <div class="mb-4 text-sm text-gray-600">
+      <p>Enter your email address and we'll send you a link to reset your password.</p>
+    </div>
+
+    <%= render(FormComponent.new(url: passwords_path, method: :post)) do |form| %>
+      <% form.with_form_content do %>
+        <div class="space-y-6">
+          <div>
+            <label for="email_address" class="block text-sm font-medium text-gray-700">Email address</label>
+            <div class="mt-1">
+              <input id="email_address" name="email_address" type="email" autocomplete="username" required autofocus value="<%= params[:email_address] %>" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Send reset instructions
+            </button>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% auth.with_footer do %>
+    <p>
+      <%= link_to "Back to sign in", new_session_path, class: "font-medium text-blue-600 hover:text-blue-500" %>
+    </p>
+  <% end %>
+<% end %>
