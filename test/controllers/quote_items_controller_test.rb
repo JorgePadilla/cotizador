@@ -15,8 +15,16 @@ class QuoteItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create quote_item" do
+    # Create a new quote to avoid interference from fixture data
+    quote = Quote.create!(
+      quote_number: "QT-202503-997",
+      client_id: clients(:one).id,
+      status: "draft",
+      valid_until: 1.month.from_now
+    )
+
     assert_difference("QuoteItem.count") do
-      post quote_quote_items_url(@quote), params: {
+      post quote_quote_items_url(quote), params: {
         quote_item: {
           product_id: @product.id,
           description: "Test product",
@@ -26,10 +34,10 @@ class QuoteItemsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to quote_url(@quote)
+    assert_redirected_to quote_url(quote)
 
-    @quote.reload
-    assert_equal 200, @quote.quote_items.last.total
+    quote.reload
+    assert_equal 200, quote.quote_items.last.total
   end
 
   test "should get edit" do

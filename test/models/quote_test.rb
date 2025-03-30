@@ -23,7 +23,13 @@ class QuoteTest < ActiveSupport::TestCase
   end
 
   test "should calculate totals from quote items" do
-    quote = quotes(:one)
+    # Create a new quote to avoid interference from fixture data
+    quote = Quote.create!(
+      quote_number: "QT-202503-999",
+      client_id: clients(:one).id,
+      status: "draft",
+      valid_until: 1.month.from_now
+    )
     product = products(:one)
 
     quote.quote_items.create!(
@@ -33,6 +39,7 @@ class QuoteTest < ActiveSupport::TestCase
       unit_price: 100
     )
 
+    quote.reload
     assert_equal 200, quote.subtotal
     assert_equal 30, quote.tax # 15% of 200
     assert_equal 230, quote.total
