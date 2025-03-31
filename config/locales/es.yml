@@ -1,0 +1,217 @@
+es:
+  # General
+  hello: "Hola mundo"
+  app_name: "Cotizador"
+  
+  # Navigation
+  nav:
+    dashboard: "Panel de control"
+    clients: "Clientes"
+    suppliers: "Proveedores"
+    products: "Productos"
+    invoices: "Facturas"
+    quotes: "Cotizaciones"
+    profile: "Perfil"
+    logout: "Cerrar sesión"
+    login: "Iniciar sesión"
+    register: "Registrarse"
+    language: "Idioma"
+  
+  # Actions
+  actions:
+    new: "Nuevo"
+    edit: "Editar"
+    delete: "Eliminar"
+    back: "Volver"
+    save: "Guardar"
+    cancel: "Cancelar"
+    show: "Ver"
+    print: "Imprimir"
+    search: "Buscar"
+    filter: "Filtrar"
+    add: "Agregar"
+    remove: "Quitar"
+    confirm_delete: "¿Está seguro que desea eliminar esto?"
+  
+  # Clients
+  clients:
+    title: "Clientes"
+    new: "Nuevo Cliente"
+    edit: "Editar Cliente"
+    details: "Detalles del Cliente"
+    list: "Lista de Clientes"
+    attributes:
+      name: "Nombre"
+      rtn: "RTN"
+      address: "Dirección"
+      phone: "Teléfono"
+      email: "Correo electrónico"
+    messages:
+      created: "Cliente creado exitosamente."
+      updated: "Cliente actualizado exitosamente."
+      deleted: "Cliente eliminado exitosamente."
+  
+  # Suppliers
+  suppliers:
+    title: "Proveedores"
+    new: "Nuevo Proveedor"
+    edit: "Editar Proveedor"
+    details: "Detalles del Proveedor"
+    list: "Lista de Proveedores"
+    attributes:
+      name: "Nombre"
+      rtn: "RTN"
+      contact_name: "Nombre de contacto"
+      phone: "Teléfono"
+      email: "Correo electrónico"
+    messages:
+      created: "Proveedor creado exitosamente."
+      updated: "Proveedor actualizado exitosamente."
+      deleted: "Proveedor eliminado exitosamente."
+  
+  # Products
+  products:
+    title: "Productos"
+    new: "Nuevo Producto"
+    edit: "Editar Producto"
+    details: "Detalles del Producto"
+    list: "Lista de Productos"
+    attributes:
+      name: "Nombre"
+      sku: "SKU"
+      description: "Descripción"
+      price: "Precio"
+      cost: "Costo"
+      stock: "Inventario"
+      supplier: "Proveedor"
+    messages:
+      created: "Producto creado exitosamente."
+      updated: "Producto actualizado exitosamente."
+      deleted: "Producto eliminado exitosamente."
+  
+  # Invoices
+  invoices:
+    title: "Facturas"
+    new: "Nueva Factura"
+    edit: "Editar Factura"
+    details: "Detalles de la Factura"
+    list: "Lista de Facturas"
+    items: "Artículos de la Factura"
+    attributes:
+      invoice_number: "Número de factura"
+      client: "Cliente"
+      date: "Fecha"
+      subtotal: "Subtotal"
+      tax: "Impuesto"
+      total: "Total"
+      status: "Estado"
+      payment_method: "Método de pago"
+    statuses:
+      draft: "Borrador"
+      sent: "Enviada"
+      paid: "Pagada"
+      overdue: "Vencida"
+      cancelled: "Cancelada"
+    messages:
+      created: "Factura creada exitosamente."
+      updated: "Factura actualizada exitosamente."
+      deleted: "Factura eliminada exitosamente."
+  
+  # Quotes
+  quotes:
+    title: "Cotizaciones"
+    new: "Nueva Cotización"
+    edit: "Editar Cotización"
+    details: "Detalles de la Cotización"
+    list: "Lista de Cotizaciones"
+    items: "Artículos de la Cotización"
+    print_to_pdf: "Imprimir a PDF"
+    attributes:
+      quote_number: "Número de cotización"
+      client: "Cliente"
+      date: "Fecha"
+      valid_until: "Válida hasta"
+      subtotal: "Subtotal"
+      tax: "Impuesto"
+      total: "Total"
+      status: "Estado"
+    statuses:
+      draft: "Borrador"
+      sent: "Enviada"
+      approved: "Aprobada"
+      rejected: "Rechazada"
+      expired: "Vencida"
+    messages:
+      created: "Cotización creada exitosamente."
+      updated: "Cotización actualizada exitosamente."
+      deleted: "Cotización eliminada exitosamente."
+  
+  # Users and Authentication
+  users:
+    title: "Usuarios"
+    profile: "Perfil de Usuario"
+    edit_profile: "Editar Perfil"
+    preferences: "Preferencias"
+    language_settings: "Configuración de Idioma"
+    attributes:
+      name: "Nombre"
+      email: "Correo electrónico"
+      password: "Contraseña"
+      password_confirmation: "Confirmar contraseña"
+      current_password: "Contraseña actual"
+      language: "Idioma"
+    messages:
+      profile_updated: "Perfil actualizado exitosamente."
+      language_changed: "Idioma cambiado exitosamente."
+  
+  auth:
+    login: "Iniciar sesión"
+    logout: "Cerrar sesión"
+    register: "Registrarse"
+    forgot_password: "¿Olvidó su contraseña?"
+    reset_password: "Restablecer contraseña"
+    messages:
+      login_success: "Sesión iniciada exitosamente."
+      logout_success: "Sesión cerrada exitosamente."
+      invalid_credentials: "Correo electrónico o contraseña inválidos."
+      password_reset_sent: "Se ha enviado un enlace para restablecer su contraseña."
+      password_reset_success: "Su contraseña ha sido restablecida exitosamente."
+  
+  # Languages
+  languages:
+    en: "Inglés"
+    es: "Español"
+    
+  # Time and dates
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d de %B de %Y a las %H:%M"
+  
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d de %B de %Y"
+    day_names: [domingo, lunes, martes, miércoles, jueves, viernes, sábado]
+    abbr_day_names: [dom, lun, mar, mié, jue, vie, sáb]
+    month_names: [~, enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
+    abbr_month_names: [~, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic]
+    
+  # Errors and flash messages
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "no puede estar en blanco"
+      invalid: "no es válido"
+      taken: "ya está en uso"
+      confirmation: "no coincide con la confirmación"
+      too_short: "es demasiado corto (mínimo %{count} caracteres)"
+      too_long: "es demasiado largo (máximo %{count} caracteres)"
+      not_a_number: "no es un número"
+      not_an_integer: "debe ser un entero"
+      greater_than: "debe ser mayor que %{count}"
+      greater_than_or_equal_to: "debe ser mayor o igual a %{count}"
+      less_than: "debe ser menor que %{count}"
+      less_than_or_equal_to: "debe ser menor o igual a %{count}"
