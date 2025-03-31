@@ -3,6 +3,43 @@ es:
   hello: "Hola mundo"
   app_name: "Cotizador"
   
+  # Common
+  common:
+    not_available: "no disponible"
+  
+  # Dashboard
+  dashboard:
+    title: "Panel de Control"
+    subtitle: "Administre sus cotizaciones y facturas"
+    stats:
+      total_clients: "Total de Clientes"
+      total_products: "Total de Productos"
+      total_suppliers: "Total de Proveedores"
+      total_quotes: "Total de Cotizaciones"
+      total_invoices: "Total de Facturas"
+    view_all: "Ver todos"
+    recent:
+      invoices: "Facturas Recientes"
+      quotes: "Cotizaciones Recientes"
+      clients: "Clientes Recientes"
+    actions:
+      quick_actions: "Acciones Rápidas"
+      new_client: "Nuevo Cliente"
+      new_product: "Nuevo Producto"
+      new_supplier: "Nuevo Proveedor"
+      new_quote: "Nueva Cotización"
+      new_invoice: "Nueva Factura"
+    empty:
+      no_invoices: "No hay facturas creadas aún."
+      no_quotes: "No hay cotizaciones creadas aún."
+      no_clients: "No hay clientes creados aún."
+    invoice: "Factura"
+    quote: "Cotización"
+    no_client: "Sin cliente"
+    create_new_invoice: "Crear nueva factura"
+    create_new_quote: "Crear nueva cotización"
+    add_new_client: "Agregar nuevo cliente"
+  
   # Navigation
   nav:
     dashboard: "Panel de control"
@@ -97,6 +134,11 @@ es:
     details: "Detalles de la Factura"
     list: "Lista de Facturas"
     items: "Artículos de la Factura"
+    status:
+      paid: "Pagada"
+      pending: "Pendiente"
+      cancelled: "Cancelada"
+      draft: "Borrador"
     attributes:
       invoice_number: "Número de factura"
       client: "Cliente"
