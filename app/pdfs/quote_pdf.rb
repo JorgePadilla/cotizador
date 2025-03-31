@@ -1,5 +1,5 @@
-require 'prawn'
-require 'prawn/measurement_extensions'
+require "prawn"
+require "prawn/measurement_extensions"
 
 class QuotePdf < Prawn::Document
   def initialize(quote)
@@ -11,19 +11,19 @@ class QuotePdf < Prawn::Document
   def generate_content
     # Add the company logo and header
     header
-    
+
     # Add quote information
     quote_details
-    
+
     # Add client information
     client_details
-    
+
     # Add quote items table
     quote_items_table
-    
+
     # Add totals
     totals
-    
+
     # Add footer with terms and conditions
     footer
   end
@@ -33,7 +33,7 @@ class QuotePdf < Prawn::Document
   def header
     # Add company logo if available
     # image "#{Rails.root}/app/assets/images/logo.png", width: 150, position: :left
-    
+
     # Add company name and quote title
     text "Cotizador", size: 24, style: :bold
     move_down 5
@@ -70,10 +70,10 @@ class QuotePdf < Prawn::Document
     # Table header
     text "Items:", size: 14, style: :bold
     move_down 10
-    
+
     # Create the items table
-    table_data = [["Description", "Quantity", "Unit Price", "Total"]]
-    
+    table_data = [ [ "Description", "Quantity", "Unit Price", "Total" ] ]
+
     # Add each quote item to the table
     @quote.quote_items.each do |item|
       table_data << [
@@ -83,7 +83,7 @@ class QuotePdf < Prawn::Document
         format_currency(item.total)
       ]
     end
-    
+
     # Draw the table
     table(table_data) do |t|
       t.header = true
@@ -92,7 +92,7 @@ class QuotePdf < Prawn::Document
       t.row(0).background_color = "DDDDDD"
       t.columns(2..3).align = :right
     end
-    
+
     move_down 20
   end
 
@@ -103,7 +103,7 @@ class QuotePdf < Prawn::Document
       ["Tax (15%):", format_currency(@quote.tax)],
       ["Total:", format_currency(@quote.total)]
     ]
-    
+
     # Draw the totals table aligned to the right
     bounding_box([300, cursor], width: 250) do
       table(totals_data) do |t|
@@ -112,7 +112,7 @@ class QuotePdf < Prawn::Document
         t.row(2).font_style = :bold
       end
     end
-    
+
     move_down 30
   end
 
@@ -123,7 +123,7 @@ class QuotePdf < Prawn::Document
     text "1. This quote is valid until the date specified above.", size: 10
     text "2. Payment terms: 50% advance payment, 50% upon delivery.", size: 10
     text "3. Delivery time: 2-3 weeks after confirmation.", size: 10
-    
+
     # Add page numbers
     number_pages "Page <page> of <total>",
                  { start_count_at: 1, page_filter: :all, at: [bounds.right - 150, 0], align: :right, size: 9 }
