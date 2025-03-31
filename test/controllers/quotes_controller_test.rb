@@ -43,6 +43,12 @@ class QuotesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "Quote #{@quote.quote_number}"
   end
 
+  test "should generate pdf" do
+    get pdf_quote_url(@quote, format: :pdf)
+    assert_response :success
+    assert_equal "application/pdf", @response.media_type
+  end
+
   test "should get edit" do
     get edit_quote_url(@quote)
     assert_response :success

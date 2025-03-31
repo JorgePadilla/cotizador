@@ -34,6 +34,10 @@ gem "view_component"
 gem "solid_queue"
 gem "solid_cable"
 
+# PDF generation
+gem "prawn"
+gem "prawn-rails"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -66,4 +70,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "pdf-inspector", require: "pdf/inspector"
 end

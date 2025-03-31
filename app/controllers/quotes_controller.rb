@@ -1,5 +1,7 @@
+require_relative "../pdfs/quote_pdf"
+
 class QuotesController < ApplicationController
-  before_action :set_quote, only: %i[show edit update destroy]
+  before_action :set_quote, only: %i[show edit update destroy pdf]
 
   def index
     @quotes = Quote.all.order(created_at: :desc)
@@ -37,6 +39,18 @@ class QuotesController < ApplicationController
   def destroy
     @quote.destroy
     redirect_to quotes_url, notice: "Quote was successfully deleted."
+  end
+
+  def pdf
+    respond_to do |format|
+      format.pdf do
+        pdf = QuotePdf.new(@quote)
+        send_data pdf.render,
+                  filename: "quote-#{@quote.quote_number}.pdf",
+                  type: "application/pdf",
+                  disposition: "inline"
+      end
+    end
   end
 
   private
