@@ -1,4 +1,4 @@
-require_relative '../pdfs/quote_pdf'
+require_relative "../pdfs/quote_pdf"
 
 class QuotesController < ApplicationController
   before_action :set_quote, only: %i[show edit update destroy pdf]
