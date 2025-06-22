@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   # Validations
   validates :language, inclusion: { in: %w[en es] }
+  validates :default_tax, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
 
   # Set default language
   after_initialize :set_default_language, if: :new_record?

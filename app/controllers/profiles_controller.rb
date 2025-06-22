@@ -41,7 +41,7 @@ class ProfilesController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email_address, :language)
+    params.require(:user).permit(:name, :email_address, :language, :default_tax)
   end
 
   def language_params

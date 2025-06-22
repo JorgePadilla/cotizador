@@ -63,7 +63,7 @@
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Unit Price</label>
-            <input type="number" step="0.01" name="invoice[invoice_items_attributes][__INDEX__][unit_price]" class="price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            <input type="number" step="0.01" name="invoice[invoice_items_attributes][__INDEX__][unit_price]" class="price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" readonly>
           </div>
           <div class="flex items-end">
             <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
@@ -104,9 +104,14 @@
             <div class="invoice-item-fields grid grid-cols-1 md:grid-cols-5 gap-4 border-b pb-4 mb-4">
               <div class="md:col-span-2">
                 <label class="block text-sm font-medium text-gray-700">Product</label>
-                <%= select_tag "invoice[invoice_items_attributes][#{index}][product_id]", 
-                              options_from_collection_for_select(Product.all, :id, :name, item.product_id),
-                              class: "product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+                <select name="invoice[invoice_items_attributes][#{index}][product_id]" class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                  <option value="">Select a product</option>
+                  <% Product.all.each do |product| %>
+                    <option value="<%= product.id %>" data-price="<%= product.price %>" <%= 'selected' if product.id == item.product_id %>>
+                      <%= product.name %> - <%= number_to_currency(product.price) %>
+                    </option>
+                  <% end %>
+                </select>
                 <%= hidden_field_tag "invoice[invoice_items_attributes][#{index}][id]", item.id if item.persisted? %>
               </div>
               <div>
@@ -121,7 +126,8 @@
                 <%= number_field_tag "invoice[invoice_items_attributes][#{index}][unit_price]", 
                                     item.unit_price, 
                                     step: "0.01", 
-                                    class: "price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+                                    readonly: true,
+                                    class: "price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
               </div>
               <div class="flex items-end">
                 <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
@@ -146,7 +152,12 @@
 
       <div>
         <%= form.label :tax, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.number_field :tax, step: "0.01", class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+        <% default_tax_percentage = current_user&.default_tax ? (current_user.default_tax * 100).round(2) : 15 %>
+        <%= form.number_field :tax, 
+                             value: default_tax_amount, 
+                             step: "0.01", 
+                             data: { default_tax_percentage: default_tax_percentage },
+                             class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
       </div>
 
       <div>
@@ -169,7 +180,7 @@
     const addButton = document.getElementById('add-item-btn');
     
     // Function to update totals
-    function updateTotals() {
+    function updateTotals(updateTaxBasedOnSubtotal = false) {
       let subtotal = 0;
       const items = container.querySelectorAll('.invoice-item-fields');
       
@@ -181,7 +192,17 @@
       
       document.getElementById('invoice_subtotal').value = subtotal.toFixed(2);
       
-      const tax = parseFloat(document.getElementById('invoice_tax').value) || 0;
+      // If this is a new invoice or updateTaxBasedOnSubtotal is true, recalculate tax
+      const taxInput = document.getElementById('invoice_tax');
+      let tax = parseFloat(taxInput.value) || 0;
+      
+      // If the form has a data attribute for default tax percentage and we should update tax
+      const defaultTaxPercentage = parseFloat(taxInput.getAttribute('data-default-tax-percentage') || '0');
+      if (updateTaxBasedOnSubtotal && defaultTaxPercentage > 0) {
+        tax = subtotal * (defaultTaxPercentage / 100);
+        taxInput.value = tax.toFixed(2);
+      }
+      
       const total = subtotal + tax;
       document.getElementById('invoice_total').value = total.toFixed(2);
     }
@@ -199,18 +220,22 @@
           priceInput.value = '';
         }
         
-        updateTotals();
+        updateTotals(true); // Update tax based on new subtotal
       });
     }
     
     // Function to handle quantity change
     function handleQuantityChange(input) {
-      input.addEventListener('input', updateTotals);
+      input.addEventListener('input', function() {
+        updateTotals(true); // Update tax based on new subtotal
+      });
     }
     
     // Function to handle price change
     function handlePriceChange(input) {
-      input.addEventListener('input', updateTotals);
+      input.addEventListener('input', function() {
+        updateTotals(true); // Update tax based on new subtotal
+      });
     }
     
     // Function to handle remove button
@@ -219,7 +244,7 @@
         const items = container.querySelectorAll('.invoice-item-fields');
         if (items.length > 1) {
           this.closest('.invoice-item-fields').remove();
-          updateTotals();
+          updateTotals(true); // Update tax based on new subtotal
         } else {
           alert('At least one item is required.');
         }
@@ -232,39 +257,51 @@
     container.querySelectorAll('.price-input').forEach(handlePriceChange);
     container.querySelectorAll('.remove-item-btn').forEach(handleRemoveButton);
     
-    // Handle add item button
-    addButton.addEventListener('click', function() {
+    // Function to add a new item
+    function addNewItem() {
       const items = container.querySelectorAll('.invoice-item-fields');
       const newIndex = items.length;
       
-      const newItem = template.content.cloneNode(true);
-      const selects = newItem.querySelectorAll('select');
-      const inputs = newItem.querySelectorAll('input');
+      // Clone the template content
+      const templateHTML = template.innerHTML;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = templateHTML.replace(/__INDEX__/g, newIndex);
       
-      selects.forEach(select => {
-        select.name = select.name.replace('__INDEX__', newIndex);
-        handleProductSelect(select);
-      });
+      // Get the new item element
+      const newItem = tempDiv.firstElementChild;
       
-      inputs.forEach(input => {
-        input.name = input.name.replace('__INDEX__', newIndex);
-        if (input.classList.contains('quantity-input')) {
-          handleQuantityChange(input);
-        } else if (input.classList.contains('price-input')) {
-          handlePriceChange(input);
-        }
-      });
+      // Add event listeners to the new elements
+      const productSelect = newItem.querySelector('.product-select');
+      if (productSelect) handleProductSelect(productSelect);
+      
+      const quantityInput = newItem.querySelector('.quantity-input');
+      if (quantityInput) handleQuantityChange(quantityInput);
+      
+      const priceInput = newItem.querySelector('.price-input');
+      if (priceInput) handlePriceChange(priceInput);
       
       const removeButton = newItem.querySelector('.remove-item-btn');
-      handleRemoveButton(removeButton);
+      if (removeButton) handleRemoveButton(removeButton);
       
+      // Add the new item to the container
       container.appendChild(newItem);
-    });
+      
+      // Update totals and recalculate tax
+      updateTotals(true);
+    }
     
-    // Initialize totals
-    updateTotals();
+    // Handle add item button
+    if (addButton) {
+      addButton.addEventListener('click', addNewItem);
+    }
+    
+    // Initialize totals with default tax calculation
+    updateTotals(true);
     
     // Update totals when tax changes
-    document.getElementById('invoice_tax').addEventListener('input', updateTotals);
+    const taxInput = document.getElementById('invoice_tax');
+    if (taxInput) {
+      taxInput.addEventListener('input', updateTotals);
+    }
   });
 </script>
