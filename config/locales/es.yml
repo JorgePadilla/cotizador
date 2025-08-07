@@ -1,0 +1,285 @@
+es:
+  # General
+  hello: "Hola mundo"
+  app_name: "Cotizador"
+  
+  # Common
+  common:
+    not_available: "no disponible"
+  
+  # Dashboard
+  dashboard:
+    title: "Panel de Control"
+    subtitle: "Administre sus cotizaciones y facturas"
+    stats:
+      total_clients: "Total de Clientes"
+      total_products: "Total de Productos"
+      total_suppliers: "Total de Proveedores"
+      total_quotes: "Total de Cotizaciones"
+      total_invoices: "Total de Facturas"
+    view_all: "Ver todos"
+    recent:
+      invoices: "Facturas Recientes"
+      quotes: "Cotizaciones Recientes"
+      clients: "Clientes Recientes"
+    actions:
+      quick_actions: "Acciones Rápidas"
+      new_client: "Nuevo Cliente"
+      new_product: "Nuevo Producto"
+      new_supplier: "Nuevo Proveedor"
+      new_quote: "Nueva Cotización"
+      new_invoice: "Nueva Factura"
+    empty:
+      no_invoices: "No hay facturas creadas aún."
+      no_quotes: "No hay cotizaciones creadas aún."
+      no_clients: "No hay clientes creados aún."
+    invoice: "Factura"
+    quote: "Cotización"
+    no_client: "Sin cliente"
+    create_new_invoice: "Crear nueva factura"
+    create_new_quote: "Crear nueva cotización"
+    add_new_client: "Agregar nuevo cliente"
+  
+  # Navigation
+  nav:
+    dashboard: "Panel de control"
+    clients: "Clientes"
+    suppliers: "Proveedores"
+    products: "Productos"
+    invoices: "Facturas"
+    quotes: "Cotizaciones"
+    profile: "Perfil"
+    logout: "Cerrar sesión"
+    login: "Iniciar sesión"
+    register: "Registrarse"
+    language: "Idioma"
+  
+  # Actions
+  actions:
+    new: "Nuevo"
+    edit: "Editar"
+    delete: "Eliminar"
+    back: "Volver"
+    save: "Guardar"
+    cancel: "Cancelar"
+    show: "Ver"
+    print: "Imprimir"
+    search: "Buscar"
+    filter: "Filtrar"
+    add: "Agregar"
+    remove: "Quitar"
+    confirm_delete: "¿Está seguro que desea eliminar esto?"
+  
+  # Clients
+  clients:
+    title: "Clientes"
+    subtitle: "Administre sus relaciones con clientes"
+    new_client: "Nuevo Cliente"
+    new: "Nuevo Cliente"
+    edit: "Editar Cliente"
+    client_details: "Detalles del Cliente"
+    details: "Detalles del Cliente"
+    list: "Lista de Clientes"
+    back_to_clients: "Volver a Clientes"
+    no_invoices: "No se encontraron facturas para este cliente."
+    delete_client: "Eliminar Cliente"
+    delete_confirm: "¿Está seguro de que desea eliminar este cliente?"
+    actions: "Acciones"
+    view: "Ver"
+    delete: "Eliminar"
+    cancel: "Cancelar"
+    save: "Guardar"
+    error: "Error:"
+    error_prohibited: "%{count} error(es) impidieron que este cliente se guardara:"
+    attributes:
+      name: "Nombre"
+      rtn: "RTN"
+      address: "Dirección"
+      phone: "Teléfono"
+      email: "Correo electrónico"
+    messages:
+      created: "Cliente creado exitosamente."
+      updated: "Cliente actualizado exitosamente."
+      deleted: "Cliente eliminado exitosamente."
+  
+  # Suppliers
+  suppliers:
+    title: "Proveedores"
+    new: "Nuevo Proveedor"
+    edit: "Editar Proveedor"
+    details: "Detalles del Proveedor"
+    list: "Lista de Proveedores"
+    attributes:
+      name: "Nombre"
+      rtn: "RTN"
+      contact_name: "Nombre de contacto"
+      phone: "Teléfono"
+      email: "Correo electrónico"
+    messages:
+      created: "Proveedor creado exitosamente."
+      updated: "Proveedor actualizado exitosamente."
+      deleted: "Proveedor eliminado exitosamente."
+  
+  # Products
+  products:
+    title: "Productos"
+    new: "Nuevo Producto"
+    edit: "Editar Producto"
+    details: "Detalles del Producto"
+    list: "Lista de Productos"
+    attributes:
+      name: "Nombre"
+      sku: "SKU"
+      description: "Descripción"
+      price: "Precio"
+      cost: "Costo"
+      stock: "Inventario"
+      supplier: "Proveedor"
+    messages:
+      created: "Producto creado exitosamente."
+      updated: "Producto actualizado exitosamente."
+      deleted: "Producto eliminado exitosamente."
+  
+  # Invoices
+  invoices:
+    title: "Facturas"
+    new: "Nueva Factura"
+    edit: "Editar Factura"
+    details: "Detalles de la Factura"
+    list: "Lista de Facturas"
+    items: "Artículos de la Factura"
+    status:
+      paid: "Pagada"
+      pending: "Pendiente"
+      cancelled: "Cancelada"
+      draft: "Borrador"
+    attributes:
+      invoice_number: "Número de factura"
+      client: "Cliente"
+      date: "Fecha"
+      subtotal: "Subtotal"
+      tax: "Impuesto"
+      total: "Total"
+      status: "Estado"
+      payment_method: "Método de pago"
+    statuses:
+      draft: "Borrador"
+      sent: "Enviada"
+      paid: "Pagada"
+      overdue: "Vencida"
+      cancelled: "Cancelada"
+    messages:
+      created: "Factura creada exitosamente."
+      updated: "Factura actualizada exitosamente."
+      deleted: "Factura eliminada exitosamente."
+  
+  # Quotes
+  quotes:
+    title: "Cotizaciones"
+    new: "Nueva Cotización"
+    edit: "Editar Cotización"
+    details: "Detalles de la Cotización"
+    list: "Lista de Cotizaciones"
+    items: "Artículos de la Cotización"
+    print_to_pdf: "Imprimir a PDF"
+    attributes:
+      quote_number: "Número de cotización"
+      client: "Cliente"
+      date: "Fecha"
+      valid_until: "Válida hasta"
+      subtotal: "Subtotal"
+      tax: "Impuesto"
+      total: "Total"
+      status: "Estado"
+    statuses:
+      draft: "Borrador"
+      sent: "Enviada"
+      approved: "Aprobada"
+      rejected: "Rechazada"
+      expired: "Vencida"
+    messages:
+      created: "Cotización creada exitosamente."
+      updated: "Cotización actualizada exitosamente."
+      deleted: "Cotización eliminada exitosamente."
+  
+  # Users and Authentication
+  users:
+    title: "Usuarios"
+    profile: "Perfil de Usuario"
+    edit_profile: "Editar Perfil"
+    preferences: "Preferencias"
+    language_settings: "Configuración de Idioma"
+    attributes:
+      name: "Nombre"
+      email: "Correo electrónico"
+      password: "Contraseña"
+      password_confirmation: "Confirmar contraseña"
+      current_password: "Contraseña actual"
+      language: "Idioma"
+      default_tax: "Tasa de Impuesto Predeterminada (%)"
+    hints:
+      default_tax: "Ingrese el valor del porcentaje (ej., 15 para 15%)"
+    messages:
+      profile_updated: "Perfil actualizado exitosamente."
+      language_changed: "Idioma cambiado exitosamente."
+  
+  auth:
+    login: "Iniciar sesión"
+    logout: "Cerrar sesión"
+    register: "Registrarse"
+    forgot_password: "¿Olvidó su contraseña?"
+    reset_password: "Restablecer contraseña"
+    messages:
+      login_success: "Sesión iniciada exitosamente."
+      logout_success: "Sesión cerrada exitosamente."
+      invalid_credentials: "Correo electrónico o contraseña inválidos."
+      password_reset_sent: "Se ha enviado un enlace para restablecer su contraseña."
+      password_reset_success: "Su contraseña ha sido restablecida exitosamente."
+  
+  # Languages
+  languages:
+    en: "Inglés"
+    es: "Español"
+    
+  # Time and dates
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d de %B de %Y a las %H:%M"
+  
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d de %B de %Y"
+    day_names: [domingo, lunes, martes, miércoles, jueves, viernes, sábado]
+    abbr_day_names: [dom, lun, mar, mié, jue, vie, sáb]
+    month_names: [~, enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
+    abbr_month_names: [~, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic]
+    
+  # Pagination
+  views:
+    pagination:
+      first: "Primero"
+      last: "Último"
+      previous: "Anterior"
+      next: "Siguiente"
+      truncate: "…"
+
+  # Errors and flash messages
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "no puede estar en blanco"
+      invalid: "no es válido"
+      taken: "ya está en uso"
+      confirmation: "no coincide con la confirmación"
+      too_short: "es demasiado corto (mínimo %{count} caracteres)"
+      too_long: "es demasiado largo (máximo %{count} caracteres)"
+      not_a_number: "no es un número"
+      not_an_integer: "debe ser un entero"
+      greater_than: "debe ser mayor que %{count}"
+      greater_than_or_equal_to: "debe ser mayor o igual a %{count}"
+      less_than: "debe ser menor que %{count}"
+      less_than_or_equal_to: "debe ser menor o igual a %{count}"

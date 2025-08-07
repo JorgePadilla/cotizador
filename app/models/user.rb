@@ -17,7 +17,6 @@ class User < ApplicationRecord
 
   def set_defaults
     self.language ||= "en"
-    self.name ||= "User"
     self.default_tax ||= 0.15
   end
 end

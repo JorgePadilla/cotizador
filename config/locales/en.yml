@@ -28,30 +28,282 @@
 #       enabled: "ON"
 
 en:
+  # General
   hello: "Hello world"
-  users:
-    profile:
-      title: "Profile"
-      edit_title: "Edit Profile"
-      user_information: "User Information"
-      user_information_description: "Personal details and preferences."
-      back_to_profile: "Back to Profile"
-      edit: "Edit Profile"
-    form:
-      name: "Name"
-      email_address: "Email Address"
-      language: "Language"
-      default_tax: "Default Tax Rate"
-      default_tax_help: "Enter as decimal (e.g., 0.15 for 15%)"
+  app_name: "Cotizador"
+  
+  # Dashboard
+  dashboard:
+    title: "Dashboard"
+    subtitle: "Manage your quotes and invoices"
+    stats:
+      total_clients: "Total Clients"
+      total_products: "Total Products"
+      total_suppliers: "Total Suppliers"
+      total_quotes: "Total Quotes"
+      total_invoices: "Total Invoices"
+    view_all: "View all"
+    recent:
+      invoices: "Recent Invoices"
+      quotes: "Recent Quotes"
+      clients: "Recent Clients"
     actions:
-      cancel: "Cancel"
-      update_profile: "Update Profile"
-    errors:
-      error: "Error"
-      prohibited_save: "prohibited this profile from being saved"
+      quick_actions: "Quick Actions"
+      new_client: "New Client"
+      new_product: "New Product"
+      new_supplier: "New Supplier"
+      new_quote: "New Quote"
+      new_invoice: "New Invoice"
+    empty:
+      no_invoices: "No invoices created yet."
+      no_quotes: "No quotes created yet."
+      no_clients: "No clients created yet."
+    invoice: "Invoice"
+    quote: "Quote"
+    no_client: "No client"
+    create_new_invoice: "Create new invoice"
+    create_new_quote: "Create new quote"
+    add_new_client: "Add new client"
+    
+  # Clients
+  clients:
+    title: "Clients"
+    subtitle: "Manage your client relationships"
+    new_client: "New Client"
+    new: "New Client"
+    edit: "Edit Client"
+    client_details: "Client Details"
+    details: "Client Details"
+    list: "Client List"
+    back_to_clients: "Back to Clients"
+    no_invoices: "No invoices found for this client."
+    delete_client: "Delete Client"
+    delete_confirm: "Are you sure you want to delete this client?"
+    actions: "Actions"
+    view: "View"
+    delete: "Delete"
+    cancel: "Cancel"
+    save: "Save"
+    error: "Error:"
+    error_prohibited: "%{count} error prohibited this client from being saved:"
+    attributes:
+      name: "Name"
+      rtn: "RTN"
+      address: "Address"
+      phone: "Phone"
+      email: "Email"
     messages:
-      profile_updated: "Profile updated successfully."
-      language_changed: "Language updated successfully."
-    language:
-      en: "English"
-      es: "Spanish"
+      created: "Client was successfully created."
+      updated: "Client was successfully updated."
+      destroyed: "Client was successfully destroyed."
+      deleted: "Client was successfully deleted."
+  
+  # Navigation
+  nav:
+    dashboard: "Dashboard"
+    clients: "Clients"
+    suppliers: "Suppliers"
+    products: "Products"
+    invoices: "Invoices"
+    quotes: "Quotes"
+    profile: "Profile"
+    logout: "Logout"
+    login: "Login"
+    register: "Register"
+    language: "Language"
+  
+  # Actions
+  actions:
+    new: "New"
+    edit: "Edit"
+    delete: "Delete"
+    back: "Back"
+    save: "Save"
+    cancel: "Cancel"
+    show: "Show"
+    print: "Print"
+    search: "Search"
+    filter: "Filter"
+    add: "Add"
+    remove: "Remove"
+    confirm_delete: "Are you sure you want to delete this?"
+  
+    details: "Client Details"
+    list: "Client List"
+    attributes:
+      name: "Name"
+      rtn: "RTN"
+      address: "Address"
+      phone: "Phone"
+      email: "Email"
+    messages:
+      created: "Client was successfully created."
+      updated: "Client was successfully updated."
+      deleted: "Client was successfully deleted."
+  
+  # Suppliers
+  suppliers:
+    title: "Suppliers"
+    new: "New Supplier"
+    edit: "Edit Supplier"
+    details: "Supplier Details"
+    list: "Supplier List"
+    attributes:
+      name: "Name"
+      rtn: "RTN"
+      contact_name: "Contact Name"
+      phone: "Phone"
+      email: "Email"
+    messages:
+      created: "Supplier was successfully created."
+      updated: "Supplier was successfully updated."
+      deleted: "Supplier was successfully deleted."
+  
+  # Products
+  products:
+    title: "Products"
+    new: "New Product"
+    edit: "Edit Product"
+    details: "Product Details"
+    list: "Product List"
+    attributes:
+      name: "Name"
+      sku: "SKU"
+      description: "Description"
+      price: "Price"
+      cost: "Cost"
+      stock: "Stock"
+      supplier: "Supplier"
+    messages:
+      created: "Product was successfully created."
+      updated: "Product was successfully updated."
+      deleted: "Product was successfully deleted."
+  
+  # Invoices
+  invoices:
+    title: "Invoices"
+    new: "New Invoice"
+    edit: "Edit Invoice"
+    details: "Invoice Details"
+    list: "Invoice List"
+    items: "Invoice Items"
+    attributes:
+      invoice_number: "Invoice Number"
+      client: "Client"
+      date: "Date"
+      subtotal: "Subtotal"
+      tax: "Tax"
+      total: "Total"
+      status: "Status"
+      payment_method: "Payment Method"
+    statuses:
+      draft: "Draft"
+      sent: "Sent"
+      paid: "Paid"
+      overdue: "Overdue"
+      cancelled: "Cancelled"
+    messages:
+      created: "Invoice was successfully created."
+      updated: "Invoice was successfully updated."
+      deleted: "Invoice was successfully deleted."
+  
+  # Quotes
+  quotes:
+    title: "Quotes"
+    new: "New Quote"
+    edit: "Edit Quote"
+    details: "Quote Details"
+    list: "Quote List"
+    items: "Quote Items"
+    print_to_pdf: "Print to PDF"
+    attributes:
+      quote_number: "Quote Number"
+      client: "Client"
+      date: "Date"
+      valid_until: "Valid Until"
+      subtotal: "Subtotal"
+      tax: "Tax"
+      total: "Total"
+      status: "Status"
+    statuses:
+      draft: "Draft"
+      sent: "Sent"
+      approved: "Approved"
+      rejected: "Rejected"
+      expired: "Expired"
+    messages:
+      created: "Quote was successfully created."
+      updated: "Quote was successfully updated."
+      deleted: "Quote was successfully deleted."
+  
+  # Users and Authentication
+  users:
+    title: "Users"
+    profile: "User Profile"
+    edit_profile: "Edit Profile"
+    preferences: "Preferences"
+    language_settings: "Language Settings"
+    attributes:
+      name: "Name"
+      email: "Email"
+      password: "Password"
+      password_confirmation: "Password Confirmation"
+      current_password: "Current Password"
+      language: "Language"
+      default_tax: "Default Tax Rate (%)"
+    hints:
+      default_tax: "Enter percentage value (e.g., 15 for 15%)"
+    messages:
+      profile_updated: "Profile successfully updated."
+      language_changed: "Language successfully changed."
+  
+  auth:
+    login: "Login"
+    logout: "Logout"
+    register: "Register"
+    forgot_password: "Forgot your password?"
+    reset_password: "Reset Password"
+    messages:
+      login_success: "Logged in successfully."
+      logout_success: "Logged out successfully."
+      invalid_credentials: "Invalid email or password."
+      password_reset_sent: "Password reset instructions have been sent to your email."
+      password_reset_success: "Your password has been reset successfully."
+  
+  # Languages
+  languages:
+    en: "English"
+    es: "Spanish"
+    
+  # Time and dates
+  time:
+    formats:
+      default: "%m/%d/%Y %H:%M"
+      short: "%b %d %H:%M"
+      long: "%B %d, %Y at %H:%M"
+  
+  # Pagination
+  views:
+    pagination:
+      first: "First"
+      last: "Last"
+      previous: "Previous"
+      next: "Next"
+      truncate: "…"
+
+  # Errors and flash messages
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "can't be blank"
+      invalid: "is invalid"
+      taken: "has already been taken"
+      confirmation: "doesn't match confirmation"
+      too_short: "is too short (minimum is %{count} characters)"
+      too_long: "is too long (maximum is %{count} characters)"
+      not_a_number: "is not a number"
+      not_an_integer: "must be an integer"
+      greater_than: "must be greater than %{count}"
+      greater_than_or_equal_to: "must be greater than or equal to %{count}"
+      less_than: "must be less than %{count}"
+      less_than_or_equal_to: "must be less than or equal to %{count}"

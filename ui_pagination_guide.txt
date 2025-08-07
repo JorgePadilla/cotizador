@@ -1,0 +1,141 @@
+
+# UI & Pagination Guide: Landing Page, Doctor Directory, and Pagination
+
+## 1. Landing Page
+
+### 1.1 Hero Section
+- Full-width background in `bg-brand-primary` with slight `backdrop-blur` and semi-transparent dark gradient (`from-black/20 to-black/20`).
+- Headline in `text-5xl font-extrabold text-brand-white` with subtle text-shadow.
+- Subheading in `mt-4 text-lg text-brand-light` that fades in via CSS keyframes.
+- Primary CTA button in `bg-brand-accent hover:bg-brand-primary transition-colors duration-300 rounded-lg px-6 py-3 text-brand-white shadow-md` with a one-time pulse on load.
+
+```erb
+<section class="relative bg-brand-primary text-brand-white">
+  <div class="absolute inset-0 bg-gradient-to-b from-black/20 to-black/20"></div>
+  <div class="relative container mx-auto py-24 text-center">
+    <h1 class="text-5xl font-extrabold drop-shadow-lg animate-fadeIn">Tu Salud, Cerca de Ti</h1>
+    <p class="mt-4 text-lg text-brand-light animate-fadeIn delay-200">Encuentra y conecta con el mejor especialista en un par de clics.</p>
+    <%= link_to "Buscar Doctor", doctors_path, class: "mt-8 inline-block bg-brand-accent hover:bg-brand-primary transition-colors duration-300 rounded-lg px-6 py-3 text-brand-white shadow-md animate-pulse-once" %>
+  </div>
+</section>
+```
+
+### 1.2 Features Overview
+- Responsive grid (`grid grid-cols-1 md:grid-cols-3 gap-6 mt-16`) of feature cards.
+- Cards use `bg-brand-light rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 translate-y-2 hover:translate-y-0`.
+- Icons in `bg-brand-accent/20 p-4 rounded-full`, fade in & scale on scroll (Stimulus IntersectionObserver).
+
+### 1.3 Testimonials
+- Carousel implemented with Turbo Frames and Stimulus, sliding horizontally with `ease-out`.
+- Background in `bg-brand-gray/10`, cards in `bg-brand-white rounded-lg p-8 shadow-lg`.
+
+### 1.4 Pricing Teaser
+- Two pricing tiles side-by-side (`SubscriptionPlanCardComponent`).
+- Hover effect: `hover:bg-brand-light hover:scale-105 transition-all duration-200`.
+
+### 1.5 Footer
+- Dark band in `bg-brand-accent text-brand-white`.
+- Simple links with `hover:underline transition`.
+
+## 2. Doctor Directory UI
+
+### 2.1 Search & Filter Bar
+- Sticky top bar: `sticky top-0 bg-brand-white shadow-sm z-10`.
+- Search input: `w-full md:w-1/2 border border-brand-gray rounded-full px-4 py-2 focus:ring-2 focus:ring-brand-primary transition`.
+- Filter dropdowns using Stimulus, fade in/out.
+
+### 2.2 Doctor Cards Grid
+- Cards animate in with staggered fade-up: `opacity-0 translate-y-4 → opacity-100 translate-y-0`.
+- Card layout:
+
+```erb
+<div class="bg-brand-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 transform hover:-translate-y-1">
+  <img src="<%= image_url %>" class="w-24 h-24 rounded-full mx-auto object-cover shadow" alt="Foto del Doctor">
+  <h3 class="mt-4 text-xl font-semibold text-brand-primary text-center"><%= name %></h3>
+  <p class="mt-2 text-center text-brand-gray"><%= specialization %></p>
+  <div class="mt-4 text-center">
+    <%= link_to "Ver Perfil", doctor_path(doctor), class: "inline-block px-4 py-2 bg-brand-accent text-brand-white rounded-full hover:bg-brand-primary transition-colors duration-300" %>
+  </div>
+</div>
+```
+
+### 2.3 Profile Quick-View Modal
+- Opens in a Turbo Frame modal.
+- Backdrop fades in (`transition-opacity duration-200`), content scales (`transition-transform duration-200`).
+
+## 3. Soft & Nice Effects
+
+- **Fade-In on Scroll:** CSS keyframes + Stimulus IntersectionObserver.
+- **Hover Lift:** `transform hover:-translate-y-1 transition`.
+- **Button Hover:** `transition-colors duration-300`.
+- **Modal Transitions:** `transition-opacity` + `transition-transform`.
+- **Carousel Slide:** Turbo Frames + CSS transitions.
+- **Pulse on Load:** Custom one-time Tailwind pulse class.
+
+## 4. Pagination
+
+### 4.1 Paginated Links (Pagy + Turbo Frames)
+- **Add Pagy:**
+
+```ruby
+# Gemfile
+gem "pagy"
+```
+```bash
+bundle install
+bin/rails generate pagy:install
+```
+
+- **Controller** (`DoctorsController#index`):
+
+```ruby
+class DoctorsController < ApplicationController
+  include Pagy::Backend
+
+  def index
+    @pagy, @doctors = pagy(DoctorProfile.order(:name), items: 12)
+    authorize DoctorProfile
+  end
+end
+```
+
+- **View** (`index.html.erb`):
+
+```erb
+<%= turbo_frame_tag "doctors" do %>
+  <div class="grid ...">
+    <%= render @doctors %>
+  </div>
+  <div class="mt-6">
+    <%= pagy_nav(@pagy) %>
+  </div>
+<% end %>
+```
+
+- **Turbo Frames** ensure only the `#doctors` frame updates on page nav.
+
+### 4.2 Infinite Scroll (Stimulus + Pagy + Turbo Streams)
+- **Controller:** Same `@pagy, @doctors` as above.
+
+- **View:**
+
+```erb
+<%= turbo_frame_tag "doctors" do %>
+  <div id="doctor_list" class="grid ...">
+    <%= render @doctors %>
+  </div>
+
+  <% if @pagy.next %>
+    <%= link_to "Cargar más", doctors_path(page: @pagy.next),
+                data: { turbo_frame: "doctor_list" },
+                class: "mt-6 block text-center text-brand-accent hover:underline" %>
+  <% end %>
+<% end %>
+```
+
+- **Stimulus:** Optionally auto-click “Cargar más” when scroll nears bottom.
+
+### 4.3 Which to Choose?
+- **Paginated links:** SEO-friendly, simple, robust.
+- **Infinite scroll:** Smooth UX, needs back/forward & accessibility handling.
+
