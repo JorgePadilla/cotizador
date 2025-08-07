@@ -41,6 +41,7 @@ gem "prawn-rails"
 # Internationalization
 gem "rails-i18n", "~> 8.0.0" # Translations for Rails
 
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 

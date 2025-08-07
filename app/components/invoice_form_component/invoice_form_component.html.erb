@@ -1,4 +1,7 @@
-<%= form_with(model: invoice, class: "space-y-6") do |form| %>
+<%= form_with(model: invoice, class: "space-y-6", data: { 
+      controller: "invoice-form",
+      invoice_form_default_tax_percentage_value: current_user&.default_tax ? (current_user.default_tax * 100).round(2) : 15
+    }) do |form| %>
   <% if invoice.errors.any? %>
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
       <strong class="font-bold">Error:</strong>
@@ -46,39 +49,14 @@
   <h3 class="text-lg font-medium text-gray-900 mt-8 mb-4">Invoice Items</h3>
   <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
     <div class="mb-4">
-      <template id="invoice-item-template">
-        <div class="invoice-item-fields grid grid-cols-1 md:grid-cols-5 gap-4 border-b pb-4 mb-4">
-          <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700">Product</label>
-            <select name="invoice[invoice_items_attributes][__INDEX__][product_id]" class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-              <option value="">Select a product</option>
-              <% Product.all.each do |product| %>
-                <option value="<%= product.id %>" data-price="<%= product.price %>"><%= product.name %> - <%= number_to_currency(product.price) %></option>
-              <% end %>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Quantity</label>
-            <input type="number" name="invoice[invoice_items_attributes][__INDEX__][quantity]" min="1" value="1" class="quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Unit Price</label>
-            <input type="number" step="0.01" name="invoice[invoice_items_attributes][__INDEX__][unit_price]" class="price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" readonly>
-          </div>
-          <div class="flex items-end">
-            <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-              Remove
-            </button>
-          </div>
-        </div>
-      </template>
-
-      <div id="invoice-items-container">
+      <div id="invoice-items" data-invoice-form-target="itemsContainer">
         <% if invoice.invoice_items.empty? %>
           <div class="invoice-item-fields grid grid-cols-1 md:grid-cols-5 gap-4 border-b pb-4 mb-4">
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-gray-700">Product</label>
-              <select name="invoice[invoice_items_attributes][0][product_id]" class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+              <select name="invoice[invoice_items_attributes][0][product_id]" 
+                      class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      data-action="change->invoice-form#updatePrice">
                 <option value="">Select a product</option>
                 <% Product.all.each do |product| %>
                   <option value="<%= product.id %>" data-price="<%= product.price %>"><%= product.name %> - <%= number_to_currency(product.price) %></option>
@@ -87,14 +65,25 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Quantity</label>
-              <input type="number" name="invoice[invoice_items_attributes][0][quantity]" min="1" value="1" class="quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+              <input type="number" 
+                     name="invoice[invoice_items_attributes][0][quantity]" 
+                     min="1" 
+                     value="1" 
+                     class="quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                     data-action="input->invoice-form#updateTotals">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Unit Price</label>
-              <input type="number" step="0.01" name="invoice[invoice_items_attributes][0][unit_price]" class="price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+              <input type="number" 
+                     step="0.01" 
+                     name="invoice[invoice_items_attributes][0][unit_price]" 
+                     class="price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" 
+                     readonly>
             </div>
             <div class="flex items-end">
-              <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              <button type="button" 
+                      class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      data-action="click->invoice-form#removeItem">
                 Remove
               </button>
             </div>
@@ -104,7 +93,9 @@
             <div class="invoice-item-fields grid grid-cols-1 md:grid-cols-5 gap-4 border-b pb-4 mb-4">
               <div class="md:col-span-2">
                 <label class="block text-sm font-medium text-gray-700">Product</label>
-                <select name="invoice[invoice_items_attributes][#{index}][product_id]" class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <select name="invoice[invoice_items_attributes][#{index}][product_id]" 
+                        class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        data-action="change->invoice-form#updatePrice">
                   <option value="">Select a product</option>
                   <% Product.all.each do |product| %>
                     <option value="<%= product.id %>" data-price="<%= product.price %>" <%= 'selected' if product.id == item.product_id %>>
@@ -119,7 +110,8 @@
                 <%= number_field_tag "invoice[invoice_items_attributes][#{index}][quantity]", 
                                     item.quantity, 
                                     min: 1, 
-                                    class: "quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+                                    class: "quantity-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
+                                    data: { action: "input->invoice-form#updateTotals" } %>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700">Unit Price</label>
@@ -130,7 +122,9 @@
                                     class: "price-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
               </div>
               <div class="flex items-end">
-                <button type="button" class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                <button type="button" 
+                        class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        data-action="click->invoice-form#removeItem">
                   Remove
                 </button>
               </div>
@@ -139,7 +133,10 @@
         <% end %>
       </div>
 
-      <button type="button" id="add-item-btn" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      <button type="button" 
+              class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              data-invoice-form-target="addButton"
+              data-action="click->invoice-form#addItem">
         Add Item
       </button>
     </div>
@@ -147,7 +144,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
       <div>
         <%= form.label :subtotal, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.number_field :subtotal, step: "0.01", class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", readonly: true %>
+        <%= form.number_field :subtotal, 
+                             step: "0.01", 
+                             class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", 
+                             readonly: true,
+                             data: { invoice_form_target: "subtotal" } %>
       </div>
 
       <div>
@@ -156,13 +157,21 @@
         <%= form.number_field :tax, 
                              value: default_tax_amount, 
                              step: "0.01", 
-                             data: { default_tax_percentage: default_tax_percentage },
+                             data: { 
+                               default_tax_percentage: default_tax_percentage,
+                               invoice_form_target: "tax",
+                               action: "input->invoice-form#updateTotals"
+                             },
                              class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
       </div>
 
       <div>
         <%= form.label :total, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.number_field :total, step: "0.01", class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", readonly: true %>
+        <%= form.number_field :total, 
+                             step: "0.01", 
+                             class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", 
+                             readonly: true,
+                             data: { invoice_form_target: "total" } %>
       </div>
     </div>
   </div>
@@ -172,136 +181,3 @@
     <%= form.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const container = document.getElementById('invoice-items-container');
-    const template = document.getElementById('invoice-item-template');
-    const addButton = document.getElementById('add-item-btn');
-    
-    // Function to update totals
-    function updateTotals(updateTaxBasedOnSubtotal = false) {
-      let subtotal = 0;
-      const items = container.querySelectorAll('.invoice-item-fields');
-      
-      items.forEach(item => {
-        const quantity = parseFloat(item.querySelector('.quantity-input').value) || 0;
-        const price = parseFloat(item.querySelector('.price-input').value) || 0;
-        subtotal += quantity * price;
-      });
-      
-      document.getElementById('invoice_subtotal').value = subtotal.toFixed(2);
-      
-      // If this is a new invoice or updateTaxBasedOnSubtotal is true, recalculate tax
-      const taxInput = document.getElementById('invoice_tax');
-      let tax = parseFloat(taxInput.value) || 0;
-      
-      // If the form has a data attribute for default tax percentage and we should update tax
-      const defaultTaxPercentage = parseFloat(taxInput.getAttribute('data-default-tax-percentage') || '0');
-      if (updateTaxBasedOnSubtotal && defaultTaxPercentage > 0) {
-        tax = subtotal * (defaultTaxPercentage / 100);
-        taxInput.value = tax.toFixed(2);
-      }
-      
-      const total = subtotal + tax;
-      document.getElementById('invoice_total').value = total.toFixed(2);
-    }
-    
-    // Function to handle product selection
-    function handleProductSelect(select) {
-      select.addEventListener('change', function() {
-        const option = this.options[this.selectedIndex];
-        const price = option.getAttribute('data-price');
-        const priceInput = this.closest('.invoice-item-fields').querySelector('.price-input');
-        
-        if (price) {
-          priceInput.value = price;
-        } else {
-          priceInput.value = '';
-        }
-        
-        updateTotals(true); // Update tax based on new subtotal
-      });
-    }
-    
-    // Function to handle quantity change
-    function handleQuantityChange(input) {
-      input.addEventListener('input', function() {
-        updateTotals(true); // Update tax based on new subtotal
-      });
-    }
-    
-    // Function to handle price change
-    function handlePriceChange(input) {
-      input.addEventListener('input', function() {
-        updateTotals(true); // Update tax based on new subtotal
-      });
-    }
-    
-    // Function to handle remove button
-    function handleRemoveButton(button) {
-      button.addEventListener('click', function() {
-        const items = container.querySelectorAll('.invoice-item-fields');
-        if (items.length > 1) {
-          this.closest('.invoice-item-fields').remove();
-          updateTotals(true); // Update tax based on new subtotal
-        } else {
-          alert('At least one item is required.');
-        }
-      });
-    }
-    
-    // Initialize event handlers for existing items
-    container.querySelectorAll('.product-select').forEach(handleProductSelect);
-    container.querySelectorAll('.quantity-input').forEach(handleQuantityChange);
-    container.querySelectorAll('.price-input').forEach(handlePriceChange);
-    container.querySelectorAll('.remove-item-btn').forEach(handleRemoveButton);
-    
-    // Function to add a new item
-    function addNewItem() {
-      const items = container.querySelectorAll('.invoice-item-fields');
-      const newIndex = items.length;
-      
-      // Clone the template content
-      const templateHTML = template.innerHTML;
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = templateHTML.replace(/__INDEX__/g, newIndex);
-      
-      // Get the new item element
-      const newItem = tempDiv.firstElementChild;
-      
-      // Add event listeners to the new elements
-      const productSelect = newItem.querySelector('.product-select');
-      if (productSelect) handleProductSelect(productSelect);
-      
-      const quantityInput = newItem.querySelector('.quantity-input');
-      if (quantityInput) handleQuantityChange(quantityInput);
-      
-      const priceInput = newItem.querySelector('.price-input');
-      if (priceInput) handlePriceChange(priceInput);
-      
-      const removeButton = newItem.querySelector('.remove-item-btn');
-      if (removeButton) handleRemoveButton(removeButton);
-      
-      // Add the new item to the container
-      container.appendChild(newItem);
-      
-      // Update totals and recalculate tax
-      updateTotals(true);
-    }
-    
-    // Handle add item button
-    if (addButton) {
-      addButton.addEventListener('click', addNewItem);
-    }
-    
-    // Initialize totals with default tax calculation
-    updateTotals(true);
-    
-    // Update totals when tax changes
-    const taxInput = document.getElementById('invoice_tax');
-    if (taxInput) {
-      taxInput.addEventListener('input', updateTotals);
-    }
-  });
-</script>

@@ -4,7 +4,11 @@ class QuotesController < ApplicationController
   before_action :set_quote, only: %i[show edit update destroy pdf]
 
   def index
-    @quotes = Quote.all.order(created_at: :desc)
+    @current_page = params[:page].to_i > 0 ? params[:page].to_i : 1
+    offset_value = (@current_page - 1) * 10
+    @quotes = Quote.all.order(created_at: :desc).limit(10).offset(offset_value)
+    @total_quotes = Quote.count
+    @total_pages = (@total_quotes.to_f / 10).ceil
   end
 
   def show

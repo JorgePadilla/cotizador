@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   # Invoices and invoice items
   resources :invoices do
     resources :invoice_items, shallow: true
+    collection do
+      get :add_item
+    end
   end
 
   # Quotes and quote items

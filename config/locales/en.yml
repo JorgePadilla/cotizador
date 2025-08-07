@@ -32,6 +32,72 @@ en:
   hello: "Hello world"
   app_name: "Cotizador"
   
+  # Dashboard
+  dashboard:
+    title: "Dashboard"
+    subtitle: "Manage your quotes and invoices"
+    stats:
+      total_clients: "Total Clients"
+      total_products: "Total Products"
+      total_suppliers: "Total Suppliers"
+      total_quotes: "Total Quotes"
+      total_invoices: "Total Invoices"
+    view_all: "View all"
+    recent:
+      invoices: "Recent Invoices"
+      quotes: "Recent Quotes"
+      clients: "Recent Clients"
+    actions:
+      quick_actions: "Quick Actions"
+      new_client: "New Client"
+      new_product: "New Product"
+      new_supplier: "New Supplier"
+      new_quote: "New Quote"
+      new_invoice: "New Invoice"
+    empty:
+      no_invoices: "No invoices created yet."
+      no_quotes: "No quotes created yet."
+      no_clients: "No clients created yet."
+    invoice: "Invoice"
+    quote: "Quote"
+    no_client: "No client"
+    create_new_invoice: "Create new invoice"
+    create_new_quote: "Create new quote"
+    add_new_client: "Add new client"
+    
+  # Clients
+  clients:
+    title: "Clients"
+    subtitle: "Manage your client relationships"
+    new_client: "New Client"
+    new: "New Client"
+    edit: "Edit Client"
+    client_details: "Client Details"
+    details: "Client Details"
+    list: "Client List"
+    back_to_clients: "Back to Clients"
+    no_invoices: "No invoices found for this client."
+    delete_client: "Delete Client"
+    delete_confirm: "Are you sure you want to delete this client?"
+    actions: "Actions"
+    view: "View"
+    delete: "Delete"
+    cancel: "Cancel"
+    save: "Save"
+    error: "Error:"
+    error_prohibited: "%{count} error prohibited this client from being saved:"
+    attributes:
+      name: "Name"
+      rtn: "RTN"
+      address: "Address"
+      phone: "Phone"
+      email: "Email"
+    messages:
+      created: "Client was successfully created."
+      updated: "Client was successfully updated."
+      destroyed: "Client was successfully destroyed."
+      deleted: "Client was successfully deleted."
+  
   # Navigation
   nav:
     dashboard: "Dashboard"
@@ -62,11 +128,6 @@ en:
     remove: "Remove"
     confirm_delete: "Are you sure you want to delete this?"
   
-  # Clients
-  clients:
-    title: "Clients"
-    new: "New Client"
-    edit: "Edit Client"
     details: "Client Details"
     list: "Client List"
     attributes:
@@ -189,9 +250,12 @@ en:
       password_confirmation: "Password Confirmation"
       current_password: "Current Password"
       language: "Language"
+      default_tax: "Default Tax Rate (%)"
+    hints:
+      default_tax: "Enter percentage value (e.g., 15 for 15%)"
     messages:
-      profile_updated: "Profile was successfully updated."
-      language_changed: "Language was successfully changed."
+      profile_updated: "Profile successfully updated."
+      language_changed: "Language successfully changed."
   
   auth:
     login: "Login"
@@ -218,6 +282,15 @@ en:
       short: "%b %d %H:%M"
       long: "%B %d, %Y at %H:%M"
   
+  # Pagination
+  views:
+    pagination:
+      first: "First"
+      last: "Last"
+      previous: "Previous"
+      next: "Next"
+      truncate: "…"
+
   # Errors and flash messages
   errors:
     format: "%{attribute} %{message}"

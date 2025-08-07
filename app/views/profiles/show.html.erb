@@ -24,7 +24,7 @@
           </div>
           
           <div class="mt-4">
-            <%= form_with model: @user, url: profile_language_path, method: :patch, class: "flex items-center" do |form| %>
+            <%= form_with model: @user, url: "/profile/language", method: :patch, class: "flex items-center", data: { turbo: false } do |form| %>
               <div class="mr-3 flex-grow">
                 <%= form.select :language, 
                   options_for_select([
@@ -35,7 +35,7 @@
                   { class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" } 
                 %>
               </div>
-              <%= form.submit t('users.messages.language_changed'), class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+              <%= form.submit t('actions.save'), class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
             <% end %>
           </div>
         </div>
