@@ -17,7 +17,7 @@ module Cotizador
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Configure ViewComponent
-    config.view_component.preview_paths << "#{Rails.root}/spec/components/previews"
+    config.view_component.preview_paths = [ "#{Rails.root}/spec/components/previews" ]
     config.view_component.preview_controller = "ComponentPreviewController"
 
     # Configuration for the application, engines, and railties goes here.
@@ -30,9 +30,9 @@ module Cotizador
 
     # Add app/pdfs to autoload paths
     config.autoload_paths << Rails.root.join("app", "pdfs")
-    
+
     # Internationalization configuration
-    config.i18n.available_locales = [:en, :es]
+    config.i18n.available_locales = [ :en, :es ]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
   end
