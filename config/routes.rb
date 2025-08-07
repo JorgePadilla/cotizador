@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post "users", to: "users#create"
   resource :session
   resources :passwords, param: :token
-  
+
   # User profile
   get "profile", to: "profiles#show"
   get "profile/edit", to: "profiles#edit"
