@@ -3,7 +3,13 @@
 one:
   email_address: one@example.com
   password_digest: <%= password_digest %>
+  name: "User One"
+  language: "en"
+  default_tax: 0.15
 
 two:
   email_address: two@example.com
   password_digest: <%= password_digest %>
+  name: "User Two"
+  language: "es"
+  default_tax: 0.20

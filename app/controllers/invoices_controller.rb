@@ -47,6 +47,16 @@ class InvoicesController < ApplicationController
     redirect_to invoices_url, notice: "Invoice was successfully destroyed."
   end
 
+  def add_item
+    @invoice = Invoice.new
+    @invoice.invoice_items.build
+    @item_index = params[:index].to_i
+    
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
 
   def set_invoice

@@ -1,0 +1,209 @@
+
+# Doctor Directory App Architecture Guide
+
+## 1. Tech Stack
+- **Framework:** Ruby on Rails 8
+- **Database:** PostgreSQL
+- **CSS:** Tailwind CSS
+- **JavaScript:** Importmap (Turbo + Stimulus)
+- **UI Components:** ViewComponent, RubyUI
+- **Authentication:** Rails 8 built‑in auth generator
+- **Authorization:** Pundit
+- **Role Management:** Rolify
+- **Payments:** Stripe
+- **Testing:** Minitest
+
+## 2. Installation & Setup Commands
+
+### Create the Rails app
+```bash
+rails new doctores_honduras \
+  --database=postgresql \
+  --css=tailwind \
+  --javascript=importmap \
+  --skip-system-test \
+  --skip-action-mailbox \
+  --skip-action-text
+cd doctores_honduras
+```
+
+### Core gems
+```ruby
+# Gemfile
+gem "view_component"
+gem "rubyui"
+gem "rolify"
+gem "stripe"
+gem "pundit"
+```
+```bash
+bundle install
+```
+
+### Generators & initializers
+```bash
+# ViewComponent
+bin/rails generate view_component:install
+
+# Rolify
+bin/rails generate rolify Role User
+
+# Pundit
+bin/rails generate pundit:install
+
+# Rails 8 auth
+bin/rails generate authentication:install
+bin/rails generate authentication:views
+bin/rails db:migrate
+```
+
+## 3. Models & Migrations
+
+```bash
+# Doctor profiles
+bin/rails generate model DoctorProfile \
+  user:references name:string specialization:string \
+  description:text location:string website:string image_url:string
+
+# Establishments (hospitals & clinics)
+bin/rails generate model Establishment \
+  name:string est_type:string address:string phone:string \
+  map_link:string image_url:string
+
+# Join table
+bin/rails generate model DoctorEstablishment \
+  doctor_profile:references establishment:references
+
+# Provider profiles
+bin/rails generate model ProviderProfile \
+  user:references name:string category:string \
+  description:text location:string phone:string website:string image_url:string
+
+# Subscriptions
+bin/rails generate model Subscription \
+  user:references plan:string status:string \
+  stripe_subscription_id:string next_billing_at:datetime
+
+# Articles
+bin/rails generate model Article \
+  title:string content:text author:references published_at:datetime
+
+bin/rails db:create db:migrate
+```
+
+## 4. ERD Diagram (Mermaid)
+
+```mermaid
+erDiagram
+    USERS {
+      Integer id PK
+      String  email
+      String  password_digest
+      Enum    role
+      Timestamp created_at
+      Timestamp updated_at
+    }
+    DOCTOR_PROFILES {
+      Integer id PK
+      Integer user_id FK
+      String  name
+      String  specialization
+      Text    description
+      String  location
+      String  website
+      String  image_url
+      Timestamp created_at
+      Timestamp updated_at
+    }
+    ESTABLISHMENTS {
+      Integer id PK
+      String  name
+      Enum    est_type
+      String  address
+      String  phone
+      String  map_link
+      String  image_url
+      Timestamp created_at
+      Timestamp updated_at
+    }
+    DOCTOR_ESTABLISHMENTS {
+      Integer id PK
+      Integer doctor_profile_id FK
+      Integer establishment_id FK
+    }
+    PROVIDER_PROFILES {
+      Integer id PK
+      Integer user_id FK
+      String  name
+      String  category
+      Text    description
+      String  location
+      String  phone
+      String  website
+      String  image_url
+      Timestamp created_at
+      Timestamp updated_at
+    }
+    SUBSCRIPTIONS {
+      Integer id PK
+      Integer user_id FK
+      Enum    plan
+      Enum    status
+      String  stripe_subscription_id
+      DateTime next_billing_at
+      Timestamp created_at
+      Timestamp updated_at
+    }
+    ARTICLES {
+      Integer id PK
+      String  title
+      Text    content
+      Integer author_id FK
+      DateTime published_at
+      Timestamp created_at
+      Timestamp updated_at
+    }
+
+    USERS ||--o{ DOCTOR_PROFILES       : has
+    USERS ||--o{ PROVIDER_PROFILES     : has
+    USERS ||--o{ SUBSCRIPTIONS         : has
+    USERS ||--o{ ARTICLES              : authors
+    DOCTOR_PROFILES ||--o{ DOCTOR_ESTABLISHMENTS : assigns
+    ESTABLISHMENTS   ||--o{ DOCTOR_ESTABLISHMENTS : employs
+```
+
+## 5. Tailwind Colors
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        'brand-primary': '#52A1C3',
+        'brand-accent':  '#1E8BC3',
+        'brand-light':   '#F5FBFF',
+        'brand-gray':    '#6B7A8F',
+        'brand-white':   '#FFFFFF',
+      }
+    }
+  }
+}
+```
+
+| Name             | Hex       | Tailwind class     | Usage                                     |
+|------------------|-----------|--------------------|-------------------------------------------|
+| brand-primary    | #52A1C3   | bg-brand-primary   | Header, footer, primary buttons          |
+| brand-accent     | #1E8BC3   | bg-brand-accent    | Button hover, links, accents             |
+| brand-light      | #F5FBFF   | bg-brand-light     | Card & section backgrounds               |
+| brand-gray       | #6B7A8F   | text-brand-gray    | Body text, metadata, borders             |
+| brand-white      | #FFFFFF   | text-brand-white   | Text on colored backgrounds              |
+
+## 6. Next Steps (Instructions to execute)
+1. Run all `rails generate` commands above.
+2. Configure `app/policies` for Pundit.
+3. Scaffold controllers & views for Doctors, Establishments, Providers, Subscriptions, Articles.
+4. Wire up Stripe checkout & webhooks.
+5. Style components with ViewComponent + Tailwind.
+6. Write Minitest specs for models, policies, components, and system tests.
+

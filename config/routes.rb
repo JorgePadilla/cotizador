@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   post "users", to: "users#create"
   resource :session
   resources :passwords, param: :token
+  
+  # User profile
+  get "profile", to: "profiles#show"
+  get "profile/edit", to: "profiles#edit"
+  patch "profile", to: "profiles#update"
+  patch "profile/language", to: "profiles#update_language"
 
   # Main resources
   resources :clients
@@ -13,6 +19,9 @@ Rails.application.routes.draw do
   # Invoices and invoice items
   resources :invoices do
     resources :invoice_items, shallow: true
+    collection do
+      get :add_item
+    end
   end
 
   # Quotes and quote items

@@ -7,5 +7,5 @@
     </div>
   </div>
 
-  <%= render(InvoiceFormComponent.new(invoice: @invoice, clients: @clients)) %>
+  <%= render(InvoiceFormComponent.new(invoice: @invoice, clients: @clients, current_user: Current.user)) %>
 </div>
