@@ -1,0 +1,58 @@
+<div class="w-full max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-900"><%= t("users.profile.edit_title") %></h1>
+    <%= link_to t("users.profile.back_to_profile"), profile_path, class: "text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <%= form_with(model: @user, url: profile_path, method: :patch, local: true, class: "space-y-6") do |form| %>
+    <% if @user.errors.any? %>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold"><%= t("users.errors.error") %>:</strong>
+        <span class="block sm:inline"><%= pluralize(@user.errors.count, t("users.errors.error")) %> <%= t("users.errors.prohibited_save") %>:</span>
+        <ul class="list-disc list-inside mt-2">
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+      <div class="grid grid-cols-1 gap-6">
+        <div>
+          <%= form.label :name, t("users.form.name"), class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_field :name, class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+        </div>
+
+        <div>
+          <%= form.label :email_address, t("users.form.email_address"), class: "block text-sm font-medium text-gray-700" %>
+          <%= form.email_field :email_address, class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+        </div>
+
+        <div>
+          <%= form.label :language, t("users.form.language"), class: "block text-sm font-medium text-gray-700" %>
+          <%= form.select :language, 
+                          [['English', 'en'], ['Español', 'es']], 
+                          {}, 
+                          { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+        </div>
+
+        <div>
+          <%= form.label :default_tax, t("users.form.default_tax"), class: "block text-sm font-medium text-gray-700" %>
+          <%= form.number_field :default_tax, 
+                               step: 0.01, 
+                               min: 0, 
+                               max: 1,
+                               placeholder: "0.15",
+                               class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+          <p class="mt-2 text-sm text-gray-500"><%= t("users.form.default_tax_help") %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-3">
+      <%= link_to t("users.actions.cancel"), profile_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" %>
+      <%= form.submit t("users.actions.update_profile"), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" %>
+    </div>
+  <% end %>
+</div>

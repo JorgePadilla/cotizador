@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   post "users", to: "users#create"
   resource :session
   resources :passwords, param: :token
+  
+  # User profile
+  get "profile", to: "profiles#show"
+  get "profile/edit", to: "profiles#edit"
+  patch "profile", to: "profiles#update"
+  patch "profile/language", to: "profiles#update_language"
 
   # Main resources
   resources :clients

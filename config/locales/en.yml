@@ -29,3 +29,29 @@
 
 en:
   hello: "Hello world"
+  users:
+    profile:
+      title: "Profile"
+      edit_title: "Edit Profile"
+      user_information: "User Information"
+      user_information_description: "Personal details and preferences."
+      back_to_profile: "Back to Profile"
+      edit: "Edit Profile"
+    form:
+      name: "Name"
+      email_address: "Email Address"
+      language: "Language"
+      default_tax: "Default Tax Rate"
+      default_tax_help: "Enter as decimal (e.g., 0.15 for 15%)"
+    actions:
+      cancel: "Cancel"
+      update_profile: "Update Profile"
+    errors:
+      error: "Error"
+      prohibited_save: "prohibited this profile from being saved"
+    messages:
+      profile_updated: "Profile updated successfully."
+      language_changed: "Language updated successfully."
+    language:
+      en: "English"
+      es: "Spanish"
