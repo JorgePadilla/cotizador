@@ -4,5 +4,5 @@
     <%= link_to "Back to Invoices", invoices_path, class: "text-blue-600 hover:text-blue-800" %>
   </div>
 
-  <%= render(InvoiceFormComponent.new(invoice: @invoice, clients: @clients)) %>
+  <%= render(InvoiceFormComponent.new(invoice: @invoice, clients: @clients, current_user: Current.user)) %>
 </div>

@@ -3,7 +3,26 @@
 
 # Clear existing data to avoid duplicates
 puts "Cleaning database..."
-[ InvoiceItem, Invoice, Product, Client, Supplier ].each(&:delete_all)
+[ InvoiceItem, Invoice, Product, Client, Supplier, User ].each(&:delete_all)
+
+# Create Users
+puts "Creating users..."
+users = [
+  {
+    email_address: "admin@example.com",
+    password: "password",
+    default_tax: 0.15 # 15% default tax
+  },
+  {
+    email_address: "user@example.com",
+    password: "password",
+    default_tax: 0.18 # 18% default tax
+  }
+]
+
+users.each do |user_attrs|
+  User.create!(user_attrs)
+end
 
 # Create Clients
 puts "Creating clients..."
