@@ -48,11 +48,11 @@ end
 
 # Quote statuses and their probabilities
 statuses = [
-  ['draft', 0.3],
-  ['sent', 0.25],
-  ['approved', 0.2],
-  ['rejected', 0.15],
-  ['expired', 0.1]
+  [ 'draft', 0.3 ],
+  [ 'sent', 0.25 ],
+  [ 'approved', 0.2 ],
+  [ 'rejected', 0.15 ],
+  [ 'expired', 0.1 ]
 ]
 
 puts "Creating 30 sample quotes..."
@@ -60,12 +60,12 @@ puts "Creating 30 sample quotes..."
 30.times do |i|
   # Select random client
   client = clients.sample
-  
+
   # Select random status based on weights
   rand_val = rand
   cumulative = 0
   status = statuses.find { |_, weight| cumulative += weight; rand_val <= cumulative }[0]
-  
+
   # Generate valid_until based on status
   valid_until = case status
   when 'expired'
@@ -75,7 +75,7 @@ puts "Creating 30 sample quotes..."
   else
     rand(15..60).days.from_now.to_date
   end
-  
+
   # Create the quote (totals will be calculated automatically)
   # We'll let the model generate the quote_number automatically
   quote = Quote.new(
@@ -84,7 +84,7 @@ puts "Creating 30 sample quotes..."
     valid_until: valid_until,
     created_at: rand(90.days.ago..Time.current)
   )
-  
+
   # Force unique quote number by adding a timestamp suffix if needed
   base_time = Time.current
   quote.quote_number = nil # Let the model generate it
@@ -101,24 +101,24 @@ puts "Creating 30 sample quotes..."
       raise e
     end
   end
-  
+
   # Add 1-5 quote items to each quote
   items_count = rand(1..5)
   items_count.times do
     product = products.sample
     quantity = rand(1..10)
-    
+
     QuoteItem.create!(
       quote: quote,
       product: product,
       quantity: quantity
     )
   end
-  
+
   # Recalculate totals after adding items
   quote.calculate_totals
   quote.save!
-  
+
   puts "Created quote #{quote.quote_number} for #{client.name} (#{status})"
 end
 

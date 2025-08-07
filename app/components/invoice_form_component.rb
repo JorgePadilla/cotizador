@@ -7,7 +7,7 @@ class InvoiceFormComponent < ViewComponent::Base
 
   def default_tax_amount
     return 0 unless @current_user&.default_tax
-    
+
     # If invoice is new and has no tax set, use the user's default
     if @invoice.new_record? && @invoice.tax.nil?
       (@invoice.subtotal || 0) * @current_user.default_tax

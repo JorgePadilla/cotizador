@@ -22,7 +22,7 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
     @user.reload
     assert_equal "New Name", @user.name
   end
-  
+
   test "should update default_tax" do
     patch profile_url, params: { user: { default_tax: 0.2 } }
     assert_redirected_to profile_url
