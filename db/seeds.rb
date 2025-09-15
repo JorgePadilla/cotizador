@@ -183,7 +183,7 @@ end
 puts "Updating invoice totals..."
 Invoice.all.each do |invoice|
   subtotal = invoice.invoice_items.sum(&:total)
-  tax = subtotal * 0.15  # 15% tax rate
+  tax = (subtotal * 0.15).round  # 15% tax rate, rounded to integer
   total = subtotal + tax
 
   invoice.update(

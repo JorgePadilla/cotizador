@@ -7,6 +7,7 @@ one:
   address: 123 Main St
   phone: 555-1234
   email: client1@example.com
+  organization: default_organization
 
 two:
   id: 22222222-2222-2222-2222-222222222222
@@ -15,3 +16,4 @@ two:
   address: 456 Oak Ave
   phone: 555-5678
   email: client2@example.com
+  organization: default_organization

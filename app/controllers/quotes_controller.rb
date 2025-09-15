@@ -6,8 +6,8 @@ class QuotesController < ApplicationController
   def index
     @current_page = params[:page].to_i > 0 ? params[:page].to_i : 1
     offset_value = (@current_page - 1) * 10
-    @quotes = Quote.all.order(created_at: :desc).limit(10).offset(offset_value)
-    @total_quotes = Quote.count
+    @quotes = Current.organization ? Current.organization.quotes.order(created_at: :desc).limit(10).offset(offset_value) : Quote.none
+    @total_quotes = Current.organization ? Current.organization.quotes.count : 0
     @total_pages = (@total_quotes.to_f / 10).ceil
   end
 
@@ -15,12 +15,12 @@ class QuotesController < ApplicationController
   end
 
   def new
-    @quote = Quote.new
+    @quote = Quote.new(organization: Current.organization)
     @quote.valid_until = 1.month.from_now.to_date
   end
 
   def create
-    @quote = Quote.new(quote_params)
+    @quote = Quote.new(quote_params.merge(organization: Current.organization))
 
     if @quote.save
       redirect_to @quote, notice: "Quote was successfully created."
@@ -60,7 +60,7 @@ class QuotesController < ApplicationController
   private
 
   def set_quote
-    @quote = Quote.find(params[:id])
+    @quote = Current.organization.quotes.find(params[:id])
   end
 
   def quote_params

@@ -9,6 +9,7 @@ one:
   cost: 50.00
   stock: 10
   supplier_id: 33333333-3333-3333-3333-333333333333
+  organization: default_organization
 
 two:
   id: 66666666-6666-6666-6666-666666666666
@@ -19,3 +20,4 @@ two:
   cost: 100.00
   stock: 20
   supplier_id: 44444444-4444-4444-4444-444444444444
+  organization: default_organization

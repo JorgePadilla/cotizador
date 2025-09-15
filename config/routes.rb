@@ -10,11 +10,25 @@ Rails.application.routes.draw do
   get "profile/edit", to: "profiles#edit"
   patch "profile", to: "profiles#update"
   patch "profile/language", to: "profiles#update_language"
+  patch "profile/preferences", to: "profiles#update_preferences"
 
   # Main resources
   resources :clients
   resources :suppliers
   resources :products
+  
+  # Organizations
+  resources :organizations do
+    resources :invitations, only: [:new, :create]
+  end
+  
+  # Invitation acceptance
+  get "invitations/accept/:token", to: "invitations#accept", as: :accept_invitation
+  
+  # Admin interface
+  namespace :admin do
+    resources :users, only: [:index, :edit, :update]
+  end
 
   # Invoices and invoice items
   resources :invoices do

@@ -6,6 +6,8 @@ one:
   name: "User One"
   language: "en"
   default_tax: 0.15
+  role: 0
+  organization: default_organization
 
 two:
   email_address: two@example.com
@@ -13,3 +15,23 @@ two:
   name: "User Two"
   language: "es"
   default_tax: 0.20
+  role: 2
+  organization: default_organization
+
+admin_user:
+  email_address: admin@example.com
+  password_digest: <%= password_digest %>
+  name: "Admin User"
+  language: "en"
+  default_tax: 0.15
+  role: 1
+  organization: default_organization
+
+member_user:
+  email_address: member@example.com
+  password_digest: <%= password_digest %>
+  name: "Member User"
+  language: "en"
+  default_tax: 0.15
+  role: 2
+  organization: default_organization

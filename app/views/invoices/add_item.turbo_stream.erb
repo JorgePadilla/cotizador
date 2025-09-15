@@ -5,10 +5,10 @@
       <select name="invoice[invoice_items_attributes][<%= @item_index %>][product_id]" 
               class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               data-action="change->invoice-form#updatePrice">
-        <option value="">Select a product</option>
+        <option value=""><%= t('invoices.select_product') %></option>
         <% Product.all.each do |product| %>
           <option value="<%= product.id %>" data-price="<%= product.price %>">
-            <%= product.name %> - <%= number_to_currency(product.price) %>
+            <%= product.name %> - <%= format_currency(product.price) %>
           </option>
         <% end %>
       </select>
@@ -34,7 +34,7 @@
       <button type="button" 
               class="remove-item-btn mt-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               data-action="click->invoice-form#removeItem">
-        Remove
+<%= t('actions.remove_item') %>
       </button>
     </div>
   </div>

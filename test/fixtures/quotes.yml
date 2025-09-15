@@ -10,6 +10,7 @@ one:
   status: draft
   created_at: 2025-03-30 17:44:45
   valid_until: <%= 1.month.from_now.to_date %>
+  organization: default_organization
 
 two:
   id: 88888888-8888-8888-8888-888888888888
@@ -21,6 +22,7 @@ two:
   status: sent
   created_at: 2025-03-30 17:44:45
   valid_until: <%= 2.months.from_now.to_date %>
+  organization: default_organization
 
 expired:
   id: 99999999-9999-9999-9999-999999999999
@@ -32,3 +34,4 @@ expired:
   status: expired
   created_at: 2025-02-15 10:30:00
   valid_until: <%= 1.month.ago.to_date %>
+  organization: default_organization

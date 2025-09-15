@@ -2,21 +2,21 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @products = Product.all.order(created_at: :desc)
+    @products = Current.organization ? Current.organization.products.order(created_at: :desc) : Product.none
   end
 
   def show
   end
 
   def new
-    @product = Product.new
+    @product = Product.new(organization: Current.organization)
   end
 
   def edit
   end
 
   def create
-    @product = Product.new(product_params)
+    @product = Product.new(product_params.merge(organization: Current.organization))
 
     if @product.save
       redirect_to @product, notice: "Product was successfully created."
@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
   private
 
   def set_product
-    @product = Product.find(params[:id])
+    @product = Current.organization.products.find(params[:id])
   end
 
   def product_params

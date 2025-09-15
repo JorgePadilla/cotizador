@@ -4,7 +4,7 @@
   <%= form_with model: @user, url: profile_path, method: :patch do |form| %>
     <% if @user.errors.any? %>
       <div class="bg-red-50 text-red-500 p-4 rounded-lg mb-6">
-        <h2 class="text-lg font-medium mb-2"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <h2 class="text-lg font-medium mb-2"><%= t('errors.messages.prohibited_save', count: @user.errors.count) %></h2>
         <ul class="list-disc pl-5">
           <% @user.errors.full_messages.each do |message| %>
             <li><%= message %></li>
@@ -37,12 +37,26 @@
       </div>
 
       <div>
-        <%= form.label :default_tax, t('users.attributes.default_tax', default: 'Default Tax Rate (%)'), class: "block text-sm font-medium text-gray-700" %>
-        <% tax_value = @user.default_tax.present? ? (@user.default_tax * 100).round(2) : 15 %>
+        <%= form.label :currency, t('users.attributes.currency'), class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :currency, 
+            options_for_select([
+              [t('currencies.USD'), 'USD'],
+              [t('currencies.HNL'), 'HNL'],
+              [t('currencies.EUR'), 'EUR']
+            ], @user.currency),
+            {}, 
+            { class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" } 
+        %>
+      </div>
+
+      <% if Current.user&.admin? || Current.user&.owner? %>
+      <div>
+        <%= form.label :default_tax, t('users.attributes.default_tax'), class: "block text-sm font-medium text-gray-700" %>
+        <% tax_value = @user.default_tax.present? ? @user.default_tax : 15 %>
         <div class="mt-1 flex rounded-md shadow-sm">
           <%= form.number_field :default_tax, 
                                value: tax_value,
-                               step: "0.01", 
+                               step: "1", 
                                min: "0", 
                                max: "100", 
                                class: "flex-1 min-w-0 block w-full rounded-none rounded-l-md border-gray-300 focus:border-blue-500 focus:ring-blue-500" %>
@@ -50,8 +64,9 @@
             %
           </span>
         </div>
-        <p class="mt-1 text-sm text-gray-500"><%= t('users.hints.default_tax', default: 'Enter percentage value (e.g., 15 for 15%)') %></p>
+        <p class="mt-1 text-sm text-gray-500"><%= t('users.hints.default_tax') %></p>
       </div>
+      <% end %>
 
       <div class="flex items-center justify-between pt-4 border-t border-gray-200">
         <%= link_to t('actions.cancel'), profile_path, class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>

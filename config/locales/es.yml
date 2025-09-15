@@ -68,6 +68,7 @@ es:
     filter: "Filtrar"
     add: "Agregar"
     remove: "Quitar"
+    remove_item: "Eliminar artículo"
     confirm_delete: "¿Está seguro que desea eliminar esto?"
   
   # Clients
@@ -105,7 +106,10 @@ es:
   # Suppliers
   suppliers:
     title: "Proveedores"
+    subtitle: "Administre sus relaciones con proveedores"
     new: "Nuevo Proveedor"
+    no_suppliers: "No hay proveedores"
+    get_started: "Comience creando un nuevo proveedor."
     edit: "Editar Proveedor"
     details: "Detalles del Proveedor"
     list: "Lista de Proveedores"
@@ -123,10 +127,13 @@ es:
   # Products
   products:
     title: "Productos"
+    subtitle: "Administre su catálogo de productos"
     new: "Nuevo Producto"
     edit: "Editar Producto"
     details: "Detalles del Producto"
     list: "Lista de Productos"
+    no_products: "No hay productos"
+    get_started: "Comience creando un nuevo producto."
     attributes:
       name: "Nombre"
       sku: "SKU"
@@ -143,10 +150,13 @@ es:
   # Invoices
   invoices:
     title: "Facturas"
+    subtitle: "Administre sus facturas y cotizaciones"
     new: "Nueva Factura"
     edit: "Editar Factura"
     details: "Detalles de la Factura"
     list: "Lista de Facturas"
+    no_invoices: "No hay facturas"
+    get_started: "Comience creando una nueva factura."
     items: "Artículos de la Factura"
     status:
       paid: "Pagada"
@@ -162,6 +172,11 @@ es:
       total: "Total"
       status: "Estado"
       payment_method: "Método de pago"
+    payment_methods:
+      cash: "Efectivo"
+      credit_card: "Tarjeta de crédito"
+      bank_transfer: "Transferencia bancaria"
+      check: "Cheque"
     statuses:
       draft: "Borrador"
       sent: "Enviada"
@@ -172,14 +187,24 @@ es:
       created: "Factura creada exitosamente."
       updated: "Factura actualizada exitosamente."
       deleted: "Factura eliminada exitosamente."
+    select_client: "Seleccionar cliente"
+    select_payment_method: "Seleccionar método de pago"
+    select_product: "Seleccionar producto"
+    quantity: "Cantidad"
+    unit_price: "Precio unitario"
+    add_item: "Agregar artículo"
   
   # Quotes
   quotes:
     title: "Cotizaciones"
+    subtitle: "Administre sus cotizaciones"
     new: "Nueva Cotización"
     edit: "Editar Cotización"
     details: "Detalles de la Cotización"
     list: "Lista de Cotizaciones"
+    no_quotes: "No se encontraron cotizaciones"
+    create_new_quote: "Crear su primera cotización"
+    fill_details: "Complete los detalles para la nueva cotización"
     items: "Artículos de la Cotización"
     print_to_pdf: "Imprimir a PDF"
     attributes:
@@ -216,12 +241,15 @@ es:
       password_confirmation: "Confirmar contraseña"
       current_password: "Contraseña actual"
       language: "Idioma"
+      currency: "Moneda"
       default_tax: "Tasa de Impuesto Predeterminada (%)"
+      role: "Rol"
     hints:
       default_tax: "Ingrese el valor del porcentaje (ej., 15 para 15%)"
     messages:
       profile_updated: "Perfil actualizado exitosamente."
       language_changed: "Idioma cambiado exitosamente."
+      in_organization: "en %{organization}"
   
   auth:
     login: "Iniciar sesión"
@@ -240,6 +268,12 @@ es:
   languages:
     en: "Inglés"
     es: "Español"
+    
+  # Currencies
+  currencies:
+    USD: "Dólar Estadounidense (USD)"
+    HNL: "Lempira Hondureño (HNL)"
+    EUR: "Euro (EUR)"
     
   # Time and dates
   time:
@@ -269,6 +303,7 @@ es:
 
   # Errors and flash messages
   errors:
+    title: "Error"
     format: "%{attribute} %{message}"
     messages:
       blank: "no puede estar en blanco"
@@ -283,3 +318,4 @@ es:
       greater_than_or_equal_to: "debe ser mayor o igual a %{count}"
       less_than: "debe ser menor que %{count}"
       less_than_or_equal_to: "debe ser menor o igual a %{count}"
+      prohibited_save: "%{count} error(es) impidieron que este registro se guardara:"

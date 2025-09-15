@@ -24,10 +24,10 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update default_tax" do
-    patch profile_url, params: { user: { default_tax: 0.2 } }
+    patch profile_url, params: { user: { default_tax: 20 } }
     assert_redirected_to profile_url
     @user.reload
-    assert_equal 0.2, @user.default_tax
+    assert_equal 20, @user.default_tax
   end
 
   test "should update language" do

@@ -19,6 +19,7 @@ class QuoteItemsControllerTest < ActionDispatch::IntegrationTest
     quote = Quote.create!(
       quote_number: "QT-202503-997",
       client_id: clients(:one).id,
+      organization_id: clients(:one).organization_id,
       status: "draft",
       valid_until: 1.month.from_now
     )

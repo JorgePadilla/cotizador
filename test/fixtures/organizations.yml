@@ -1,0 +1,8 @@
+default_organization:
+  name: "Default Organization"
+  address: "123 Main St, City, State"
+  phone: "+1-555-0123"
+  email: "info@default.org"
+  tax_id: "123-456-789"
+  currency: "USD"
+  language: "en"

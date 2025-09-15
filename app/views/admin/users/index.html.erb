@@ -1,0 +1,30 @@
+<%= render HeaderComponent.new(title: "User Management") %>
+
+<div class="bg-white shadow rounded-lg p-6">
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Organization</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @users.each do |user| %>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= user.email_address %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= user.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= user.organization&.name || "No organization" %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= user.role_string.capitalize %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <%= link_to "Edit Role", edit_admin_user_path(user), class: "text-indigo-600 hover:text-indigo-900" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

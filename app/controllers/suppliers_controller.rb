@@ -2,21 +2,21 @@ class SuppliersController < ApplicationController
   before_action :set_supplier, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @suppliers = Supplier.all.order(created_at: :desc)
+    @suppliers = Current.organization ? Current.organization.suppliers.order(created_at: :desc) : Supplier.none
   end
 
   def show
   end
 
   def new
-    @supplier = Supplier.new
+    @supplier = Supplier.new(organization: Current.organization)
   end
 
   def edit
   end
 
   def create
-    @supplier = Supplier.new(supplier_params)
+    @supplier = Supplier.new(supplier_params.merge(organization: Current.organization))
 
     if @supplier.save
       redirect_to @supplier, notice: "Supplier was successfully created."
@@ -41,7 +41,7 @@ class SuppliersController < ApplicationController
   private
 
   def set_supplier
-    @supplier = Supplier.find(params[:id])
+    @supplier = Current.organization.suppliers.find(params[:id])
   end
 
   def supplier_params

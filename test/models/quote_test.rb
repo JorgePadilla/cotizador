@@ -5,6 +5,7 @@ class QuoteTest < ActiveSupport::TestCase
     client = clients(:one)
     quote = Quote.new(
       client: client,
+      organization: client.organization,
       valid_until: 1.month.from_now,
       status: "draft"
     )
@@ -15,6 +16,7 @@ class QuoteTest < ActiveSupport::TestCase
     client = clients(:one)
     quote = Quote.create!(
       client: client,
+      organization: client.organization,
       valid_until: 1.month.from_now,
       status: "draft"
     )
@@ -24,9 +26,11 @@ class QuoteTest < ActiveSupport::TestCase
 
   test "should calculate totals from quote items" do
     # Create a new quote to avoid interference from fixture data
+    client = clients(:one)
     quote = Quote.create!(
       quote_number: "QT-202503-999",
-      client_id: clients(:one).id,
+      client: client,
+      organization: client.organization,
       status: "draft",
       valid_until: 1.month.from_now
     )

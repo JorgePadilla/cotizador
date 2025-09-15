@@ -1,0 +1,39 @@
+<div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  <%= render(HeaderComponent.new(title: "Edit User Role", subtitle: "Update user permissions in #{@organization.name}")) %>
+
+  <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Edit User Role</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">Update role for <%= @organization_user.user.name %></p>
+    </div>
+
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+      <%= form_with(model: [@organization, @organization_user], url: organization_organization_user_path(@organization, @organization_user), method: :patch, local: true, class: "space-y-6") do |form| %>
+        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <%= form.label :user, "User", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <input type="text" value="<%= @organization_user.user.name %> (<%= @organization_user.user.email_address %>)" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-50" disabled>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <%= form.label :role, "Role", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.select :role, [["Owner", "owner"], ["Admin", "admin"], ["Member", "member"]], {}, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-3">
+          <%= link_to "Cancel", organization_organization_users_path(@organization), class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+          <%= form.submit "Update Role", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to "Back to Users", organization_organization_users_path(@organization), class: "text-indigo-600 hover:text-indigo-900" %>
+  </div>
+</div>

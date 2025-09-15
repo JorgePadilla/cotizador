@@ -251,11 +251,13 @@ en:
       current_password: "Current Password"
       language: "Language"
       default_tax: "Default Tax Rate (%)"
+      role: "Role"
     hints:
       default_tax: "Enter percentage value (e.g., 15 for 15%)"
     messages:
       profile_updated: "Profile successfully updated."
       language_changed: "Language successfully changed."
+      in_organization: "in %{organization}"
   
   auth:
     login: "Login"

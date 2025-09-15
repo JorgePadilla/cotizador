@@ -158,7 +158,7 @@
                         <%= t('dashboard.invoice') %> #<%= invoice.invoice_number %>
                       </p>
                       <p class="text-sm text-gray-500 truncate">
-                        <%= invoice.client&.name || t('dashboard.no_client') %> - <%= number_to_currency(invoice.total) %>
+                        <%= invoice.client&.name || t('dashboard.no_client') %> - <%= format_currency(invoice.total) %>
                       </p>
                     </div>
                     <div>
@@ -198,7 +198,7 @@
                         <%= t('dashboard.quote') %> #<%= quote.quote_number %>
                       </p>
                       <p class="text-sm text-gray-500 truncate">
-                        <%= quote.client&.name || t('dashboard.no_client') %> - <%= number_to_currency(quote.total) %>
+                        <%= quote.client&.name || t('dashboard.no_client') %> - <%= format_currency(quote.total) %>
                       </p>
                     </div>
                     <div>

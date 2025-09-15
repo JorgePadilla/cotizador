@@ -1,0 +1,89 @@
+<div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  <%= render(HeaderComponent.new(title: "Manage Organization Users", subtitle: "Add and manage users in #{@organization.name}")) %>
+
+  <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Organization Members</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">Manage users and their roles in this organization</p>
+    </div>
+
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+      <!-- Add User Form -->
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+        <h4 class="text-md font-medium text-gray-900 mb-3">Add User to Organization</h4>
+        <%= form_with(model: [@organization, @organization_user], url: organization_organization_users_path(@organization), local: true, class: "space-y-4") do |form| %>
+          <div class="grid grid-cols-1 gap-y-4 gap-x-4 sm:grid-cols-6">
+            <div class="sm:col-span-4">
+              <%= form.label :email, "User Email", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= form.email_field :email, required: true, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <%= form.label :role, "Role", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= form.select :role, [["Owner", "owner"], ["Admin", "admin"], ["Member", "member"]], { selected: "member" }, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end">
+            <%= form.submit "Add User", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Users List -->
+      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">User</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Joined</th>
+              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+            <% @organization_users.each do |org_user| %>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                  <%= org_user.user.name %>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <%= org_user.user.email_address %>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                    <%= org_user.owner? ? 'bg-purple-100 text-purple-800' : org_user.admin? ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' %>">
+                    <%= org_user.role.titleize %>
+                  </span>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <%= org_user.created_at.strftime('%b %d, %Y') %>
+                </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                  <%= link_to "Edit", edit_organization_organization_user_path(@organization, org_user), class: "text-indigo-600 hover:text-indigo-900 mr-4" %>
+                  <% unless org_user.user == Current.user && org_user.owner? && @organization.organization_users.owners.count <= 1 %>
+                    <%= button_to "Remove", organization_organization_user_path(@organization, org_user), 
+                                  method: :delete, 
+                                  data: { confirm: "Are you sure you want to remove this user?" },
+                                  class: "text-red-600 hover:text-red-900" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to "Back to Organization", organization_path(@organization), class: "text-indigo-600 hover:text-indigo-900" %>
+  </div>
+</div>

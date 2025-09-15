@@ -2,21 +2,21 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @clients = Client.all
+    @clients = Current.organization ? Current.organization.clients : Client.none
   end
 
   def show
   end
 
   def new
-    @client = Client.new
+    @client = Client.new(organization: Current.organization)
   end
 
   def edit
   end
 
   def create
-    @client = Client.new(client_params)
+    @client = Client.new(client_params.merge(organization: Current.organization))
 
     if @client.save
       redirect_to @client, notice: "Client was successfully created."
@@ -41,7 +41,7 @@ class ClientsController < ApplicationController
   private
 
   def set_client
-    @client = Client.find(params[:id])
+    @client = Current.organization.clients.find(params[:id])
   end
 
   def client_params

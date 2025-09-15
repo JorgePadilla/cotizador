@@ -6,6 +6,6 @@ class NavbarComponent < ViewComponent::Base
   private
 
   def active_class(path)
-    @current_path.start_with?(path) ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"
+    @current_path.start_with?(path) ? "bg-gray-800 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
   end
 end

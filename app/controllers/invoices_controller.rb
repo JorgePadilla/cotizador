@@ -3,7 +3,7 @@ class InvoicesController < ApplicationController
   before_action :load_clients_and_products, only: [ :new, :edit, :create, :update ]
 
   def index
-    @invoices = Invoice.includes(:client).order(created_at: :desc)
+    @invoices = Current.organization ? Current.organization.invoices.includes(:client).order(created_at: :desc) : Invoice.none
   end
 
   def show
@@ -11,7 +11,7 @@ class InvoicesController < ApplicationController
   end
 
   def new
-    @invoice = Invoice.new
+    @invoice = Invoice.new(organization: Current.organization)
     @invoice.invoice_number = generate_invoice_number
 
     # Pre-select client if provided in params
@@ -25,7 +25,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(invoice_params)
+    @invoice = Invoice.new(invoice_params.merge(organization: Current.organization))
 
     if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully created."
@@ -60,12 +60,12 @@ class InvoicesController < ApplicationController
   private
 
   def set_invoice
-    @invoice = Invoice.find(params[:id])
+    @invoice = Current.organization.invoices.find(params[:id])
   end
 
   def load_clients_and_products
-    @clients = Client.order(:name)
-    @products = Product.order(:name)
+    @clients = Current.organization ? Current.organization.clients.order(:name) : Client.none
+    @products = Current.organization ? Current.organization.products.order(:name) : Product.none
   end
 
   def invoice_params
@@ -82,7 +82,7 @@ class InvoicesController < ApplicationController
   end
 
   def generate_invoice_number
-    last_invoice = Invoice.order(created_at: :desc).first
+    last_invoice = Current.organization ? Current.organization.invoices.order(created_at: :desc).first : nil
     if last_invoice && last_invoice.invoice_number.match(/\d+$/)
       # Extract the number part and increment
       base = last_invoice.invoice_number.gsub(/\d+$/) { |n| n.to_i + 1 }

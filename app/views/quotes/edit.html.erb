@@ -17,7 +17,7 @@
                 </svg>
               </div>
               <div class="ml-3">
-                <h3 class="text-sm font-medium text-red-800">There were <%= pluralize(@quote.errors.count, "error") %> with your submission</h3>
+                <h3 class="text-sm font-medium text-red-800"><%= t('errors.messages.prohibited_save', count: @quote.errors.count) %></h3>
                 <div class="mt-2 text-sm text-red-700">
                   <ul class="list-disc pl-5 space-y-1">
                     <% @quote.errors.full_messages.each do |message| %>
@@ -34,7 +34,7 @@
           <div class="sm:col-span-3">
             <%= form.label :client_id, class: "block text-sm font-medium text-gray-700" %>
             <div class="mt-1">
-              <%= form.collection_select :client_id, Client.all, :id, :name, { include_blank: "Select a client" }, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+              <%= form.collection_select :client_id, Client.all, :id, :name, { include_blank: t("invoices.select_client") }, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
             </div>
           </div>
 
@@ -62,7 +62,7 @@
         </div>
 
         <div class="flex justify-end space-x-3">
-          <%= link_to "Cancel", quote_path(@quote), class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+          <%= link_to t('actions.cancel'), quote_path(@quote), class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
           <%= form.submit "Update Quote", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
         </div>
       <% end %>

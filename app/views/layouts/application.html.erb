@@ -22,7 +22,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-100 min-h-screen">
+  <body class="bg-gray-100 min-h-screen flex flex-col">
     <%= render(NavbarComponent.new(current_path: request.path)) %>
     
     <% if notice %>
@@ -41,14 +41,14 @@
       </div>
     <% end %>
     
-    <main class="py-6">
+    <main class="py-6 flex-grow">
       <%= yield %>
     </main>
     
-    <footer class="bg-white mt-12 py-6 border-t">
+    <footer class="bg-black py-4 mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-gray-500 text-sm">
-          &copy; <%= Time.current.year %> Cotizador. All rights reserved.
+        <p class="text-center text-white text-sm">
+          &copy; <%= Time.current.year %> Cotizador. Todos los derechos reservados.
         </p>
       </div>
     </footer>

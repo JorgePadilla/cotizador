@@ -78,8 +78,8 @@ export default class extends Controller {
     // Calculate tax if default tax percentage is set
     let tax = parseFloat(this.taxTarget.value) || 0
     if (this.defaultTaxPercentageValue > 0) {
-      tax = subtotal * (this.defaultTaxPercentageValue / 100)
-      this.taxTarget.value = tax.toFixed(2)
+      tax = Math.round(subtotal * (this.defaultTaxPercentageValue / 100))
+      this.taxTarget.value = tax
     }
     
     const total = subtotal + tax

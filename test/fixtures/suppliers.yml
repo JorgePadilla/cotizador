@@ -7,6 +7,7 @@ one:
   contact_name: Contact Person One
   phone: 555-1111
   email: supplier1@example.com
+  organization: default_organization
 
 two:
   id: 44444444-4444-4444-4444-444444444444
@@ -15,3 +16,4 @@ two:
   contact_name: Contact Person Two
   phone: 555-2222
   email: supplier2@example.com
+  organization: default_organization

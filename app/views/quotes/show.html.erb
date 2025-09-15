@@ -18,7 +18,7 @@
           <svg class="-ml-0.5 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
-          Add Item
+          <%= t('invoices.add_item') %>
         <% end %>
         <%= link_to pdf_quote_path(@quote, format: :pdf), class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", target: "_blank" do %>
           <svg class="-ml-0.5 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -101,10 +101,10 @@
                         <%= item.quantity %>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <%= number_to_currency(item.unit_price) %>
+                        <%= format_currency(item.unit_price) %>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <%= number_to_currency(item.total) %>
+                        <%= format_currency(item.total) %>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div class="flex justify-end space-x-2">
@@ -125,17 +125,17 @@
               <tfoot class="bg-gray-50">
                 <tr>
                   <td colspan="4" class="px-6 py-4 text-right text-sm font-medium text-gray-900">Subtotal:</td>
-                  <td class="px-6 py-4 text-sm text-gray-900"><%= number_to_currency(@quote.subtotal) %></td>
+                  <td class="px-6 py-4 text-sm text-gray-900"><%= format_currency(@quote.subtotal) %></td>
                   <td></td>
                 </tr>
                 <tr>
                   <td colspan="4" class="px-6 py-4 text-right text-sm font-medium text-gray-900">Tax (15%):</td>
-                  <td class="px-6 py-4 text-sm text-gray-900"><%= number_to_currency(@quote.tax) %></td>
+                  <td class="px-6 py-4 text-sm text-gray-900"><%= format_currency(@quote.tax) %></td>
                   <td></td>
                 </tr>
                 <tr>
                   <td colspan="4" class="px-6 py-4 text-right text-sm font-medium text-gray-900">Total:</td>
-                  <td class="px-6 py-4 text-sm font-bold text-gray-900"><%= number_to_currency(@quote.total) %></td>
+                  <td class="px-6 py-4 text-sm font-bold text-gray-900"><%= format_currency(@quote.total) %></td>
                   <td></td>
                 </tr>
               </tfoot>
