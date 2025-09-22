@@ -2,7 +2,7 @@ class OrganizationUser < ApplicationRecord
   belongs_to :organization
   belongs_to :user
 
-  validates :role, inclusion: { in: [0, 1, 2] }
+  validates :role, inclusion: { in: [ 0, 1, 2 ] }
 
   def role_string
     case role
