@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
-  before_action :set_organization, only: [:show, :edit, :update, :destroy, :switch]
-  before_action :require_organization_owner, only: [:edit, :update, :destroy]
+  before_action :set_organization, only: [ :show, :edit, :update, :destroy, :switch ]
+  before_action :require_organization_owner, only: [ :edit, :update, :destroy ]
 
   def index
     @organizations = Current.user.organizations

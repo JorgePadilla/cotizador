@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_organization
     return unless Current.user
-    
+
     Current.organization = Current.user.organization
   end
 end

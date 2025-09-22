@@ -8,10 +8,10 @@ class CreateInvitations < ActiveRecord::Migration[8.0]
       t.string :token, null: false
       t.datetime :expires_at, null: false
       t.datetime :accepted_at
-      
+
       t.timestamps
     end
-    
+
     add_index :invitations, :token, unique: true
     add_index :invitations, :email
   end

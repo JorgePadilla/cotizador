@@ -16,18 +16,18 @@ Rails.application.routes.draw do
   resources :clients
   resources :suppliers
   resources :products
-  
+
   # Organizations
   resources :organizations do
-    resources :invitations, only: [:new, :create]
+    resources :invitations, only: [ :new, :create ]
   end
-  
+
   # Invitation acceptance
   get "invitations/accept/:token", to: "invitations#accept", as: :accept_invitation
-  
+
   # Admin interface
   namespace :admin do
-    resources :users, only: [:index, :edit, :update]
+    resources :users, only: [ :index, :edit, :update ]
   end
 
   # Invoices and invoice items

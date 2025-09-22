@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :language, inclusion: { in: %w[en es] }
   validates :currency, inclusion: { in: %w[USD HNL EUR] }
   validates :default_tax, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
-  validates :role, inclusion: { in: [0, 1, 2] }
+  validates :role, inclusion: { in: [ 0, 1, 2 ] }
 
   # Set defaults
   after_initialize :set_defaults, if: :new_record?
@@ -19,7 +19,7 @@ class User < ApplicationRecord
   def role_string
     case role
     when 0 then "owner"
-    when 1 then "admin" 
+    when 1 then "admin"
     when 2 then "member"
     else role.to_s
     end

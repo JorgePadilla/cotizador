@@ -6,5 +6,4 @@ class Client < ApplicationRecord
   validates :name, presence: true
   validates :rtn, presence: true, uniqueness: { scope: :organization_id }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
-
 end
