@@ -10,9 +10,28 @@
       <% form.with_form_content do %>
         <div class="space-y-6">
           <div>
+            <label for="organization_name" class="block text-sm font-medium text-gray-700">Organization Name</label>
+            <div class="mt-1">
+              <input id="organization_name" name="organization[name]" type="text" required autofocus class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+          </div>
+
+          <div>
+            <label for="organization_currency" class="block text-sm font-medium text-gray-700">Country/Currency</label>
+            <div class="mt-1">
+              <select id="organization_currency" name="organization[currency]" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="">Select a country</option>
+                <option value="USD">United States (USD)</option>
+                <option value="HNL">Honduras (HNL)</option>
+                <option value="EUR">European Union (EUR)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
             <label for="user_email_address" class="block text-sm font-medium text-gray-700">Email address</label>
             <div class="mt-1">
-              <input id="user_email_address" name="user[email_address]" type="email" autocomplete="username" required autofocus class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+              <input id="user_email_address" name="user[email_address]" type="email" autocomplete="username" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
           </div>
 

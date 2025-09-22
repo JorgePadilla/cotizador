@@ -142,6 +142,9 @@ es:
       cost: "Costo"
       stock: "Inventario"
       supplier: "Proveedor"
+      created_at: "Creado En"
+      updated_at: "Última Actualización"
+      profit_margin: "Margen de Ganancia"
     messages:
       created: "Producto creado exitosamente."
       updated: "Producto actualizado exitosamente."

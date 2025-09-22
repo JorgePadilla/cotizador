@@ -1,9 +1,9 @@
 <div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
   <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-3xl font-bold text-gray-900">Product Details</h1>
+    <h1 class="text-3xl font-bold text-gray-900"><%= t('products.title') %></h1>
     <div class="flex space-x-2">
-      <%= link_to "Edit", edit_product_path(@product), class: "bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" %>
-      <%= link_to "Back to Products", products_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= link_to t('actions.edit'), edit_product_path(@product), class: "bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= link_to t('actions.back'), products_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
     </div>
   </div>
 
@@ -24,21 +24,34 @@
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= format_currency(@product.price) %></dd>
         </div>
         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Supplier</dt>
+          <dt class="text-sm font-medium text-gray-500"><%= t('products.attributes.cost') %></dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= format_currency(@product.cost) if @product.cost %></dd>
+        </div>
+        <% if @product.cost && @product.cost > 0 %>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500"><%= t('products.attributes.profit_margin') %></dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <%= format_currency(@product.price - @product.cost) %>
+            (<%= number_to_percentage(((@product.price - @product.cost) / @product.cost * 100), precision: 1) %>)
+          </dd>
+        </div>
+        <% end %>
+        <div class="<%= @product.cost && @product.cost > 0 ? 'bg-white' : 'bg-gray-50' %> px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500"><%= t('products.attributes.supplier') %></dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <%= link_to @product.supplier.name, supplier_path(@product.supplier), class: "text-blue-600 hover:text-blue-800" %>
           </dd>
         </div>
         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Description</dt>
+          <dt class="text-sm font-medium text-gray-500"><%= t('products.attributes.description') %></dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @product.description %></dd>
         </div>
         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Created At</dt>
+          <dt class="text-sm font-medium text-gray-500"><%= t('products.attributes.created_at') %></dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @product.created_at.strftime("%B %d, %Y at %I:%M %p") %></dd>
         </div>
         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
+          <dt class="text-sm font-medium text-gray-500"><%= t('products.attributes.updated_at') %></dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @product.updated_at.strftime("%B %d, %Y at %I:%M %p") %></dd>
         </div>
       </dl>

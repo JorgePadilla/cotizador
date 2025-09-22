@@ -1,10 +1,10 @@
 <div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-  <%= render(HeaderComponent.new(title: "Edit Quote", subtitle: "Update quote details")) %>
+  <%= render(HeaderComponent.new(title: t('quotes.edit'), subtitle: t('quotes.fill_details'))) %>
 
   <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
     <div class="px-4 py-5 sm:px-6">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">Quote Details</h3>
-      <p class="mt-1 max-w-2xl text-sm text-gray-500">Update the details for this quote.</p>
+      <h3 class="text-lg leading-6 font-medium text-gray-900"><%= t('quotes.details') %></h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500"><%= t('quotes.fill_details') %></p>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
       <%= form_with(model: @quote, local: true, class: "space-y-6") do |form| %>
@@ -34,14 +34,14 @@
           <div class="sm:col-span-3">
             <%= form.label :client_id, class: "block text-sm font-medium text-gray-700" %>
             <div class="mt-1">
-              <%= form.collection_select :client_id, Client.all, :id, :name, { include_blank: t("invoices.select_client") }, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+              <%= form.collection_select :client_id, Current.organization.clients, :id, :name, { include_blank: t("invoices.select_client") }, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
             </div>
           </div>
 
           <div class="sm:col-span-3">
             <%= form.label :status, class: "block text-sm font-medium text-gray-700" %>
             <div class="mt-1">
-              <%= form.select :status, [['Draft', 'draft'], ['Sent', 'sent'], ['Accepted', 'accepted']], {}, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+              <%= form.select :status, [[t('quotes.statuses.draft'), 'draft'], [t('quotes.statuses.sent'), 'sent'], [t('quotes.statuses.approved'), 'approved']], {}, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
             </div>
           </div>
 
@@ -63,7 +63,7 @@
 
         <div class="flex justify-end space-x-3">
           <%= link_to t('actions.cancel'), quote_path(@quote), class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-          <%= form.submit "Update Quote", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+          <%= form.submit t('actions.save'), class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
         </div>
       <% end %>
     </div>

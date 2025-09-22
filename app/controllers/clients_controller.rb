@@ -9,14 +9,16 @@ class ClientsController < ApplicationController
   end
 
   def new
-    @client = Client.new(organization: Current.organization)
+    organization = Current.organization || create_default_organization
+    @client = Client.new(organization: organization)
   end
 
   def edit
   end
 
   def create
-    @client = Client.new(client_params.merge(organization: Current.organization))
+    organization = Current.organization || create_default_organization
+    @client = Client.new(client_params.merge(organization: organization))
 
     if @client.save
       redirect_to @client, notice: "Client was successfully created."
@@ -46,5 +48,9 @@ class ClientsController < ApplicationController
 
   def client_params
     params.require(:client).permit(:name, :rtn, :address, :phone, :email)
+  end
+
+  def create_default_organization
+    Organization.create!(name: "Default Organization", currency: "USD", language: "en")
   end
 end
