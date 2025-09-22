@@ -7,6 +7,12 @@ class InvitationsController < ApplicationController
   end
 
   def create
+    # Check if user is authorized to assign the requested role
+    unless can_assign_role?(invitation_params[:role])
+      redirect_to new_organization_invitation_path(@organization), alert: "You are not authorized to assign this role."
+      return
+    end
+
     @invitation = @organization.invitations.new(invitation_params.merge(invited_by: Current.user))
 
     if @invitation.save
@@ -58,5 +64,18 @@ class InvitationsController < ApplicationController
 
   def invitation_params
     params.require(:invitation).permit(:email, :role)
+  end
+
+  def can_assign_role?(requested_role)
+    organization_user = @organization.organization_users.find_by(user: Current.user)
+
+    # Owners can assign any role
+    return true if organization_user&.owner?
+
+    # Admins can only assign member role
+    return true if organization_user&.admin? && requested_role == "member"
+
+    # Default deny
+    false
   end
 end
