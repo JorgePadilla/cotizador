@@ -19,7 +19,13 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_users_path, alert: "You cannot modify this user's role."
       return
     end
-    
+
+    # Only allow owners to assign owner role, admins can only assign member role
+    if !Current.user.owner? && user_params[:role].to_i == 0
+      redirect_to admin_users_path, alert: "You cannot assign owner role."
+      return
+    end
+
     if @user.update(user_params)
       redirect_to admin_users_path, notice: "User role updated successfully."
     else
