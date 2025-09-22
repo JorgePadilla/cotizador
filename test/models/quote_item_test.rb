@@ -92,6 +92,7 @@ class QuoteItemTest < ActiveSupport::TestCase
     quote = Quote.create!(
       quote_number: "QT-202503-998",
       client_id: clients(:one).id,
+      organization_id: organizations(:default_organization).id,
       status: "draft",
       valid_until: 1.month.from_now
     )

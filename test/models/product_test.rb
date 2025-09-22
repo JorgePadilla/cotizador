@@ -3,6 +3,7 @@ require "test_helper"
 class ProductTest < ActiveSupport::TestCase
   test "valid product" do
     supplier = suppliers(:one)
+    organization = organizations(:default_organization)
     product = Product.new(
       name: "Test Product",
       sku: "PROD001",
@@ -10,46 +11,53 @@ class ProductTest < ActiveSupport::TestCase
       price: 100.00,
       cost: 50.00,
       stock: 10,
-      supplier: supplier
+      supplier: supplier,
+      organization: organization
     )
     assert product.valid?
   end
 
   test "product without name is invalid" do
     supplier = suppliers(:one)
+    organization = organizations(:default_organization)
     product = Product.new(
       sku: "PROD001",
       description: "This is a test product",
       price: 100.00,
       cost: 50.00,
       stock: 10,
-      supplier: supplier
+      supplier: supplier,
+      organization: organization
     )
     assert_not product.valid?
   end
 
   test "product without sku is invalid" do
     supplier = suppliers(:one)
+    organization = organizations(:default_organization)
     product = Product.new(
       name: "Test Product",
       description: "This is a test product",
       price: 100.00,
       cost: 50.00,
       stock: 10,
-      supplier: supplier
+      supplier: supplier,
+      organization: organization
     )
     assert_not product.valid?
   end
 
   test "product without price is invalid" do
     supplier = suppliers(:one)
+    organization = organizations(:default_organization)
     product = Product.new(
       name: "Test Product",
       sku: "PROD001",
       description: "This is a test product",
       cost: 50.00,
       stock: 10,
-      supplier: supplier
+      supplier: supplier,
+      organization: organization
     )
     assert_not product.valid?
   end
