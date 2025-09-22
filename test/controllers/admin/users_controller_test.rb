@@ -141,4 +141,23 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "You must be an admin to access this page.", flash[:alert]
     assert_equal 2, user.reload.role
   end
+
+  test "should redirect when admin tries to assign owner role" do
+    sign_in_as(users(:admin_user))
+    user = users(:member_user)
+    patch admin_user_path(user), params: { user: { role: 0 } }
+    assert_redirected_to admin_users_path
+    assert_equal "You cannot assign owner role.", flash[:alert]
+    assert_equal 2, user.reload.role # Role should not change
+  end
+
+  test "should allow owner to assign owner role" do
+    owner = users(:one)
+    sign_in_as(owner)
+    user = users(:member_user)
+    patch admin_user_path(user), params: { user: { role: 0 } }
+    assert_redirected_to admin_users_path
+    assert_equal "User role updated successfully.", flash[:notice]
+    assert_equal 0, user.reload.role # Role should change to owner
+  end
 end
