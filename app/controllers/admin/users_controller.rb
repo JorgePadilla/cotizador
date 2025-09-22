@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [ :edit, :update ]
 
   def index
     @users = User.includes(:organization).order(:email_address)
@@ -52,7 +52,7 @@ class Admin::UsersController < ApplicationController
   def cannot_modify_user?(target_user)
     # Owners can modify anyone
     return false if Current.user&.owner?
-    
+
     # Admins cannot modify:
     # 1. Themselves
     # 2. Other admins

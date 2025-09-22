@@ -25,15 +25,15 @@ class InvitationsController < ApplicationController
 
   def accept
     invitation = Invitation.find_by(token: params[:token])
-    
+
     if invitation && !invitation.expired? && !invitation.accepted?
       user = User.find_by(email: invitation.email)
-      
+
       if user
         # Add user to organization
         @organization.organization_users.create(user: user, role: invitation.role)
         invitation.update(accepted_at: Time.current)
-        
+
         if user == Current.user
           redirect_to organizations_path, notice: "You have joined the organization successfully."
         else
