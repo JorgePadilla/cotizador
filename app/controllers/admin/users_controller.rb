@@ -23,7 +23,7 @@ class Admin::UsersController < ApplicationController
     # Check if user is authorized to assign the requested role
     # Only check for valid roles (0, 1, 2) - invalid roles will be caught by model validation
     requested_role = user_params[:role].to_i
-    if [0, 1, 2].include?(requested_role) && !authorized_to_assign_role?(requested_role)
+    if [ 0, 1, 2 ].include?(requested_role) && !authorized_to_assign_role?(requested_role)
       if !Current.user.owner? && requested_role == 0
         redirect_to admin_users_path, alert: "You cannot assign owner role."
       else
@@ -46,8 +46,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    # Use fetch to safely extract parameters with authorization checks in the action
-    params.fetch(:user, {}).permit(:role)
+    # Use standard strong parameters with authorization checks in the action
+    params.require(:user).permit(:role)
   end
 
   def require_admin
@@ -69,7 +69,7 @@ class Admin::UsersController < ApplicationController
 
   def authorized_to_assign_role?(requested_role)
     # Check if the role is valid (0, 1, or 2)
-    return false unless [0, 1, 2].include?(requested_role)
+    return false unless [ 0, 1, 2 ].include?(requested_role)
 
     if Current.user&.owner?
       # Owners can assign any valid role

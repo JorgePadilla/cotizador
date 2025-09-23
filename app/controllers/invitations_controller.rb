@@ -63,8 +63,8 @@ class InvitationsController < ApplicationController
   end
 
   def invitation_params
-    # Use fetch to safely extract parameters with authorization checks in the action
-    params.fetch(:invitation, {}).permit(:email, :role)
+    # Use standard strong parameters with authorization checks in the action
+    params.require(:invitation).permit(:email, :role)
   end
 
   def can_assign_role?(requested_role)
