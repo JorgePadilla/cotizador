@@ -14,6 +14,23 @@ class QuoteItemsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "New Quote Item"
   end
 
+  test "should only show organization products in new quote item form" do
+    # Create a product in a different organization
+    other_org = Organization.create!(name: "Other Org", currency: "USD")
+    other_product = Product.create!(name: "Other Product", sku: "OTHER002", price: 75.00, organization: other_org, supplier: suppliers(:one))
+
+    get new_quote_quote_item_url(@quote)
+    assert_response :success
+
+    # Verify that only current organization's products are available
+    assert_select "option[value='#{other_product.id}']", false, "Should not show products from other organizations"
+
+    # Verify that current organization's products are available
+    current_org = @quote.organization
+    current_org_product = current_org.products.first
+    assert_select "option[value='#{current_org_product.id}']", true, "Should show products from current organization"
+  end
+
   test "should create quote_item" do
     # Create a new quote to avoid interference from fixture data
     quote = Quote.create!(

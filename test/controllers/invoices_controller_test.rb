@@ -23,6 +23,23 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should only show organization products in new invoice form" do
+    # Create a product in a different organization
+    other_org = Organization.create!(name: "Other Org", currency: "USD")
+    other_product = Product.create!(name: "Other Product", sku: "OTHER001", price: 50.00, organization: other_org, supplier: suppliers(:one))
+
+    get new_invoice_url
+    assert_response :success
+
+    # Verify that only current organization's products are available
+    assert_select "option[value='#{other_product.id}']", false, "Should not show products from other organizations"
+
+    # Verify that current organization's products are available
+    current_org = @user.organization
+    current_org_product = current_org.products.first
+    assert_select "option[value='#{current_org_product.id}']", true, "Should show products from current organization"
+  end
+
   test "should get edit" do
     get edit_invoice_url(@invoice)
     assert_response :success

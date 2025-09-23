@@ -23,6 +23,23 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should only show organization suppliers in new product form" do
+    # Create a supplier in a different organization
+    other_org = Organization.create!(name: "Other Org", currency: "USD")
+    other_supplier = Supplier.create!(name: "Other Supplier", rtn: "99999999", organization: other_org)
+
+    get new_product_url
+    assert_response :success
+
+    # Verify that only current organization's suppliers are available
+    assert_select "option[value='#{other_supplier.id}']", false, "Should not show suppliers from other organizations"
+
+    # Verify that current organization's suppliers are available
+    current_org = @user.organization
+    current_org_supplier = current_org.suppliers.first
+    assert_select "option[value='#{current_org_supplier.id}']", true, "Should show suppliers from current organization"
+  end
+
   test "should get edit" do
     get edit_product_url(@product)
     assert_response :success
