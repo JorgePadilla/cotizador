@@ -1,6 +1,7 @@
 <%= form_with(model: invoice, class: "space-y-6", data: { 
       controller: "invoice-form",
-      invoice_form_default_tax_percentage_value: current_user&.default_tax || 15
+      invoice_form_default_tax_percentage_value: current_user&.default_tax || 15,
+      invoice_form_invoice_persisted_value: invoice.persisted?
     }) do |form| %>
   <% if invoice.errors.any? %>
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -30,18 +31,20 @@
 
       <div>
         <%= form.label :status, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.select :status, 
-                        [[t('invoices.statuses.draft'), 'draft'], [t('invoices.statuses.pending'), 'pending'], [t('invoices.statuses.paid'), 'paid'], [t('invoices.statuses.cancelled'), 'cancelled']], 
-                        { include_blank: false }, 
-                        { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+        <%= form.select :status,
+                        [[t('invoices.statuses.draft'), 'draft'], [t('invoices.statuses.pending'), 'pending'], [t('invoices.statuses.paid'), 'paid'], [t('invoices.statuses.cancelled'), 'cancelled']],
+                        { include_blank: false },
+                        { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
+                          data: { action: "change->invoice-form#togglePaymentMethod" } } %>
       </div>
 
-      <div>
+      <div id="payment-method-field" class="<%= invoice.status == 'paid' ? '' : 'hidden' %>">
         <%= form.label :payment_method, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.select :payment_method, 
-                        [[t('invoices.payment_methods.cash'), 'cash'], [t('invoices.payment_methods.credit_card'), 'credit_card'], [t('invoices.payment_methods.bank_transfer'), 'bank_transfer'], [t('invoices.payment_methods.check'), 'check']], 
-                        { include_blank: t('invoices.select_payment_method') }, 
-                        { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+        <%= form.select :payment_method,
+                        [[t('invoices.payment_methods.cash'), 'cash'], [t('invoices.payment_methods.credit_card'), 'credit_card'], [t('invoices.payment_methods.bank_transfer'), 'bank_transfer'], [t('invoices.payment_methods.check'), 'check']],
+                        { include_blank: t('invoices.select_payment_method') },
+                        { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
+                          data: { invoice_form_target: "paymentMethod" } } %>
       </div>
     </div>
   </div>

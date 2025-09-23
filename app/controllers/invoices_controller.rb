@@ -1,5 +1,7 @@
+require_relative "../pdfs/invoice_pdf"
+
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_invoice, only: [ :show, :edit, :update, :destroy, :pdf ]
   before_action :load_clients_and_products, only: [ :new, :edit, :create, :update ]
 
   def index
@@ -45,6 +47,18 @@ class InvoicesController < ApplicationController
   def destroy
     @invoice.destroy
     redirect_to invoices_url, notice: "Invoice was successfully destroyed."
+  end
+
+  def pdf
+    respond_to do |format|
+      format.pdf do
+        pdf = InvoicePdf.new(@invoice, I18n.locale)
+        send_data pdf.render,
+                  filename: "invoice-#{@invoice.invoice_number}.pdf",
+                  type: "application/pdf",
+                  disposition: "inline"
+      end
+    end
   end
 
   def add_item

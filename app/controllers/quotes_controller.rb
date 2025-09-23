@@ -48,7 +48,7 @@ class QuotesController < ApplicationController
   def pdf
     respond_to do |format|
       format.pdf do
-        pdf = QuotePdf.new(@quote)
+        pdf = QuotePdf.new(@quote, I18n.locale)
         send_data pdf.render,
                   filename: "quote-#{@quote.quote_number}.pdf",
                   type: "application/pdf",

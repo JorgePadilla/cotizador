@@ -153,6 +153,7 @@ es:
   # Invoices
   invoices:
     title: "Facturas"
+    invoice: "Factura"
     subtitle: "Administre sus facturas y cotizaciones"
     new: "Nueva Factura"
     edit: "Editar Factura"
@@ -182,6 +183,7 @@ es:
       check: "Cheque"
     statuses:
       draft: "Borrador"
+      pending: "Pendiente"
       sent: "Enviada"
       paid: "Pagada"
       overdue: "Vencida"
@@ -196,6 +198,16 @@ es:
     quantity: "Cantidad"
     unit_price: "Precio unitario"
     add_item: "Agregar artículo"
+    details_description: "Detalles sobre la factura y el cliente."
+    no_items: "No hay artículos agregados a esta factura"
+    delete: "Eliminar Factura"
+    delete_confirm: "¿Está seguro de que desea eliminar esta factura?"
+    terms_and_conditions: "Términos y Condiciones"
+    terms:
+      payment_due: "1. El pago vence dentro de los 30 días de la fecha de la factura."
+      late_payment: "2. Los pagos atrasados pueden estar sujetos a cargos por intereses."
+      include_invoice_number: "3. Por favor incluya el número de factura con su pago."
+    page_numbers: "Página <page> de <total>"
   
   # Quotes
   quotes:
@@ -229,6 +241,12 @@ es:
       created: "Cotización creada exitosamente."
       updated: "Cotización actualizada exitosamente."
       deleted: "Cotización eliminada exitosamente."
+    terms_and_conditions: "Términos y Condiciones"
+    terms:
+      valid_until: "1. Esta cotización es válida hasta la fecha especificada anteriormente."
+      payment_terms: "2. Términos de pago: 50% pago por adelantado, 50% al momento de la entrega."
+      delivery_time: "3. Tiempo de entrega: 2-3 semanas después de la confirmación."
+    page_numbers: "Página <page> de <total>"
   
   # Users and Authentication
   users:

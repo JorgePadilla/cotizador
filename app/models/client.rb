@@ -4,6 +4,6 @@ class Client < ApplicationRecord
   has_many :quotes, dependent: :destroy
 
   validates :name, presence: true
-  validates :rtn, presence: true, uniqueness: { scope: :organization_id }
+  validates :rtn, uniqueness: { scope: :organization_id }, allow_blank: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 end

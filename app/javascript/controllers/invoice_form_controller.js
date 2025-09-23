@@ -1,11 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["itemsContainer", "subtotal", "tax", "total", "addButton"]
-  static values = { defaultTaxPercentage: Number }
+  static targets = ["itemsContainer", "subtotal", "tax", "total", "addButton", "paymentMethod"]
+  static values = { defaultTaxPercentage: Number, invoicePersisted: Boolean }
 
   connect() {
     this.updateTotals()
+    this.togglePaymentMethod()
   }
 
   async addItem(event) {
@@ -66,23 +67,40 @@ export default class extends Controller {
   updateTotals() {
     let subtotal = 0
     const items = this.itemsContainerTarget.querySelectorAll('.invoice-item-fields')
-    
+
     items.forEach(item => {
       const quantity = parseFloat(item.querySelector('.quantity-input').value) || 0
       const price = parseFloat(item.querySelector('.price-input').value) || 0
       subtotal += quantity * price
     })
-    
+
     this.subtotalTarget.value = subtotal.toFixed(2)
-    
-    // Calculate tax if default tax percentage is set
+
+    // Calculate tax automatically only for new invoices
     let tax = parseFloat(this.taxTarget.value) || 0
-    if (this.defaultTaxPercentageValue > 0) {
+    if (this.defaultTaxPercentageValue > 0 && !this.invoicePersistedValue) {
       tax = Math.round(subtotal * (this.defaultTaxPercentageValue / 100))
       this.taxTarget.value = tax
     }
-    
+
     const total = subtotal + tax
     this.totalTarget.value = total.toFixed(2)
+  }
+
+  togglePaymentMethod() {
+    const statusField = this.element.querySelector('select[name="invoice[status]"]')
+    const paymentMethodField = this.paymentMethodTarget.closest('#payment-method-field')
+
+    if (statusField && paymentMethodField) {
+      const status = statusField.value
+
+      if (status === 'paid') {
+        paymentMethodField.classList.remove('hidden')
+      } else {
+        paymentMethodField.classList.add('hidden')
+        // Clear payment method when status is not paid
+        this.paymentMethodTarget.value = ''
+      }
+    }
   }
 }

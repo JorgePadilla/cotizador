@@ -36,6 +36,9 @@ Rails.application.routes.draw do
     collection do
       get :add_item
     end
+    member do
+      get :pdf
+    end
   end
 
   # Quotes and quote items
