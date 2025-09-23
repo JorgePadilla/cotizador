@@ -39,7 +39,7 @@ gem "prawn"
 gem "prawn-rails"
 
 # Internationalization
-gem "rails-i18n", "~> 8.0.0" # Translations for Rails
+gem "rails-i18n", "~> 8.0.2" # Translations for Rails
 
 
 # Reduces boot times through caching; required in config/boot.rb
