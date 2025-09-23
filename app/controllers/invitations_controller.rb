@@ -63,7 +63,11 @@ class InvitationsController < ApplicationController
   end
 
   def invitation_params
-    params.require(:invitation).permit(:email, :role)
+    # Only allow role parameter if user is authorized to assign roles
+    permitted_params = [:email]
+    permitted_params << :role if can_assign_role?(params[:invitation][:role])
+
+    params.require(:invitation).permit(*permitted_params)
   end
 
   def can_assign_role?(requested_role)

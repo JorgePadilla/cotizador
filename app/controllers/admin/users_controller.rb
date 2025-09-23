@@ -40,7 +40,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:role)
+    # Only allow role parameter if user is authorized to assign roles
+    permitted_params = []
+    permitted_params << :role if Current.user&.owner? || (Current.user&.admin? && params[:user][:role].to_i != 0)
+
+    params.require(:user).permit(*permitted_params)
   end
 
   def require_admin
