@@ -58,7 +58,7 @@
                       class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       data-action="change->invoice-form#updatePrice">
                 <option value=""><%= t('invoices.select_product') %></option>
-                <% Product.all.each do |product| %>
+                <% Current.organization.products.each do |product| %>
                   <option value="<%= product.id %>" data-price="<%= product.price %>"><%= product.name %> - <%= number_to_currency(product.price) %></option>
                 <% end %>
               </select>
@@ -97,7 +97,7 @@
                         class="product-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                         data-action="change->invoice-form#updatePrice">
                   <option value=""><%= t('invoices.select_product') %></option>
-                  <% Product.all.each do |product| %>
+                  <% Current.organization.products.each do |product| %>
                     <option value="<%= product.id %>" data-price="<%= product.price %>" <%= 'selected' if product.id == item.product_id %>>
                       <%= product.name %> - <%= number_to_currency(product.price) %>
                     </option>
