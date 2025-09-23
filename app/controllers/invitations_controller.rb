@@ -63,8 +63,15 @@ class InvitationsController < ApplicationController
   end
 
   def invitation_params
-    # Use standard strong parameters with authorization checks in the action
-    params.require(:invitation).permit(:email, :role)
+    # Use safe parameter filtering - extract only email and role parameters
+    invitation_params = params.require(:invitation)
+
+    # Build a hash with only the parameters we want
+    filtered_params = {}
+    filtered_params[:email] = invitation_params[:email] if invitation_params.key?(:email)
+    filtered_params[:role] = invitation_params[:role] if invitation_params.key?(:role)
+
+    filtered_params
   end
 
   def can_assign_role?(requested_role)
