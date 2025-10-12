@@ -34,7 +34,7 @@ class QuotePdfTest < ActiveSupport::TestCase
 
     # Check for financial labels
     assert_includes extracted_text, "Subtotal:"
-    assert_includes extracted_text, "Tax (15%):"
+    assert_includes extracted_text, "Tax:"
     assert_includes extracted_text, "Total:"
 
     # Check for formatted currency values
