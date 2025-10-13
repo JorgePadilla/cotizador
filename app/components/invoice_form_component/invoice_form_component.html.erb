@@ -23,9 +23,18 @@
       </div>
 
       <div>
+        <%= form.label :invoice_date, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.date_field :invoice_date,
+                            class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md",
+                            placeholder: "YYYY-MM-DD",
+                            pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+                            title: "Use format YYYY-MM-DD" %>
+      </div>
+
+      <div>
         <%= form.label :client_id, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.collection_select :client_id, clients, :id, :name, 
-                                  { include_blank: t('invoices.select_client') }, 
+        <%= form.collection_select :client_id, clients, :id, :name,
+                                  { include_blank: t('invoices.select_client') },
                                   { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
       </div>
 
@@ -62,7 +71,7 @@
                       data-action="change->invoice-form#updatePrice">
                 <option value=""><%= t('invoices.select_product') %></option>
                 <% Current.organization.products.each do |product| %>
-                  <option value="<%= product.id %>" data-price="<%= product.price %>"><%= product.name %> - <%= number_to_currency(product.price) %></option>
+                  <option value="<%= product.id %>" data-price="<%= product.price %>"><%= product.name %> - <%= format_currency(product.price, Current.organization) %></option>
                 <% end %>
               </select>
             </div>
@@ -102,7 +111,7 @@
                   <option value=""><%= t('invoices.select_product') %></option>
                   <% Current.organization.products.each do |product| %>
                     <option value="<%= product.id %>" data-price="<%= product.price %>" <%= 'selected' if product.id == item.product_id %>>
-                      <%= product.name %> - <%= number_to_currency(product.price) %>
+                      <%= product.name %> - <%= format_currency(product.price, Current.organization) %>
                     </option>
                   <% end %>
                 </select>

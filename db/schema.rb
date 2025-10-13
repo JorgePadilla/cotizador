@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_15_042733) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_13_020933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -70,6 +70,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_042733) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "organization_id"
+    t.date "invoice_date"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["invoice_number"], name: "index_invoices_on_invoice_number", unique: true
     t.index ["organization_id"], name: "index_invoices_on_organization_id"

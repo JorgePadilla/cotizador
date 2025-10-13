@@ -313,6 +313,10 @@ en:
     en: "English"
     es: "Spanish"
 
+  # Search
+  search:
+    results_found: "Found %{count} products matching '%{search_term}'"
+
   # Common
   common:
     not_available: "Not available"

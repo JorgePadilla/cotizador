@@ -3,6 +3,13 @@ class ProductsController < ApplicationController
 
   def index
     @products = Current.organization ? Current.organization.products.order(created_at: :desc) : Product.none
+
+    # Add search functionality
+    if params[:search].present?
+      search_term = "%#{params[:search]}%"
+      @products = @products.where("name ILIKE ? OR sku ILIKE ? OR description ILIKE ?",
+                                 search_term, search_term, search_term)
+    end
   end
 
   def show

@@ -1,12 +1,22 @@
 <div class="w-full max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
   <%= render(HeaderComponent.new(title: t('clients.title'), subtitle: t('clients.subtitle'))) %>
 
-  <div class="flex justify-end mb-4">
-    <%= link_to t('clients.new_client'), new_client_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  <div class="flex justify-between mb-4">
+    <%= render SearchComponent.new(resource_name: "clients") %>
+
+    <%= link_to t('clients.new_client'), new_client_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded", data: { turbo_frame: "_top" } %>
   </div>
 
+  <% if params[:search].present? && @clients.any? %>
+    <div class="mb-4 p-4 bg-blue-50 rounded-lg">
+      <p class="text-blue-700">
+        <%= t('search.results_found', count: @clients.count, search_term: params[:search]) %>
+      </p>
+    </div>
+  <% end %>
 
-  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+  <%= turbo_frame_tag "clients" do %>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -26,8 +36,8 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= client.email %></td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
               <div class="flex space-x-2">
-                <%= link_to t('clients.view'), client, class: "text-blue-600 hover:text-blue-900" %>
-                <%= link_to t('clients.edit'), edit_client_path(client), class: "text-indigo-600 hover:text-indigo-900" %>
+                <%= link_to t('clients.view'), client, class: "text-blue-600 hover:text-blue-900", data: { turbo_frame: "_top" } %>
+                <%= link_to t('clients.edit'), edit_client_path(client), class: "text-indigo-600 hover:text-indigo-900", data: { turbo_frame: "_top" } %>
                 <%= button_to t('clients.delete'), client_path(client), method: :delete, class: "text-red-600 hover:text-red-900 bg-transparent border-none cursor-pointer", form: { data: { turbo_confirm: t('clients.delete_confirm') } } %>
               </div>
             </td>
@@ -44,7 +54,7 @@
         <h3 class="mt-2 text-sm font-medium text-gray-900"><%= t('dashboard.empty.no_clients') %></h3>
         <p class="mt-1 text-sm text-gray-500"><%= t('dashboard.add_new_client') %></p>
         <div class="mt-6">
-          <%= link_to new_client_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+          <%= link_to new_client_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500", data: { turbo_frame: "_top" } do %>
             <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
@@ -53,5 +63,6 @@
         </div>
       </div>
     <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

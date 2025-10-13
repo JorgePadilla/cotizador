@@ -162,6 +162,10 @@ es:
     no_invoices: "No hay facturas"
     get_started: "Comience creando una nueva factura."
     items: "Artículos de la Factura"
+    quantity: "Cantidad"
+    description: "Descripción"
+    unit_price: "Precio Unitario"
+    total: "Total"
     status:
       paid: "Pagada"
       pending: "Pendiente"
@@ -212,6 +216,7 @@ es:
   # Quotes
   quotes:
     title: "Cotizaciones"
+    pdf_title: "Cotización"
     subtitle: "Administre sus cotizaciones"
     new: "Nueva Cotización"
     edit: "Editar Cotización"
@@ -221,6 +226,10 @@ es:
     create_new_quote: "Crear su primera cotización"
     fill_details: "Complete los detalles para la nueva cotización"
     items: "Artículos de la Cotización"
+    quantity: "Cantidad"
+    description: "Descripción"
+    unit_price: "Precio Unitario"
+    total: "Total"
     print_to_pdf: "Imprimir a PDF"
     attributes:
       quote_number: "Número de cotización"

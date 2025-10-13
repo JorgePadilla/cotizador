@@ -39,7 +39,7 @@ class QuotePdf < Prawn::Document
     # Add organization name and quote title
     text @quote.organization.name, size: 24, style: :bold
     move_down 5
-    text I18n.t("quotes.title").upcase, size: 18, style: :bold
+    text I18n.t("quotes.pdf_title").upcase, size: 18, style: :bold
     move_down 20
   end
 
@@ -75,10 +75,10 @@ class QuotePdf < Prawn::Document
 
     # Create the items table
     table_data = [ [
-      I18n.t('quotes.attributes.description'),
-      I18n.t('quotes.quantity'),
-      I18n.t('quotes.attributes.unit_price'),
-      I18n.t('quotes.attributes.total')
+      I18n.t("quotes.attributes.description"),
+      I18n.t("quotes.quantity"),
+      I18n.t("quotes.attributes.unit_price"),
+      I18n.t("quotes.attributes.total")
     ] ]
 
     # Add each quote item to the table
@@ -125,14 +125,14 @@ class QuotePdf < Prawn::Document
 
   def footer
     # Add terms and conditions
-    text I18n.t('quotes.terms_and_conditions'), size: 14, style: :bold
+    text I18n.t("quotes.terms_and_conditions"), size: 14, style: :bold
     move_down 5
-    text I18n.t('quotes.terms.valid_until'), size: 10
-    text I18n.t('quotes.terms.payment_terms'), size: 10
-    text I18n.t('quotes.terms.delivery_time'), size: 10
+    text I18n.t("quotes.terms.valid_until"), size: 10
+    text I18n.t("quotes.terms.payment_terms"), size: 10
+    text I18n.t("quotes.terms.delivery_time"), size: 10
 
     # Add page numbers
-    number_pages I18n.t('quotes.page_numbers'),
+    number_pages I18n.t("quotes.page_numbers"),
                  { start_count_at: 1, page_filter: :all, at: [bounds.right - 150, 0], align: :right, size: 9 }
   end
 
@@ -146,11 +146,11 @@ class QuotePdf < Prawn::Document
     # Use current user's currency preference first, fall back to organization currency
     currency = if Current.user&.currency.present?
                  Current.user.currency
-               elsif @quote.organization&.currency.present?
+    elsif @quote.organization&.currency.present?
                  @quote.organization.currency
-               else
+    else
                  "USD"
-               end
+    end
 
     case currency
     when "HNL"

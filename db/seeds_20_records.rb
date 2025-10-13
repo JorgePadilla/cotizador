@@ -13,7 +13,7 @@ organization = Organization.create!(
   address: "123 Calle Principal, Tegucigalpa, Honduras",
   phone: "+504 2234-5678",
   email: "info@miempresa.com",
-  tax_id: "08019999000001"
+  rtn: "08019999000001"
 )
 
 # Create Users
@@ -170,7 +170,8 @@ Invoice.all.each do |invoice|
       description: product.name,
       quantity: quantity,
       unit_price: unit_price,
-      total: total
+      total: total,
+      organization: organization
     )
   end
 end

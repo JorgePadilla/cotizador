@@ -21,5 +21,6 @@ class Invoice < ApplicationRecord
     self.subtotal ||= 0
     self.tax ||= 0
     self.total ||= 0
+    self.invoice_date ||= Date.current
   end
 end

@@ -1,4 +1,6 @@
 class InvoiceFormComponent < ViewComponent::Base
+  include ApplicationHelper
+
   def initialize(invoice:, clients:, current_user: nil)
     @invoice = invoice
     @clients = clients

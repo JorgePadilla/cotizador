@@ -6,6 +6,10 @@ class InvoicesController < ApplicationController
 
   def index
     @invoices = Current.organization ? Current.organization.invoices.includes(:client).order(created_at: :desc) : Invoice.none
+
+    if params[:search].present?
+      @invoices = @invoices.where("invoice_number ILIKE ? OR clients.name ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+    end
   end
 
   def show

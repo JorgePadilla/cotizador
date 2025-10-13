@@ -42,11 +42,11 @@ def test_format_currency(amount)
   # Use current user's currency preference first, fall back to organization currency
   currency = if Current.user&.currency.present?
                Current.user.currency
-             elsif Current.organization&.currency.present?
+  elsif Current.organization&.currency.present?
                Current.organization.currency
-             else
+  else
                "USD"
-             end
+  end
 
   case currency
   when "HNL"

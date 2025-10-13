@@ -49,20 +49,20 @@ class InvoicePdf < Prawn::Document
       text "#{I18n.t('invoices.attributes.invoice_number')}: #{@invoice.invoice_number}", size: 12
       text "#{I18n.t('invoices.attributes.date')}: #{format_date(@invoice.created_at)}", size: 12
       text "#{I18n.t('invoices.attributes.status')}: #{I18n.t("invoices.statuses.#{@invoice.status}")}", size: 12
-      if @invoice.status == 'paid'
+      if @invoice.status == "paid"
         payment_method_display = if @invoice.payment_method.present?
-                                   if @invoice.payment_method.is_a?(String)
-                                     I18n.t("invoices.payment_methods.#{@invoice.payment_method}")
-                                   elsif @invoice.payment_method.is_a?(Hash)
-                                     # Extract the first key if it's a hash
-                                     first_key = @invoice.payment_method.keys.first
-                                     I18n.t("invoices.payment_methods.#{first_key}")
-                                   else
-                                     I18n.t('common.not_available')
-                                   end
-                                 else
-                                   I18n.t('common.not_available')
-                                 end
+                                  if @invoice.payment_method.is_a?(String)
+                                    I18n.t("invoices.payment_methods.#{@invoice.payment_method}")
+                                  elsif @invoice.payment_method.is_a?(Hash)
+                                    # Extract the first key if it's a hash
+                                    first_key = @invoice.payment_method.keys.first
+                                    I18n.t("invoices.payment_methods.#{first_key}")
+                                  else
+                                    I18n.t("common.not_available")
+                                  end
+        else
+                                  I18n.t("common.not_available")
+        end
         text "#{I18n.t('invoices.attributes.payment_method')}: #{payment_method_display}", size: 12
       end
     end
@@ -90,10 +90,10 @@ class InvoicePdf < Prawn::Document
 
     # Create the items table
     table_data = [ [
-      I18n.t('invoices.attributes.description'),
-      I18n.t('invoices.quantity'),
-      I18n.t('invoices.attributes.unit_price'),
-      I18n.t('invoices.attributes.total')
+      I18n.t("invoices.attributes.description"),
+      I18n.t("invoices.quantity"),
+      I18n.t("invoices.attributes.unit_price"),
+      I18n.t("invoices.attributes.total")
     ] ]
 
     # Add each invoice item to the table
@@ -140,14 +140,14 @@ class InvoicePdf < Prawn::Document
 
   def footer
     # Add terms and conditions
-    text I18n.t('invoices.terms_and_conditions'), size: 14, style: :bold
+    text I18n.t("invoices.terms_and_conditions"), size: 14, style: :bold
     move_down 5
-    text I18n.t('invoices.terms.payment_due'), size: 10
-    text I18n.t('invoices.terms.late_payment'), size: 10
-    text I18n.t('invoices.terms.include_invoice_number'), size: 10
+    text I18n.t("invoices.terms.payment_due"), size: 10
+    text I18n.t("invoices.terms.late_payment"), size: 10
+    text I18n.t("invoices.terms.include_invoice_number"), size: 10
 
     # Add page numbers
-    number_pages I18n.t('invoices.page_numbers'),
+    number_pages I18n.t("invoices.page_numbers"),
                  { start_count_at: 1, page_filter: :all, at: [bounds.right - 150, 0], align: :right, size: 9 }
   end
 
@@ -161,11 +161,11 @@ class InvoicePdf < Prawn::Document
     # Use current user's currency preference first, fall back to organization currency
     currency = if Current.user&.currency.present?
                  Current.user.currency
-               elsif @invoice.organization&.currency.present?
+    elsif @invoice.organization&.currency.present?
                  @invoice.organization.currency
-               else
+    else
                  "USD"
-               end
+    end
 
     case currency
     when "HNL"
