@@ -5,6 +5,17 @@
 puts "Cleaning database..."
 [ InvoiceItem, Invoice, Quote, Product, Client, Supplier, User, Organization ].each(&:delete_all)
 
+# Seed SAR document types (idempotent — they are referential, not org-scoped)
+puts "Seeding SAR document types..."
+[
+  [ "01", "Factura" ],
+  [ "02", "Nota de Débito" ],
+  [ "03", "Nota de Crédito" ],
+  [ "04", "Recibo" ]
+].each do |code, name|
+  DocumentType.find_or_create_by!(code: code) { |dt| dt.name = name }
+end
+
 # Create Organizations
 puts "Creating organizations..."
 organization = Organization.create!(
@@ -13,7 +24,8 @@ organization = Organization.create!(
   address: "123 Calle Principal, Tegucigalpa, Honduras",
   phone: "+504 2234-5678",
   email: "info@miempresa.com",
-  tax_id: "08019999000001"
+  rtn: "08019999000001",
+  nombre_comercial: "Mi Empresa S. de R.L."
 )
 
 # Create Users
