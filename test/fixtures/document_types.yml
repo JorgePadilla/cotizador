@@ -1,0 +1,15 @@
+factura:
+  code: "01"
+  name: "Factura"
+
+debit_note:
+  code: "02"
+  name: "Nota de Débito"
+
+credit_note:
+  code: "03"
+  name: "Nota de Crédito"
+
+receipt:
+  code: "04"
+  name: "Recibo"

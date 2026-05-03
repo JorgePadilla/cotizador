@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_03_091000) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_03_091100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_03_091000) do
   create_table "cai_authorizations", force: :cascade do |t|
     t.bigint "emission_point_id", null: false
     t.bigint "document_type_id", null: false
-    t.string "cai", limit: 49, null: false
+    t.string "cai", limit: 50, null: false
     t.bigint "rango_inicial", null: false
     t.bigint "rango_final", null: false
     t.bigint "correlativo_actual", default: 0, null: false

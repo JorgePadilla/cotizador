@@ -1,0 +1,7 @@
+main:
+  organization: default_organization
+  codigo: "001"
+  nombre: "Casa Matriz"
+  address: "123 Main St, Tegucigalpa"
+  phone: "+504 2234-5678"
+  active: true

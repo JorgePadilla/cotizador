@@ -1,0 +1,5 @@
+main:
+  establishment: main
+  codigo: "001"
+  descripcion: "Punto de emisión principal"
+  active: true
