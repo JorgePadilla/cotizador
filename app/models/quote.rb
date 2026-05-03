@@ -13,15 +13,21 @@ class Quote < ApplicationRecord
   before_validation :calculate_totals
 
   def calculate_totals
-    if quote_items.empty?
+    items = persisted? ? quote_items.includes(:product).to_a : quote_items.to_a
+    items = items.reject(&:marked_for_destruction?)
+
+    if items.empty?
       self.subtotal = 0
       self.tax = 0
       self.total = 0
       return
     end
 
-    self.subtotal = quote_items.sum(&:total)
-    self.tax = (subtotal * 0.15).round # Assuming 15% tax rate, rounded to integer
+    self.subtotal = items.sum { |item| item.total || 0 }
+    self.tax = items.sum do |item|
+      rate = Invoice::ISV_RATES[item.product&.tipo_isv].to_f
+      ((item.total || 0) * rate).round(2)
+    end
     self.total = subtotal + tax
   end
 
