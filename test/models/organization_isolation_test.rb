@@ -7,8 +7,8 @@ class OrganizationIsolationTest < ActiveSupport::TestCase
     org2 = Organization.create!(name: "Org 2", currency: "USD", language: "en")
 
     # Create clients for each organization
-    client1 = org1.clients.create!(name: "Client 1", rtn: "RTN11111")
-    client2 = org2.clients.create!(name: "Client 2", rtn: "RTN22222")
+    client1 = org1.clients.create!(name: "Client 1", rtn: "08019999111111")
+    client2 = org2.clients.create!(name: "Client 2", rtn: "08019999222222")
 
     # Test controller-style scoping
     assert_includes org1.clients, client1
@@ -40,8 +40,8 @@ class OrganizationIsolationTest < ActiveSupport::TestCase
     org1 = Organization.create!(name: "Org 1", currency: "USD", language: "en")
     org2 = Organization.create!(name: "Org 2", currency: "USD", language: "en")
 
-    client1 = org1.clients.create!(name: "Client 1", rtn: "RTN11111")
-    client2 = org2.clients.create!(name: "Client 2", rtn: "RTN22222")
+    client1 = org1.clients.create!(name: "Client 1", rtn: "08019999111111")
+    client2 = org2.clients.create!(name: "Client 2", rtn: "08019999222222")
 
     invoice1 = org1.invoices.create!(invoice_number: "INV11111", client: client1, total: 100)
     invoice2 = org2.invoices.create!(invoice_number: "INV22222", client: client2, total: 200)

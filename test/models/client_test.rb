@@ -5,7 +5,7 @@ class ClientTest < ActiveSupport::TestCase
     organization = organizations(:default_organization)
     client = Client.new(
       name: "Test Client",
-      rtn: "12345678",
+      rtn: "08019999000099",
       address: "123 Test Street",
       phone: "555-1234",
       email: "test@example.com",
@@ -17,7 +17,7 @@ class ClientTest < ActiveSupport::TestCase
   test "client without name is invalid" do
     organization = organizations(:default_organization)
     client = Client.new(
-      rtn: "12345678",
+      rtn: "08019999000099",
       address: "123 Test Street",
       phone: "555-1234",
       email: "test@example.com",
@@ -42,12 +42,12 @@ class ClientTest < ActiveSupport::TestCase
     organization = organizations(:default_organization)
     client1 = Client.create!(
       name: "Client 1",
-      rtn: "12345678",
+      rtn: "08019999000099",
       organization: organization
     )
     client2 = Client.new(
       name: "Client 2",
-      rtn: "12345678",
+      rtn: "08019999000099",
       organization: organization
     )
     assert_not client2.valid?
@@ -72,7 +72,7 @@ class ClientTest < ActiveSupport::TestCase
     organization = organizations(:default_organization)
     client = Client.new(
       name: "Test Client",
-      rtn: "12345678",
+      rtn: "08019999000099",
       address: "123 Test Street",
       phone: "555-1234",
       email: "invalid-email",

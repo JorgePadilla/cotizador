@@ -9,6 +9,6 @@ class CreateEmissionPoints < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :emission_points, [:establishment_id, :codigo], unique: true
+    add_index :emission_points, [ :establishment_id, :codigo ], unique: true
   end
 end

@@ -29,10 +29,10 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create client" do
     assert_difference("Client.count") do
-      post clients_url, params: { client: { name: "New Client", rtn: "87654321", email: "client@example.com", address: "123 Main St", phone: "12345678" } }
+      post clients_url, params: { client: { name: "New Client", rtn: "08019999444444", email: "client@example.com", address: "123 Main St", phone: "12345678" } }
     end
     # Get the actual client that was created
-    new_client = Client.find_by(rtn: "87654321")
+    new_client = Client.find_by(rtn: "08019999444444")
     assert_redirected_to client_url(new_client)
   end
 

@@ -17,12 +17,12 @@ class CreateCaiAuthorizations < ActiveRecord::Migration[8.0]
     end
 
     add_index :cai_authorizations,
-              [:emission_point_id, :document_type_id, :cai],
+              [ :emission_point_id, :document_type_id, :cai ],
               unique: true,
               name: "index_cai_auths_on_ep_dt_cai"
 
     add_index :cai_authorizations,
-              [:emission_point_id, :document_type_id],
+              [ :emission_point_id, :document_type_id ],
               unique: true,
               where: "active = true",
               name: "index_cai_auths_active_per_ep_dt"

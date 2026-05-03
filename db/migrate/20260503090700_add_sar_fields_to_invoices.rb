@@ -28,7 +28,7 @@ class AddSarFieldsToInvoices < ActiveRecord::Migration[8.0]
     add_index :invoices, :invoice_kind
 
     add_index :invoices,
-              [:emission_point_id, :document_type_id, :correlativo_numero],
+              [ :emission_point_id, :document_type_id, :correlativo_numero ],
               unique: true,
               where: "correlativo_numero IS NOT NULL",
               name: "index_invoices_unique_correlativo"
