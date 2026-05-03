@@ -15,11 +15,60 @@
     </div>
   <% end %>
 
+  <% if fiscal_mode? %>
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+      <div class="flex items-start gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <div class="flex-1">
+          <h3 class="text-sm font-semibold text-blue-900"><%= t("invoices.sar.fiscal_mode_title") %></h3>
+          <p class="text-xs text-blue-800 mt-1"><%= t("invoices.sar.fiscal_mode_help") %></p>
+          <% if correlativo_preview %>
+            <p class="text-xs text-blue-900 mt-2 font-mono">
+              <%= t("invoices.sar.next_correlativo_preview") %>: <strong><%= correlativo_preview %></strong>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6 mb-4">
+      <h3 class="text-sm font-medium text-gray-900 mb-3"><%= t("invoices.sar.fiscal_section") %></h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <%= form.label :establishment_id, t("invoices.sar.establishment"), class: "block text-sm font-medium text-gray-700" %>
+          <%= form.collection_select :establishment_id, establishments, :id, ->(e) { "#{e.codigo} — #{e.nombre}" },
+                                     { include_blank: true },
+                                     { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm sm:text-sm",
+                                       disabled: invoice.immutable? } %>
+        </div>
+        <div>
+          <%= form.label :emission_point_id, t("invoices.sar.emission_point"), class: "block text-sm font-medium text-gray-700" %>
+          <% emission_point_choices = establishments.flat_map { |e| e.emission_points.active.map { |ep| [ "#{e.codigo}-#{ep.codigo}", ep.id ] } } %>
+          <%= form.select :emission_point_id, emission_point_choices,
+                          { include_blank: true },
+                          { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm sm:text-sm",
+                            disabled: invoice.immutable? } %>
+        </div>
+        <div>
+          <%= form.label :document_type_id, t("invoices.sar.document_type"), class: "block text-sm font-medium text-gray-700" %>
+          <%= form.collection_select :document_type_id, document_types, :id, :name,
+                                     { include_blank: true },
+                                     { class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm sm:text-sm",
+                                       disabled: invoice.immutable? } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <%= form.label :invoice_number, class: "block text-sm font-medium text-gray-700" %>
-        <%= form.text_field :invoice_number, class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+        <%= form.text_field :invoice_number,
+                            class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md",
+                            readonly: invoice.fiscal? || invoice.immutable? %>
       </div>
 
       <div>

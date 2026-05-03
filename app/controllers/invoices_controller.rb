@@ -3,6 +3,7 @@ require_relative "../pdfs/invoice_pdf"
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [ :show, :edit, :update, :destroy, :pdf ]
   before_action :load_clients_and_products, only: [ :new, :edit, :create, :update ]
+  before_action :load_fiscal_collections, only: [ :new, :edit, :create, :update ]
 
   def index
     @invoices = Current.organization ? Current.organization.invoices.includes(:client).order(created_at: :desc) : Invoice.none
@@ -18,26 +19,38 @@ class InvoicesController < ApplicationController
 
   def new
     @invoice = Invoice.new(organization: Current.organization)
-    @invoice.invoice_number = generate_invoice_number
 
-    # Pre-select client if provided in params
+    if Current.organization&.fiscal_enabled?
+      assign_fiscal_defaults(@invoice)
+    else
+      @invoice.invoice_number = generate_invoice_number
+    end
+
     @invoice.client_id = params[:client_id] if params[:client_id].present?
-
-    # Initialize with one empty invoice item
     @invoice.invoice_items.build
   end
 
   def edit
+    if @invoice.immutable?
+      flash.now[:alert] = t("invoices.sar.immutable_warning")
+    end
   end
 
   def create
     @invoice = Invoice.new(invoice_params.merge(organization: Current.organization))
+    if Current.organization&.fiscal_enabled? && @invoice.cai_authorization_id.blank?
+      assign_fiscal_defaults(@invoice)
+    end
 
     if @invoice.save
       redirect_to @invoice, notice: t("invoices.messages.created")
     else
       render :new, status: :unprocessable_entity
     end
+  rescue Invoice::SarError => e
+    @invoice ||= Invoice.new(organization: Current.organization)
+    flash.now[:alert] = e.message
+    render :new, status: :unprocessable_entity
   end
 
   def update
@@ -49,6 +62,12 @@ class InvoicesController < ApplicationController
   end
 
   def destroy
+    if @invoice.fiscal?
+      redirect_to new_credit_note_path(original_invoice_id: @invoice.id),
+                  alert: t("invoices.sar.cannot_destroy_create_credit_note")
+      return
+    end
+
     @invoice.destroy
     redirect_to invoices_url, notice: t("invoices.messages.deleted")
   end
@@ -86,6 +105,13 @@ class InvoicesController < ApplicationController
     @products = Current.organization ? Current.organization.products.order(:name) : Product.none
   end
 
+  def load_fiscal_collections
+    return unless Current.organization
+
+    @establishments = Current.organization.establishments.active.includes(emission_points: :cai_authorizations).order(:codigo)
+    @document_types = DocumentType.where(code: [ DocumentType::INVOICE ]).order(:code)
+  end
+
   def invoice_params
     params.require(:invoice).permit(
       :invoice_number,
@@ -95,19 +121,28 @@ class InvoicesController < ApplicationController
       :total,
       :status,
       :payment_method,
-      invoice_items_attributes: [ :id, :product_id, :description, :quantity, :unit_price, :total, :_destroy ]
+      :establishment_id,
+      :emission_point_id,
+      :document_type_id,
+      :cai_authorization_id,
+      :descuento_total,
+      invoice_items_attributes: [ :id, :product_id, :description, :quantity, :unit_price, :total, :tipo_isv_override, :_destroy ]
     )
   end
 
+  def assign_fiscal_defaults(invoice)
+    invoice.document_type ||= DocumentType.invoice
+    invoice.establishment ||= Current.organization.establishments.active.first
+    invoice.emission_point ||= invoice.establishment&.emission_points&.active&.first
+    invoice.cai_authorization ||= invoice.emission_point&.active_cai_for(invoice.document_type)
+  end
+
   def generate_invoice_number
-    last_invoice = Current.organization ? Current.organization.invoices.order(created_at: :desc).first : nil
+    last_invoice = Current.organization ? Current.organization.invoices.legacy.order(created_at: :desc).first : nil
     if last_invoice && last_invoice.invoice_number.match(/\d+$/)
-      # Extract the number part and increment
-      base = last_invoice.invoice_number.gsub(/\d+$/) { |n| n.to_i + 1 }
+      last_invoice.invoice_number.gsub(/\d+$/) { |n| n.to_i + 1 }
     else
-      # Start with INV-001
-      base = "INV-001"
+      "INV-001"
     end
-    base
   end
 end

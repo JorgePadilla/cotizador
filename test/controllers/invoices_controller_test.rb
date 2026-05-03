@@ -49,8 +49,7 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Invoice.count") do
       post invoices_url, params: { invoice: { invoice_number: "INV-001", client_id: @client.id, subtotal: 100.0, tax: 15.0, total: 115.0, status: "draft", payment_method: "cash" } }
     end
-    # Get the actual invoice that was created
-    new_invoice = Invoice.find_by(invoice_number: "INV-001")
+    new_invoice = Invoice.order(created_at: :desc).first
     assert_redirected_to invoice_url(new_invoice)
   end
 
