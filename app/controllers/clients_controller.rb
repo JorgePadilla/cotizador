@@ -21,7 +21,7 @@ class ClientsController < ApplicationController
     @client = Client.new(client_params.merge(organization: organization))
 
     if @client.save
-      redirect_to @client, notice: "Client was successfully created."
+      redirect_to @client, notice: t('clients.messages.created')
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class ClientsController < ApplicationController
 
   def update
     if @client.update(client_params)
-      redirect_to @client, notice: "Client was successfully updated."
+      redirect_to @client, notice: t('clients.messages.updated')
     else
       render :edit, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class ClientsController < ApplicationController
 
   def destroy
     @client.destroy
-    redirect_to clients_url, notice: "Client was successfully destroyed."
+    redirect_to clients_url, notice: t('clients.messages.destroyed')
   end
 
   private

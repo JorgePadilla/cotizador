@@ -2,11 +2,16 @@ es:
   # General
   hello: "Hola mundo"
   app_name: "Cotizador"
-  
+
   # Common
   common:
-    not_available: "no disponible"
-  
+    not_available: "No disponible"
+    not_set: "No establecido"
+    actions: "Acciones"
+    created: "Creado"
+    yes: "Sí"
+    no: "No"
+
   # Dashboard
   dashboard:
     title: "Panel de Control"
@@ -39,7 +44,7 @@ es:
     create_new_invoice: "Crear nueva factura"
     create_new_quote: "Crear nueva cotización"
     add_new_client: "Agregar nuevo cliente"
-  
+
   # Navigation
   nav:
     dashboard: "Panel de control"
@@ -53,7 +58,9 @@ es:
     login: "Iniciar sesión"
     register: "Registrarse"
     language: "Idioma"
-  
+    admin: "Administración"
+    open_main_menu: "Abrir menú principal"
+
   # Actions
   actions:
     new: "Nuevo"
@@ -70,18 +77,21 @@ es:
     remove: "Quitar"
     remove_item: "Eliminar artículo"
     confirm_delete: "¿Está seguro que desea eliminar esto?"
-  
+
   # Clients
   clients:
     title: "Clientes"
     subtitle: "Administre sus relaciones con clientes"
     new_client: "Nuevo Cliente"
     new: "Nuevo Cliente"
+    new_subtitle: "Agregue un nuevo cliente a su organización"
     edit: "Editar Cliente"
+    edit_subtitle: "Actualice la información del cliente"
     client_details: "Detalles del Cliente"
     details: "Detalles del Cliente"
     list: "Lista de Clientes"
     back_to_clients: "Volver a Clientes"
+    back_to_client: "Volver al Cliente"
     no_invoices: "No se encontraron facturas para este cliente."
     delete_client: "Eliminar Cliente"
     delete_confirm: "¿Está seguro de que desea eliminar este cliente?"
@@ -101,29 +111,36 @@ es:
     messages:
       created: "Cliente creado exitosamente."
       updated: "Cliente actualizado exitosamente."
+      destroyed: "Cliente eliminado exitosamente."
       deleted: "Cliente eliminado exitosamente."
-  
+
   # Suppliers
   suppliers:
     title: "Proveedores"
     subtitle: "Administre sus relaciones con proveedores"
     new: "Nuevo Proveedor"
-    no_suppliers: "No hay proveedores"
-    get_started: "Comience creando un nuevo proveedor."
     edit: "Editar Proveedor"
     details: "Detalles del Proveedor"
     list: "Lista de Proveedores"
+    no_suppliers: "No hay proveedores"
+    get_started: "Comience creando un nuevo proveedor."
+    back_to_suppliers: "Volver a Proveedores"
+    back_to_supplier: "Volver al Proveedor"
+    delete_supplier: "Eliminar Proveedor"
+    delete_confirm: "¿Está seguro de que desea eliminar este proveedor?"
     attributes:
       name: "Nombre"
       rtn: "RTN"
-      contact_name: "Nombre de contacto"
+      contact_name: "Persona de contacto"
       phone: "Teléfono"
       email: "Correo electrónico"
+      created_at: "Creado el"
+      updated_at: "Última actualización"
     messages:
       created: "Proveedor creado exitosamente."
       updated: "Proveedor actualizado exitosamente."
       deleted: "Proveedor eliminado exitosamente."
-  
+
   # Products
   products:
     title: "Productos"
@@ -134,6 +151,10 @@ es:
     list: "Lista de Productos"
     no_products: "No hay productos"
     get_started: "Comience creando un nuevo producto."
+    back_to_product: "Volver al Producto"
+    delete_product: "Eliminar Producto"
+    delete_confirm: "¿Está seguro de que desea eliminar este producto?"
+    stock_label: "Inventario"
     attributes:
       name: "Nombre"
       sku: "SKU"
@@ -142,35 +163,39 @@ es:
       cost: "Costo"
       stock: "Inventario"
       supplier: "Proveedor"
-      created_at: "Creado En"
-      updated_at: "Última Actualización"
+      created_at: "Creado el"
+      updated_at: "Última actualización"
       profit_margin: "Margen de Ganancia"
     messages:
       created: "Producto creado exitosamente."
       updated: "Producto actualizado exitosamente."
       deleted: "Producto eliminado exitosamente."
-  
+
   # Invoices
   invoices:
     title: "Facturas"
     invoice: "Factura"
-    subtitle: "Administre sus facturas y cotizaciones"
+    subtitle: "Administre sus facturas"
     new: "Nueva Factura"
     edit: "Editar Factura"
     details: "Detalles de la Factura"
     list: "Lista de Facturas"
+    items: "Artículos de la Factura"
+    items_section: "Artículos de la Factura"
     no_invoices: "No hay facturas"
     get_started: "Comience creando una nueva factura."
-    items: "Artículos de la Factura"
+    add_item: "Agregar artículo"
+    select_client: "Seleccionar cliente"
+    select_product: "Seleccionar producto"
+    select_payment_method: "Seleccionar método de pago"
     quantity: "Cantidad"
-    description: "Descripción"
-    unit_price: "Precio Unitario"
-    total: "Total"
-    status:
-      paid: "Pagada"
-      pending: "Pendiente"
-      cancelled: "Cancelada"
-      draft: "Borrador"
+    back_to_invoice: "Volver a la Factura"
+    back_to_invoices: "Volver a Facturas"
+    all_invoices: "Todas las Facturas"
+    item:
+      product: "Producto"
+      quantity: "Cantidad"
+      unit_price: "Precio Unitario"
     attributes:
       invoice_number: "Número de factura"
       client: "Cliente"
@@ -180,11 +205,8 @@ es:
       total: "Total"
       status: "Estado"
       payment_method: "Método de pago"
-    payment_methods:
-      cash: "Efectivo"
-      credit_card: "Tarjeta de crédito"
-      bank_transfer: "Transferencia bancaria"
-      check: "Cheque"
+      description: "Descripción"
+      unit_price: "Precio unitario"
     statuses:
       draft: "Borrador"
       pending: "Pendiente"
@@ -192,45 +214,56 @@ es:
       paid: "Pagada"
       overdue: "Vencida"
       cancelled: "Cancelada"
-    messages:
-      created: "Factura creada exitosamente."
-      updated: "Factura actualizada exitosamente."
-      deleted: "Factura eliminada exitosamente."
-    select_client: "Seleccionar cliente"
-    select_payment_method: "Seleccionar método de pago"
-    select_product: "Seleccionar producto"
-    quantity: "Cantidad"
-    unit_price: "Precio unitario"
-    add_item: "Agregar artículo"
-    details_description: "Detalles sobre la factura y el cliente."
-    no_items: "No hay artículos agregados a esta factura"
-    delete: "Eliminar Factura"
-    delete_confirm: "¿Está seguro de que desea eliminar esta factura?"
+    payment_methods:
+      cash: "Efectivo"
+      credit_card: "Tarjeta de crédito"
+      bank_transfer: "Transferencia bancaria"
+      check: "Cheque"
     terms_and_conditions: "Términos y Condiciones"
     terms:
       payment_due: "1. El pago vence dentro de los 30 días de la fecha de la factura."
       late_payment: "2. Los pagos atrasados pueden estar sujetos a cargos por intereses."
       include_invoice_number: "3. Por favor incluya el número de factura con su pago."
     page_numbers: "Página <page> de <total>"
-  
+    messages:
+      created: "Factura creada exitosamente."
+      updated: "Factura actualizada exitosamente."
+      deleted: "Factura eliminada exitosamente."
+    details_description: "Detalles sobre la factura y el cliente."
+    no_items: "No hay artículos agregados a esta factura"
+    delete: "Eliminar Factura"
+    delete_confirm: "¿Está seguro de que desea eliminar esta factura?"
+
   # Quotes
   quotes:
     title: "Cotizaciones"
     pdf_title: "Cotización"
     subtitle: "Administre sus cotizaciones"
+    quote_number_immutable: "El número de cotización no se puede cambiar"
     new: "Nueva Cotización"
     edit: "Editar Cotización"
     details: "Detalles de la Cotización"
     list: "Lista de Cotizaciones"
+    items: "Artículos de la Cotización"
     no_quotes: "No se encontraron cotizaciones"
     create_new_quote: "Crear su primera cotización"
     fill_details: "Complete los detalles para la nueva cotización"
-    items: "Artículos de la Cotización"
-    quantity: "Cantidad"
-    description: "Descripción"
-    unit_price: "Precio Unitario"
-    total: "Total"
     print_to_pdf: "Imprimir a PDF"
+    quantity: "Cantidad"
+    info_title: "Información de la Cotización"
+    info_subtitle: "Detalles y artículos de esta cotización."
+    view_subtitle: "Ver y administrar los detalles de la cotización"
+    no_client_assigned: "Sin cliente asignado"
+    no_product: "Sin producto"
+    add_first_item: "Agregue su primer artículo"
+    no_items: "No hay artículos agregados a esta cotización aún."
+    subtotal_label: "Subtotal:"
+    tax_label: "Impuesto (%{rate}%):"
+    total_label: "Total:"
+    back_to_quotes: "Volver a Cotizaciones"
+    delete_quote: "Eliminar Cotización"
+    delete_confirm: "¿Está seguro de que desea eliminar esta cotización?"
+    remove_item_confirm: "¿Está seguro de que desea quitar este artículo?"
     attributes:
       quote_number: "Número de cotización"
       client: "Cliente"
@@ -240,23 +273,157 @@ es:
       tax: "Impuesto"
       total: "Total"
       status: "Estado"
+      description: "Descripción"
+      unit_price: "Precio unitario"
+      quantity: "Cantidad"
+      product: "Producto"
+      created: "Creada"
     statuses:
       draft: "Borrador"
       sent: "Enviada"
       approved: "Aprobada"
       rejected: "Rechazada"
       expired: "Vencida"
-    messages:
-      created: "Cotización creada exitosamente."
-      updated: "Cotización actualizada exitosamente."
-      deleted: "Cotización eliminada exitosamente."
     terms_and_conditions: "Términos y Condiciones"
     terms:
       valid_until: "1. Esta cotización es válida hasta la fecha especificada anteriormente."
       payment_terms: "2. Términos de pago: 50% pago por adelantado, 50% al momento de la entrega."
       delivery_time: "3. Tiempo de entrega: 2-3 semanas después de la confirmación."
     page_numbers: "Página <page> de <total>"
-  
+    messages:
+      created: "Cotización creada exitosamente."
+      updated: "Cotización actualizada exitosamente."
+      deleted: "Cotización eliminada exitosamente."
+
+  # Quote items
+  quote_items:
+    new: "Nuevo Artículo de Cotización"
+    edit: "Editar Artículo de Cotización"
+    add_subtitle: "Agregue un artículo a su cotización"
+    update_subtitle: "Actualice los detalles del artículo"
+    details: "Detalles del Artículo"
+    fill_details: "Complete los detalles para el nuevo artículo de la cotización."
+    update_details: "Actualice los detalles para este artículo de la cotización."
+    description_hint: "Breve descripción del artículo."
+    update_item: "Actualizar Artículo"
+    messages:
+      added: "Artículo de cotización agregado exitosamente."
+      updated: "Artículo de cotización actualizado exitosamente."
+      removed: "Artículo de cotización eliminado exitosamente."
+
+  # Organizations
+  organizations:
+    organization_label: "Organización:"
+    messages:
+      created: "Organización creada exitosamente."
+      updated: "Organización actualizada exitosamente."
+      deleted: "Organización eliminada exitosamente."
+    info_title: "Información de la Organización"
+    info_subtitle: "Detalles y configuración de su organización"
+    members: "Miembros de la Organización"
+    manage_users: "Administrar Usuarios"
+    manage_organizations: "Administrar Organizaciones"
+    edit_organization: "Editar Organización"
+    back_to_organization: "Volver a la Organización"
+    back_to_organizations: "Volver a Organizaciones"
+    show_subtitle: "Detalles de la Organización"
+    table:
+      user: "Usuario"
+      email: "Correo electrónico"
+      role: "Rol"
+    attributes:
+      name: "Nombre"
+      email: "Correo electrónico"
+      phone: "Teléfono"
+      tax_id: "RTN"
+      currency: "Moneda"
+      language: "Idioma"
+      address: "Dirección"
+
+  # Organization users
+  organization_users:
+    title: "Administrar Usuarios de la Organización"
+    subtitle: "Agregue y administre usuarios en %{organization}"
+    members: "Miembros de la Organización"
+    members_subtitle: "Administre los usuarios y sus roles en esta organización"
+    add_user: "Agregar Usuario"
+    add_user_to_organization: "Agregar Usuario a la Organización"
+    user_email: "Correo electrónico del usuario"
+    role: "Rol"
+    user: "Usuario"
+    edit_role: "Editar Rol del Usuario"
+    edit_role_subtitle: "Actualice los permisos del usuario en %{organization}"
+    update_role_for: "Actualizar rol para %{name}"
+    joined: "Se unió"
+    remove_confirm: "¿Está seguro de que desea quitar a este usuario?"
+    back_to_organization: "Volver a la Organización"
+    back_to_users: "Volver a Usuarios"
+    update_role: "Actualizar Rol"
+    remove: "Quitar"
+    roles:
+      owner: "Propietario"
+      admin: "Administrador"
+      member: "Miembro"
+
+  # Admin
+  admin:
+    users:
+      title: "Administración de Usuarios"
+      edit_role: "Editar Rol"
+      edit_role_title: "Editar Rol del Usuario"
+      update_role: "Actualizar Rol"
+      no_organization: "Sin organización"
+      table:
+        email: "Correo electrónico"
+        name: "Nombre"
+        organization: "Organización"
+        role: "Rol"
+        actions: "Acciones"
+      labels:
+        email: "Correo electrónico"
+        name: "Nombre"
+        organization: "Organización"
+        role: "Rol"
+
+  # Sign up / Authentication forms
+  signup:
+    title: "Cree su cuenta"
+    organization_name: "Nombre de la Organización"
+    country_currency: "País/Moneda"
+    select_country: "Seleccione un país"
+    email_address: "Correo electrónico"
+    password: "Contraseña"
+    confirm_password: "Confirmar contraseña"
+    sign_up: "Registrarse"
+    already_have_account: "¿Ya tiene una cuenta?"
+    sign_in: "Iniciar sesión"
+
+  signin:
+    title: "Inicie sesión en su cuenta"
+    email_address: "Correo electrónico"
+    password: "Contraseña"
+    sign_in: "Iniciar sesión"
+    forgot_password: "¿Olvidó su contraseña?"
+    no_account: "¿No tiene una cuenta?"
+    sign_up: "Registrarse"
+
+  passwords:
+    reset_title: "Restablecer su contraseña"
+    reset_description: "Ingrese su correo electrónico y le enviaremos un enlace para restablecer su contraseña."
+    set_new_title: "Establecer nueva contraseña"
+    set_new_description: "Cree una nueva contraseña para su cuenta."
+    email_address: "Correo electrónico"
+    new_password: "Nueva contraseña"
+    confirm_new_password: "Confirmar nueva contraseña"
+    send_instructions: "Enviar instrucciones de restablecimiento"
+    update_password: "Actualizar contraseña"
+    back_to_sign_in: "Volver al inicio de sesión"
+    messages:
+      reset_sent: "Se enviaron las instrucciones para restablecer la contraseña (si existe un usuario con ese correo electrónico)."
+      reset_complete: "La contraseña ha sido restablecida."
+      no_match: "Las contraseñas no coinciden."
+      invalid_link: "El enlace para restablecer la contraseña es inválido o ha expirado."
+
   # Users and Authentication
   users:
     title: "Usuarios"
@@ -280,7 +447,8 @@ es:
       profile_updated: "Perfil actualizado exitosamente."
       language_changed: "Idioma cambiado exitosamente."
       in_organization: "en %{organization}"
-  
+      signup_welcome: "¡Bienvenido! Se ha registrado exitosamente."
+
   auth:
     login: "Iniciar sesión"
     logout: "Cerrar sesión"
@@ -293,25 +461,61 @@ es:
       invalid_credentials: "Correo electrónico o contraseña inválidos."
       password_reset_sent: "Se ha enviado un enlace para restablecer su contraseña."
       password_reset_success: "Su contraseña ha sido restablecida exitosamente."
-  
+
+  # Sessions
+  sessions:
+    messages:
+      rate_limited: "Inténtelo de nuevo más tarde."
+      invalid: "Pruebe con otro correo electrónico o contraseña."
+
+  # Invoice items
+  invoice_items:
+    messages:
+      created: "Artículo de factura creado exitosamente."
+      updated: "Artículo de factura actualizado exitosamente."
+      deleted: "Artículo de factura eliminado exitosamente."
+
+  # Invitations
+  invitations:
+    messages:
+      sent: "Invitación enviada exitosamente."
+      joined: "Se ha unido a la organización exitosamente."
+      accepted: "Invitación aceptada exitosamente."
+      need_account: "Por favor cree una cuenta para aceptar la invitación."
+      invalid: "Invitación inválida o expirada."
+      no_permission: "No tiene permisos para administrar invitaciones."
+      not_authorized: "No está autorizado para asignar este rol."
+
+  # Admin messages
+  admin_messages:
+    cannot_modify_role: "No puede modificar el rol de este usuario."
+    cannot_assign_owner: "No puede asignar el rol de propietario."
+    not_authorized_role: "No está autorizado para asignar este rol."
+    role_updated: "Rol del usuario actualizado exitosamente."
+    must_be_admin: "Debe ser administrador para acceder a esta página."
+
   # Languages
   languages:
     en: "Inglés"
     es: "Español"
-    
+
   # Currencies
   currencies:
     USD: "Dólar Estadounidense (USD)"
     HNL: "Lempira Hondureño (HNL)"
     EUR: "Euro (EUR)"
-    
+
+  # Search
+  search:
+    results_found: "Se encontraron %{count} productos que coinciden con '%{search_term}'"
+
   # Time and dates
   time:
     formats:
       default: "%d/%m/%Y %H:%M"
       short: "%d %b %H:%M"
       long: "%d de %B de %Y a las %H:%M"
-  
+
   date:
     formats:
       default: "%d/%m/%Y"
@@ -321,7 +525,7 @@ es:
     abbr_day_names: [dom, lun, mar, mié, jue, vie, sáb]
     month_names: [~, enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
     abbr_month_names: [~, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic]
-    
+
   # Pagination
   views:
     pagination:

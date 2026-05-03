@@ -1,4 +1,4 @@
-<%= render(AuthComponent.new(title_text: "Create your account")) do |auth| %>
+<%= render(AuthComponent.new(title_text: t('signup.title'))) do |auth| %>
   <% if alert = flash[:alert] %>
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
       <span class="block sm:inline"><%= alert %></span>
@@ -10,40 +10,40 @@
       <% form.with_form_content do %>
         <div class="space-y-6">
           <div>
-            <label for="organization_name" class="block text-sm font-medium text-gray-700">Organization Name</label>
+            <label for="organization_name" class="block text-sm font-medium text-gray-700"><%= t('signup.organization_name') %></label>
             <div class="mt-1">
               <input id="organization_name" name="organization[name]" type="text" required autofocus class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
           </div>
 
           <div>
-            <label for="organization_currency" class="block text-sm font-medium text-gray-700">Country/Currency</label>
+            <label for="organization_currency" class="block text-sm font-medium text-gray-700"><%= t('signup.country_currency') %></label>
             <div class="mt-1">
               <select id="organization_currency" name="organization[currency]" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <option value="">Select a country</option>
-                <option value="USD">United States (USD)</option>
-                <option value="HNL">Honduras (HNL)</option>
-                <option value="EUR">European Union (EUR)</option>
+                <option value=""><%= t('signup.select_country') %></option>
+                <option value="USD"><%= t('currencies.USD') %></option>
+                <option value="HNL"><%= t('currencies.HNL') %></option>
+                <option value="EUR"><%= t('currencies.EUR') %></option>
               </select>
             </div>
           </div>
 
           <div>
-            <label for="user_email_address" class="block text-sm font-medium text-gray-700">Email address</label>
+            <label for="user_email_address" class="block text-sm font-medium text-gray-700"><%= t('signup.email_address') %></label>
             <div class="mt-1">
               <input id="user_email_address" name="user[email_address]" type="email" autocomplete="username" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
           </div>
 
           <div>
-            <label for="user_password" class="block text-sm font-medium text-gray-700">Password</label>
+            <label for="user_password" class="block text-sm font-medium text-gray-700"><%= t('signup.password') %></label>
             <div class="mt-1">
               <input id="user_password" name="user[password]" type="password" autocomplete="new-password" required maxlength="72" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
           </div>
 
           <div>
-            <label for="user_password_confirmation" class="block text-sm font-medium text-gray-700">Confirm password</label>
+            <label for="user_password_confirmation" class="block text-sm font-medium text-gray-700"><%= t('signup.confirm_password') %></label>
             <div class="mt-1">
               <input id="user_password_confirmation" name="user[password_confirmation]" type="password" autocomplete="new-password" required maxlength="72" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
@@ -51,7 +51,7 @@
 
           <div>
             <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-              Sign up
+              <%= t('signup.sign_up') %>
             </button>
           </div>
         </div>
@@ -61,8 +61,8 @@
 
   <% auth.with_footer do %>
     <p>
-      Already have an account? 
-      <%= link_to "Sign in", new_session_path, class: "font-medium text-blue-600 hover:text-blue-500" %>
+      <%= t('signup.already_have_account') %>
+      <%= link_to t('signup.sign_in'), new_session_path, class: "font-medium text-blue-600 hover:text-blue-500" %>
     </p>
   <% end %>
 <% end %>
