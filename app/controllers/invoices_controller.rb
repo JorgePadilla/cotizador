@@ -34,7 +34,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params.merge(organization: Current.organization))
 
     if @invoice.save
-      redirect_to @invoice, notice: "Invoice was successfully created."
+      redirect_to @invoice, notice: t("invoices.messages.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -42,7 +42,7 @@ class InvoicesController < ApplicationController
 
   def update
     if @invoice.update(invoice_params)
-      redirect_to @invoice, notice: "Invoice was successfully updated."
+      redirect_to @invoice, notice: t("invoices.messages.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,7 +50,7 @@ class InvoicesController < ApplicationController
 
   def destroy
     @invoice.destroy
-    redirect_to invoices_url, notice: "Invoice was successfully destroyed."
+    redirect_to invoices_url, notice: t("invoices.messages.deleted")
   end
 
   def pdf

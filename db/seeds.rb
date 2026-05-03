@@ -133,8 +133,8 @@ invoices = []
 20.times do |i|
   invoice_number = "INV-2025-#{(i + 1).to_s.rjust(3, '0')}"
   client = Client.all.sample
-  status = ["draft", "pending", "paid", "cancelled"].sample
-  payment_method = ["cash", "credit_card", "bank_transfer", "check"].sample
+  status = [ "draft", "pending", "paid", "cancelled" ].sample
+  payment_method = [ "cash", "credit_card", "bank_transfer", "check" ].sample
 
   invoices << {
     invoice_number: invoice_number,
@@ -195,7 +195,7 @@ quotes = []
 20.times do |i|
   quote_number = "QT-2025-#{(i + 1).to_s.rjust(3, '0')}"
   client = Client.all.sample
-  status = ["draft", "sent", "approved", "rejected", "expired"].sample
+  status = [ "draft", "sent", "approved", "rejected", "expired" ].sample
   valid_until = rand(7..30).days.from_now.to_date
 
   quotes << {

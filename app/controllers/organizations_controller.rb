@@ -24,7 +24,7 @@ class OrganizationsController < ApplicationController
     if @organization.save
       @organization.organization_users.create(user: Current.user, role: "owner")
       Current.user.update(current_organization: @organization)
-      redirect_to organizations_path, notice: "Organization was successfully created."
+      redirect_to organizations_path, notice: t("organizations.messages.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update(organization_params)
-      redirect_to organizations_path, notice: "Organization was successfully updated."
+      redirect_to organizations_path, notice: t("organizations.messages.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class OrganizationsController < ApplicationController
 
   def destroy
     @organization.destroy
-    redirect_to organizations_url, notice: "Organization was successfully destroyed."
+    redirect_to organizations_url, notice: t("organizations.messages.deleted")
   end
 
   private

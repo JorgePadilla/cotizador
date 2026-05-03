@@ -9,7 +9,7 @@ class InvitationsController < ApplicationController
   def create
     # Check if user is authorized to assign the requested role
     unless can_assign_role?(invitation_params[:role])
-      redirect_to new_organization_invitation_path(@organization), alert: "You are not authorized to assign this role."
+      redirect_to new_organization_invitation_path(@organization), alert: t("invitations.messages.not_authorized")
       return
     end
 
@@ -17,7 +17,7 @@ class InvitationsController < ApplicationController
 
     if @invitation.save
       # TODO: Send invitation email
-      redirect_to organization_path(@organization), notice: "Invitation sent successfully."
+      redirect_to organization_path(@organization), notice: t("invitations.messages.sent")
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,17 +35,17 @@ class InvitationsController < ApplicationController
         invitation.update(accepted_at: Time.current)
 
         if user == Current.user
-          redirect_to organizations_path, notice: "You have joined the organization successfully."
+          redirect_to organizations_path, notice: t("invitations.messages.joined")
         else
-          redirect_to root_path, notice: "Invitation accepted successfully."
+          redirect_to root_path, notice: t("invitations.messages.accepted")
         end
       else
         # User doesn't exist yet, redirect to signup with invitation token
         session[:invitation_token] = invitation.token
-        redirect_to signup_path, alert: "Please create an account to accept the invitation."
+        redirect_to signup_path, alert: t("invitations.messages.need_account")
       end
     else
-      redirect_to root_path, alert: "Invalid or expired invitation."
+      redirect_to root_path, alert: t("invitations.messages.invalid")
     end
   end
 
@@ -58,7 +58,7 @@ class InvitationsController < ApplicationController
   def require_organization_owner_or_admin
     organization_user = @organization.organization_users.find_by(user: Current.user)
     unless organization_user&.owner? || organization_user&.admin?
-      redirect_to organizations_path, alert: "You don't have permission to manage invitations."
+      redirect_to organizations_path, alert: t("invitations.messages.no_permission")
     end
   end
 

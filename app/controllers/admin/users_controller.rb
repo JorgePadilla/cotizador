@@ -9,14 +9,14 @@ class Admin::UsersController < ApplicationController
   def edit
     # Prevent admins from editing their own role or roles of other admins/owners
     if cannot_modify_user?(@user)
-      redirect_to admin_users_path, alert: "You cannot modify this user's role."
+      redirect_to admin_users_path, alert: t("admin_messages.cannot_modify_role")
     end
   end
 
   def update
     # Prevent admins from changing their own role or roles of other admins/owners
     if cannot_modify_user?(@user)
-      redirect_to admin_users_path, alert: "You cannot modify this user's role."
+      redirect_to admin_users_path, alert: t("admin_messages.cannot_modify_role")
       return
     end
 
@@ -25,16 +25,16 @@ class Admin::UsersController < ApplicationController
     requested_role = user_params[:role].to_i
     if [ 0, 1, 2 ].include?(requested_role) && !authorized_to_assign_role?(requested_role)
       if !Current.user.owner? && requested_role == 0
-        redirect_to admin_users_path, alert: "You cannot assign owner role."
+        redirect_to admin_users_path, alert: t("admin_messages.cannot_assign_owner")
       else
-        redirect_to admin_users_path, alert: "You are not authorized to assign this role."
+        redirect_to admin_users_path, alert: t("admin_messages.not_authorized_role")
       end
       return
     end
 
     update_params = user_params
     if update_params.present? && @user.update(update_params)
-      redirect_to admin_users_path, notice: "User role updated successfully."
+      redirect_to admin_users_path, notice: t("admin_messages.role_updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -61,7 +61,7 @@ class Admin::UsersController < ApplicationController
 
   def require_admin
     unless Current.user&.admin? || Current.user&.owner?
-      redirect_to root_path, alert: "You must be an admin to access this page."
+      redirect_to root_path, alert: t("admin_messages.must_be_admin")
     end
   end
 

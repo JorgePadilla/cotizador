@@ -31,7 +31,16 @@ en:
   # General
   hello: "Hello world"
   app_name: "Cotizador"
-  
+
+  # Common
+  common:
+    not_available: "Not available"
+    not_set: "Not set"
+    actions: "Actions"
+    created: "Created"
+    yes: "Yes"
+    no: "No"
+
   # Dashboard
   dashboard:
     title: "Dashboard"
@@ -64,18 +73,54 @@ en:
     create_new_invoice: "Create new invoice"
     create_new_quote: "Create new quote"
     add_new_client: "Add new client"
-    
+
+  # Navigation
+  nav:
+    dashboard: "Dashboard"
+    clients: "Clients"
+    suppliers: "Suppliers"
+    products: "Products"
+    invoices: "Invoices"
+    quotes: "Quotes"
+    profile: "Profile"
+    logout: "Logout"
+    login: "Login"
+    register: "Register"
+    language: "Language"
+    admin: "Admin"
+    open_main_menu: "Open main menu"
+
+  # Actions
+  actions:
+    new: "New"
+    edit: "Edit"
+    delete: "Delete"
+    back: "Back"
+    save: "Save"
+    cancel: "Cancel"
+    show: "Show"
+    print: "Print"
+    search: "Search"
+    filter: "Filter"
+    add: "Add"
+    remove: "Remove"
+    remove_item: "Remove item"
+    confirm_delete: "Are you sure you want to delete this?"
+
   # Clients
   clients:
     title: "Clients"
     subtitle: "Manage your client relationships"
     new_client: "New Client"
     new: "New Client"
+    new_subtitle: "Add a new client to your organization"
     edit: "Edit Client"
+    edit_subtitle: "Update client information"
     client_details: "Client Details"
     details: "Client Details"
     list: "Client List"
     back_to_clients: "Back to Clients"
+    back_to_client: "Back to Client"
     no_invoices: "No invoices found for this client."
     delete_client: "Delete Client"
     delete_confirm: "Are you sure you want to delete this client?"
@@ -97,75 +142,48 @@ en:
       updated: "Client was successfully updated."
       destroyed: "Client was successfully destroyed."
       deleted: "Client was successfully deleted."
-  
-  # Navigation
-  nav:
-    dashboard: "Dashboard"
-    clients: "Clients"
-    suppliers: "Suppliers"
-    products: "Products"
-    invoices: "Invoices"
-    quotes: "Quotes"
-    profile: "Profile"
-    logout: "Logout"
-    login: "Login"
-    register: "Register"
-    language: "Language"
-  
-  # Actions
-  actions:
-    new: "New"
-    edit: "Edit"
-    delete: "Delete"
-    back: "Back"
-    save: "Save"
-    cancel: "Cancel"
-    show: "Show"
-    print: "Print"
-    search: "Search"
-    filter: "Filter"
-    add: "Add"
-    remove: "Remove"
-    confirm_delete: "Are you sure you want to delete this?"
-  
-    details: "Client Details"
-    list: "Client List"
-    attributes:
-      name: "Name"
-      rtn: "RTN"
-      address: "Address"
-      phone: "Phone"
-      email: "Email"
-    messages:
-      created: "Client was successfully created."
-      updated: "Client was successfully updated."
-      deleted: "Client was successfully deleted."
-  
+
   # Suppliers
   suppliers:
     title: "Suppliers"
+    subtitle: "Manage your supplier relationships"
     new: "New Supplier"
     edit: "Edit Supplier"
     details: "Supplier Details"
     list: "Supplier List"
+    no_suppliers: "No suppliers"
+    get_started: "Get started by creating a new supplier."
+    back_to_suppliers: "Back to Suppliers"
+    back_to_supplier: "Back to Supplier"
+    delete_supplier: "Delete Supplier"
+    delete_confirm: "Are you sure you want to delete this supplier?"
     attributes:
       name: "Name"
       rtn: "RTN"
-      contact_name: "Contact Name"
+      contact_name: "Contact Person"
       phone: "Phone"
       email: "Email"
+      created_at: "Created At"
+      updated_at: "Last Updated"
     messages:
       created: "Supplier was successfully created."
       updated: "Supplier was successfully updated."
       deleted: "Supplier was successfully deleted."
-  
+
   # Products
   products:
     title: "Products"
+    subtitle: "Manage your product catalog"
     new: "New Product"
     edit: "Edit Product"
     details: "Product Details"
     list: "Product List"
+    no_products: "No products"
+    get_started: "Get started by creating a new product."
+    back_to_product: "Back to Product"
+    delete_product: "Delete Product"
+    delete_confirm: "Are you sure you want to delete this product?"
+    stock_label: "Stock"
     attributes:
       name: "Name"
       sku: "SKU"
@@ -181,21 +199,32 @@ en:
       created: "Product was successfully created."
       updated: "Product was successfully updated."
       deleted: "Product was successfully deleted."
-  
+
   # Invoices
   invoices:
     title: "Invoices"
     invoice: "Invoice"
+    subtitle: "Manage your invoices"
     new: "New Invoice"
     edit: "Edit Invoice"
     details: "Invoice Details"
     list: "Invoice List"
     items: "Invoice Items"
+    items_section: "Invoice Items"
+    no_invoices: "No invoices"
+    get_started: "Get started by creating a new invoice."
     add_item: "Add Item"
     select_client: "Select Client"
     select_product: "Select Product"
     select_payment_method: "Select Payment Method"
     quantity: "Quantity"
+    back_to_invoice: "Back to Invoice"
+    back_to_invoices: "Back to Invoices"
+    all_invoices: "All Invoices"
+    item:
+      product: "Product"
+      quantity: "Quantity"
+      unit_price: "Unit Price"
     attributes:
       invoice_number: "Invoice Number"
       client: "Client"
@@ -233,17 +262,37 @@ en:
     no_items: "No items added to this invoice"
     delete: "Delete Invoice"
     delete_confirm: "Are you sure you want to delete this invoice?"
-  
+
   # Quotes
   quotes:
     title: "Quotes"
+    pdf_title: "Quote"
+    subtitle: "Manage your quotes"
+    quote_number_immutable: "Quote number cannot be changed"
     new: "New Quote"
     edit: "Edit Quote"
     details: "Quote Details"
     list: "Quote List"
     items: "Quote Items"
+    no_quotes: "No quotes found"
+    create_new_quote: "Create your first quote"
+    fill_details: "Fill in the details for the new quote"
     print_to_pdf: "Print to PDF"
     quantity: "Quantity"
+    info_title: "Quote Information"
+    info_subtitle: "Details and items for this quote."
+    view_subtitle: "View and manage quote details"
+    no_client_assigned: "No client assigned"
+    no_product: "No product"
+    add_first_item: "Add your first item"
+    no_items: "No items added to this quote yet."
+    subtotal_label: "Subtotal:"
+    tax_label: "Tax (%{rate}%):"
+    total_label: "Total:"
+    back_to_quotes: "Back to Quotes"
+    delete_quote: "Delete Quote"
+    delete_confirm: "Are you sure you want to delete this quote?"
+    remove_item_confirm: "Are you sure you want to remove this item?"
     attributes:
       quote_number: "Quote Number"
       client: "Client"
@@ -255,6 +304,9 @@ en:
       status: "Status"
       description: "Description"
       unit_price: "Unit Price"
+      quantity: "Quantity"
+      product: "Product"
+      created: "Created"
     statuses:
       draft: "Draft"
       sent: "Sent"
@@ -271,7 +323,136 @@ en:
       created: "Quote was successfully created."
       updated: "Quote was successfully updated."
       deleted: "Quote was successfully deleted."
-  
+
+  # Quote items
+  quote_items:
+    new: "New Quote Item"
+    edit: "Edit Quote Item"
+    add_subtitle: "Add an item to your quote"
+    update_subtitle: "Update item details"
+    details: "Item Details"
+    fill_details: "Fill in the details for the new quote item."
+    update_details: "Update the details for this quote item."
+    description_hint: "Brief description of the item."
+    update_item: "Update Item"
+    messages:
+      added: "Quote item was successfully added."
+      updated: "Quote item was successfully updated."
+      removed: "Quote item was successfully removed."
+
+  # Organizations
+  organizations:
+    organization_label: "Organization:"
+    messages:
+      created: "Organization was successfully created."
+      updated: "Organization was successfully updated."
+      deleted: "Organization was successfully destroyed."
+    info_title: "Organization Information"
+    info_subtitle: "Details and settings for your organization"
+    members: "Organization Members"
+    manage_users: "Manage Users"
+    manage_organizations: "Manage Organizations"
+    edit_organization: "Edit Organization"
+    back_to_organization: "Back to Organization"
+    back_to_organizations: "Back to Organizations"
+    show_subtitle: "Organization Details"
+    table:
+      user: "User"
+      email: "Email"
+      role: "Role"
+    attributes:
+      name: "Name"
+      email: "Email"
+      phone: "Phone"
+      tax_id: "Tax ID"
+      currency: "Currency"
+      language: "Language"
+      address: "Address"
+
+  # Organization users
+  organization_users:
+    title: "Manage Organization Users"
+    subtitle: "Add and manage users in %{organization}"
+    members: "Organization Members"
+    members_subtitle: "Manage users and their roles in this organization"
+    add_user: "Add User"
+    add_user_to_organization: "Add User to Organization"
+    user_email: "User Email"
+    role: "Role"
+    user: "User"
+    edit_role: "Edit User Role"
+    edit_role_subtitle: "Update user permissions in %{organization}"
+    update_role_for: "Update role for %{name}"
+    joined: "Joined"
+    remove_confirm: "Are you sure you want to remove this user?"
+    back_to_organization: "Back to Organization"
+    back_to_users: "Back to Users"
+    update_role: "Update Role"
+    remove: "Remove"
+    roles:
+      owner: "Owner"
+      admin: "Admin"
+      member: "Member"
+
+  # Admin
+  admin:
+    users:
+      title: "User Management"
+      edit_role: "Edit Role"
+      edit_role_title: "Edit User Role"
+      update_role: "Update Role"
+      no_organization: "No organization"
+      table:
+        email: "Email"
+        name: "Name"
+        organization: "Organization"
+        role: "Role"
+        actions: "Actions"
+      labels:
+        email: "Email"
+        name: "Name"
+        organization: "Organization"
+        role: "Role"
+
+  # Sign up / Authentication forms
+  signup:
+    title: "Create your account"
+    organization_name: "Organization Name"
+    country_currency: "Country/Currency"
+    select_country: "Select a country"
+    email_address: "Email address"
+    password: "Password"
+    confirm_password: "Confirm password"
+    sign_up: "Sign up"
+    already_have_account: "Already have an account?"
+    sign_in: "Sign in"
+
+  signin:
+    title: "Sign in to your account"
+    email_address: "Email address"
+    password: "Password"
+    sign_in: "Sign in"
+    forgot_password: "Forgot your password?"
+    no_account: "Don't have an account?"
+    sign_up: "Sign up"
+
+  passwords:
+    reset_title: "Reset your password"
+    reset_description: "Enter your email address and we'll send you a link to reset your password."
+    set_new_title: "Set new password"
+    set_new_description: "Create a new password for your account."
+    email_address: "Email address"
+    new_password: "New password"
+    confirm_new_password: "Confirm new password"
+    send_instructions: "Send reset instructions"
+    update_password: "Update password"
+    back_to_sign_in: "Back to sign in"
+    messages:
+      reset_sent: "Password reset instructions sent (if user with that email address exists)."
+      reset_complete: "Password has been reset."
+      no_match: "Passwords did not match."
+      invalid_link: "Password reset link is invalid or has expired."
+
   # Users and Authentication
   users:
     title: "Users"
@@ -286,6 +467,7 @@ en:
       password_confirmation: "Password Confirmation"
       current_password: "Current Password"
       language: "Language"
+      currency: "Currency"
       default_tax: "Default Tax Rate (%)"
       role: "Role"
     hints:
@@ -294,7 +476,8 @@ en:
       profile_updated: "Profile successfully updated."
       language_changed: "Language successfully changed."
       in_organization: "in %{organization}"
-  
+      signup_welcome: "Welcome! You have signed up successfully."
+
   auth:
     login: "Login"
     logout: "Logout"
@@ -307,27 +490,71 @@ en:
       invalid_credentials: "Invalid email or password."
       password_reset_sent: "Password reset instructions have been sent to your email."
       password_reset_success: "Your password has been reset successfully."
-  
+
+  # Sessions
+  sessions:
+    messages:
+      rate_limited: "Try again later."
+      invalid: "Try another email address or password."
+
+  # Invoice items
+  invoice_items:
+    messages:
+      created: "Invoice item was successfully created."
+      updated: "Invoice item was successfully updated."
+      deleted: "Invoice item was successfully removed."
+
+  # Invitations
+  invitations:
+    messages:
+      sent: "Invitation sent successfully."
+      joined: "You have joined the organization successfully."
+      accepted: "Invitation accepted successfully."
+      need_account: "Please create an account to accept the invitation."
+      invalid: "Invalid or expired invitation."
+      no_permission: "You don't have permission to manage invitations."
+      not_authorized: "You are not authorized to assign this role."
+
+  # Admin messages
+  admin_messages:
+    cannot_modify_role: "You cannot modify this user's role."
+    cannot_assign_owner: "You cannot assign owner role."
+    not_authorized_role: "You are not authorized to assign this role."
+    role_updated: "User role updated successfully."
+    must_be_admin: "You must be an admin to access this page."
+
   # Languages
   languages:
     en: "English"
     es: "Spanish"
 
+  # Currencies
+  currencies:
+    USD: "United States Dollar (USD)"
+    HNL: "Honduran Lempira (HNL)"
+    EUR: "Euro (EUR)"
+
   # Search
   search:
     results_found: "Found %{count} products matching '%{search_term}'"
 
-  # Common
-  common:
-    not_available: "Not available"
-    
   # Time and dates
   time:
     formats:
       default: "%m/%d/%Y %H:%M"
       short: "%b %d %H:%M"
       long: "%B %d, %Y at %H:%M"
-  
+
+  date:
+    formats:
+      default: "%m/%d/%Y"
+      short: "%b %d"
+      long: "%B %d, %Y"
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+
   # Pagination
   views:
     pagination:
@@ -339,6 +566,7 @@ en:
 
   # Errors and flash messages
   errors:
+    title: "Error"
     format: "%{attribute} %{message}"
     messages:
       blank: "can't be blank"
@@ -353,3 +581,4 @@ en:
       greater_than_or_equal_to: "must be greater than or equal to %{count}"
       less_than: "must be less than %{count}"
       less_than_or_equal_to: "must be less than or equal to %{count}"
+      prohibited_save: "%{count} error(s) prohibited this record from being saved:"
