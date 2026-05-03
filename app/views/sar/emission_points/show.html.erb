@@ -1,0 +1,51 @@
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex justify-between items-start mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">
+        <%= @establishment.codigo %>-<%= @emission_point.codigo %>
+      </h1>
+      <p class="text-sm text-gray-600"><%= @emission_point.descripcion %></p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to t("actions.edit"), edit_sar_establishment_emission_point_path(@establishment, @emission_point),
+                  class: "px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm" %>
+      <%= button_to t("actions.delete"), sar_establishment_emission_point_path(@establishment, @emission_point),
+                    method: :delete, data: { turbo_confirm: t("actions.confirm_delete") },
+                    class: "px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-sm" %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow sm:rounded-md p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-gray-900"><%= t("sar.cai_authorizations.title") %></h2>
+      <%= link_to t("sar.cai_authorizations.new"), new_sar_cai_authorization_path(emission_point_id: @emission_point.id),
+                  class: "px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md" %>
+    </div>
+
+    <% if @cai_authorizations.any? %>
+      <table class="min-w-full text-sm">
+        <thead class="text-left text-gray-500">
+          <tr><th class="py-2"><%= t("sar.cai_authorizations.attributes.document_type") %></th>
+              <th><%= t("sar.cai_authorizations.attributes.cai") %></th>
+              <th><%= t("sar.cai_authorizations.attributes.range") %></th>
+              <th><%= t("sar.cai_authorizations.attributes.fecha_limite_emision") %></th>
+              <th><%= t("sar.cai_authorizations.attributes.active") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cai_authorizations.each do |cai| %>
+            <tr class="border-t">
+              <td class="py-2"><%= cai.document_type.name %></td>
+              <td class="font-mono text-xs"><%= link_to cai.cai, sar_cai_authorization_path(cai), class: "text-blue-600" %></td>
+              <td><%= cai.correlativo_actual %> / <%= cai.rango_final %></td>
+              <td><%= cai.fecha_limite_emision %></td>
+              <td><%= cai.active? ? t("common.yes") : t("common.no") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-gray-500 text-center py-6"><%= t("sar.cai_authorizations.empty") %></p>
+    <% end %>
+  </div>
+</div>

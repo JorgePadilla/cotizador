@@ -584,3 +584,61 @@ en:
       less_than: "must be less than %{count}"
       less_than_or_equal_to: "must be less than or equal to %{count}"
       prohibited_save: "%{count} error(s) prohibited this record from being saved:"
+
+  # SAR fiscal configuration (Acuerdo 481-2017)
+  sar:
+    nav: "Fiscal configuration"
+    establishments:
+      title: "Establishments"
+      new: "New establishment"
+      edit: "Edit establishment"
+      empty: "No establishments yet."
+      codigo_help: "3-digit SAR code (e.g. 001)."
+      attributes:
+        codigo: "Code"
+        nombre: "Name"
+        address: "Address"
+        phone: "Phone"
+        active: "Active"
+      messages:
+        created: "Establishment created."
+        updated: "Establishment updated."
+        deleted: "Establishment deleted."
+    emission_points:
+      title: "Emission points"
+      new: "New emission point"
+      edit: "Edit emission point"
+      empty: "No emission points yet."
+      attributes:
+        codigo: "Code"
+        descripcion: "Description"
+        active: "Active"
+      messages:
+        created: "Emission point created."
+        updated: "Emission point updated."
+        deleted: "Emission point deleted."
+    cai_authorizations:
+      title: "CAI authorizations"
+      new: "New CAI authorization"
+      edit: "Edit CAI authorization"
+      empty: "No CAI authorizations yet."
+      cai_help: "37-character CAI assigned by SAR (format XXXXXX-XXXXXX-...-X)."
+      days: "days"
+      attributes:
+        emission_point: "Emission point"
+        document_type: "Document type"
+        cai: "CAI"
+        rango_inicial: "Initial number"
+        rango_final: "Final number"
+        range: "Range used"
+        correlativo_actual: "Last issued"
+        restantes: "Remaining"
+        fecha_limite_emision: "Issuance deadline"
+        fecha_resolucion: "Resolution date"
+        numero_resolucion: "Resolution number"
+        active: "Active"
+      messages:
+        created: "CAI authorization created."
+        updated: "CAI authorization updated."
+        deleted: "CAI authorization deleted."
+        cannot_delete_used: "This CAI has already issued documents and cannot be deleted."

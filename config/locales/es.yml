@@ -555,3 +555,61 @@ es:
       less_than: "debe ser menor que %{count}"
       less_than_or_equal_to: "debe ser menor o igual a %{count}"
       prohibited_save: "%{count} error(es) impidieron que este registro se guardara:"
+
+  # Configuración fiscal SAR (Acuerdo 481-2017)
+  sar:
+    nav: "Configuración fiscal"
+    establishments:
+      title: "Establecimientos"
+      new: "Nuevo establecimiento"
+      edit: "Editar establecimiento"
+      empty: "Aún no hay establecimientos."
+      codigo_help: "Código de 3 dígitos asignado por SAR (ej. 001)."
+      attributes:
+        codigo: "Código"
+        nombre: "Nombre"
+        address: "Dirección"
+        phone: "Teléfono"
+        active: "Activo"
+      messages:
+        created: "Establecimiento creado."
+        updated: "Establecimiento actualizado."
+        deleted: "Establecimiento eliminado."
+    emission_points:
+      title: "Puntos de emisión"
+      new: "Nuevo punto de emisión"
+      edit: "Editar punto de emisión"
+      empty: "Aún no hay puntos de emisión."
+      attributes:
+        codigo: "Código"
+        descripcion: "Descripción"
+        active: "Activo"
+      messages:
+        created: "Punto de emisión creado."
+        updated: "Punto de emisión actualizado."
+        deleted: "Punto de emisión eliminado."
+    cai_authorizations:
+      title: "Autorizaciones CAI"
+      new: "Nueva autorización CAI"
+      edit: "Editar autorización CAI"
+      empty: "Aún no hay autorizaciones CAI."
+      cai_help: "CAI de 37 caracteres asignado por SAR (formato XXXXXX-XXXXXX-...-X)."
+      days: "días"
+      attributes:
+        emission_point: "Punto de emisión"
+        document_type: "Tipo de documento"
+        cai: "CAI"
+        rango_inicial: "Número inicial"
+        rango_final: "Número final"
+        range: "Rango usado"
+        correlativo_actual: "Último emitido"
+        restantes: "Restantes"
+        fecha_limite_emision: "Fecha límite de emisión"
+        fecha_resolucion: "Fecha de resolución"
+        numero_resolucion: "Número de resolución"
+        active: "Activo"
+      messages:
+        created: "Autorización CAI creada."
+        updated: "Autorización CAI actualizada."
+        deleted: "Autorización CAI eliminada."
+        cannot_delete_used: "Este CAI ya emitió documentos y no se puede eliminar."

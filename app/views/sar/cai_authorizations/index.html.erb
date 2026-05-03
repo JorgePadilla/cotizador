@@ -1,0 +1,40 @@
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900"><%= t("sar.cai_authorizations.title") %></h1>
+    <%= link_to t("sar.cai_authorizations.new"), new_sar_cai_authorization_path,
+                class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm" %>
+  </div>
+
+  <% if @cai_authorizations.any? %>
+    <div class="bg-white shadow sm:rounded-md overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-50 text-left text-gray-600">
+          <tr>
+            <th class="px-3 py-2"><%= t("sar.cai_authorizations.attributes.emission_point") %></th>
+            <th><%= t("sar.cai_authorizations.attributes.document_type") %></th>
+            <th><%= t("sar.cai_authorizations.attributes.cai") %></th>
+            <th class="text-right"><%= t("sar.cai_authorizations.attributes.range") %></th>
+            <th><%= t("sar.cai_authorizations.attributes.fecha_limite_emision") %></th>
+            <th><%= t("sar.cai_authorizations.attributes.active") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cai_authorizations.each do |cai| %>
+            <tr class="border-t hover:bg-gray-50">
+              <td class="px-3 py-2"><%= cai.emission_point.establishment.codigo %>-<%= cai.emission_point.codigo %></td>
+              <td><%= cai.document_type.name %></td>
+              <td class="font-mono text-xs"><%= link_to cai.cai, sar_cai_authorization_path(cai), class: "text-blue-600" %></td>
+              <td class="text-right"><%= cai.correlativo_actual %> / <%= cai.rango_final %></td>
+              <td class="<%= cai.dias_para_expirar.to_i <= 30 ? 'text-red-600 font-medium' : '' %>">
+                <%= cai.fecha_limite_emision %>
+              </td>
+              <td><%= cai.active? ? t("common.yes") : t("common.no") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-gray-500 text-center py-12"><%= t("sar.cai_authorizations.empty") %></p>
+  <% end %>
+</div>
