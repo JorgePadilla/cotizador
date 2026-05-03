@@ -1,5 +1,6 @@
 require "prawn"
 require "prawn/measurement_extensions"
+require "prawn/table"
 
 class InvoicePdf < Prawn::Document
   def initialize(invoice, locale = :en)
@@ -11,23 +12,21 @@ class InvoicePdf < Prawn::Document
   end
 
   def generate_content
-    # Add the company logo and header
-    header
-
-    # Add invoice information
-    invoice_details
-
-    # Add client information
-    client_details
-
-    # Add invoice items table
-    invoice_items_table
-
-    # Add totals
-    totals
-
-    # Add footer with terms and conditions
-    footer
+    if @invoice.fiscal?
+      sar_header
+      sar_invoice_details
+      client_details
+      invoice_items_table
+      sar_totals
+      sar_footer
+    else
+      header
+      invoice_details
+      client_details
+      invoice_items_table
+      totals
+      footer
+    end
   end
 
   private
@@ -149,6 +148,68 @@ class InvoicePdf < Prawn::Document
     # Add page numbers
     number_pages I18n.t("invoices.page_numbers"),
                  { start_count_at: 1, page_filter: :all, at: [bounds.right - 150, 0], align: :right, size: 9 }
+  end
+
+  def sar_header
+    org = @invoice.organization
+    text org.name, size: 18, style: :bold
+    text org.nombre_comercial, size: 11 if org.nombre_comercial.present?
+    text "RTN: #{org.rtn}", size: 10
+    text(org.casa_matriz_address.presence || org.address.to_s, size: 10)
+    if @invoice.establishment
+      text "#{@invoice.establishment.nombre} — #{@invoice.establishment.address}", size: 9
+    end
+    move_down 8
+    text I18n.t("invoices.sar.kinds.#{@invoice.invoice_kind}"), size: 18, style: :bold
+    move_down 12
+  end
+
+  def sar_invoice_details
+    bounding_box([0, cursor], width: 540) do
+      bounding_box([0, cursor], width: 270) do
+        text "#{I18n.t('invoices.sar.correlativo')}: #{@invoice.correlativo}", size: 11, style: :bold
+        text "#{I18n.t('invoices.attributes.date')}: #{format_date(@invoice.invoice_date || @invoice.created_at)}", size: 10
+        if @invoice.original_invoice
+          text "#{I18n.t('invoices.sar.original_document')}: #{@invoice.original_invoice.correlativo}", size: 10
+        end
+      end
+      bounding_box([280, cursor + 50], width: 260) do
+        cai = @invoice.cai_authorization
+        text "#{I18n.t('invoices.sar.cai')}:", size: 9
+        text cai.cai, size: 9, style: :bold
+        text "#{I18n.t('invoices.sar.fecha_limite')}: #{cai.fecha_limite_emision}", size: 9
+        text "#{I18n.t('invoices.sar.rango_autorizado')}: #{cai.rango_inicial} – #{cai.rango_final}", size: 9
+      end
+    end
+    move_down 18
+  end
+
+  def sar_totals
+    rows = []
+    rows << [ "#{I18n.t('invoices.sar.importe_exento')}:", format_currency(@invoice.importe_exento) ]    if @invoice.importe_exento.to_f.nonzero?
+    rows << [ "#{I18n.t('invoices.sar.importe_exonerado')}:", format_currency(@invoice.importe_exonerado) ] if @invoice.importe_exonerado.to_f.nonzero?
+    rows << [ "#{I18n.t('invoices.sar.gravado_15')}:", format_currency(@invoice.gravado_15) ] if @invoice.gravado_15.to_f.nonzero?
+    rows << [ "#{I18n.t('invoices.sar.gravado_18')}:", format_currency(@invoice.gravado_18) ] if @invoice.gravado_18.to_f.nonzero?
+    rows << [ "#{I18n.t('invoices.sar.isv_15')}:", format_currency(@invoice.isv_15) ] if @invoice.isv_15.to_f.nonzero?
+    rows << [ "#{I18n.t('invoices.sar.isv_18')}:", format_currency(@invoice.isv_18) ] if @invoice.isv_18.to_f.nonzero?
+    rows << [ "#{I18n.t('invoices.sar.descuento')}:", format_currency(@invoice.descuento_total) ] if @invoice.descuento_total.to_f.nonzero?
+    rows << [ "#{I18n.t('invoices.sar.total_a_pagar')}:", format_currency(@invoice.total) ]
+
+    bounding_box([300, cursor], width: 250) do
+      table(rows) do |t|
+        t.cell_style = { padding: [ 4, 8, 4, 8 ], borders: [] }
+        t.columns(1).align = :right
+        t.row(rows.size - 1).font_style = :bold
+      end
+    end
+    move_down 24
+  end
+
+  def sar_footer
+    move_down 10
+    text I18n.t("invoices.sar.legend"), size: 11, style: :italic, align: :center
+    number_pages I18n.t("invoices.page_numbers"),
+                 { start_count_at: 1, page_filter: :all, at: [ bounds.right - 150, 0 ], align: :right, size: 9 }
   end
 
   def format_date(date)
