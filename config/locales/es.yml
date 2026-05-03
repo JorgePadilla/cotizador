@@ -263,6 +263,22 @@ es:
       immutable_warning: "Esta factura ya fue emitida. Solo se pueden cambiar estado y forma de pago."
       cannot_destroy_create_credit_note: "Las facturas emitidas no se pueden eliminar. Cree una nota de crédito en su lugar."
 
+  credit_notes:
+    new: "Nueva nota de crédito"
+    create: "Crear nota de crédito"
+    creating_from: "Creando nota de crédito para la factura"
+    messages:
+      created: "Nota de crédito creada."
+      original_required: "Se requiere una factura original para crear una nota de crédito."
+
+  debit_notes:
+    new: "Nueva nota de débito"
+    create: "Crear nota de débito"
+    creating_from: "Creando nota de débito para la factura"
+    messages:
+      created: "Nota de débito creada."
+      original_required: "Se requiere una factura original para crear una nota de débito."
+
   # Quotes
   quotes:
     title: "Cotizaciones"

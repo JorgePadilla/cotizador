@@ -9,6 +9,12 @@
     </h1>
     <div class="flex space-x-3">
       <%= link_to t('actions.back'), invoices_path, class: "text-blue-600 hover:text-blue-800" %>
+      <% if @invoice.fiscal? && @invoice.invoice_kind == "invoice" %>
+        <%= link_to t("credit_notes.new"), new_credit_note_path(original_invoice_id: @invoice.id),
+                    class: "bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded" %>
+        <%= link_to t("debit_notes.new"), new_debit_note_path(original_invoice_id: @invoice.id),
+                    class: "bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded" %>
+      <% end %>
       <% unless @invoice.immutable? %>
         <%= link_to t('actions.edit'), edit_invoice_path(@invoice), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
       <% end %>

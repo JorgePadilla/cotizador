@@ -292,6 +292,22 @@ en:
       immutable_warning: "This invoice has already been issued. Only status and payment method can be changed."
       cannot_destroy_create_credit_note: "Issued invoices cannot be deleted. Create a credit note instead."
 
+  credit_notes:
+    new: "New credit note"
+    create: "Create credit note"
+    creating_from: "Creating credit note for invoice"
+    messages:
+      created: "Credit note created."
+      original_required: "An original invoice is required to create a credit note."
+
+  debit_notes:
+    new: "New debit note"
+    create: "Create debit note"
+    creating_from: "Creating debit note for invoice"
+    messages:
+      created: "Debit note created."
+      original_required: "An original invoice is required to create a debit note."
+
   # Quotes
   quotes:
     title: "Quotes"

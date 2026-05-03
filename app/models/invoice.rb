@@ -7,13 +7,13 @@ class Invoice < ApplicationRecord
 
   self.inheritance_column = :invoice_kind
 
-  STI_NAMES = { "Invoice" => "invoice" }.freeze
+  STI_NAMES = { "Invoice" => "invoice", "CreditNote" => "credit_note", "DebitNote" => "debit_note" }.freeze
 
   def self.find_sti_class(type_name)
     case type_name
     when "invoice"     then Invoice
-    when "credit_note" then "CreditNote".safe_constantize || Invoice
-    when "debit_note"  then "DebitNote".safe_constantize || Invoice
+    when "credit_note" then CreditNote
+    when "debit_note"  then DebitNote
     else super
     end
   end
@@ -31,6 +31,8 @@ class Invoice < ApplicationRecord
   belongs_to :original_invoice, class_name: "Invoice", optional: true
   has_many :invoice_items, dependent: :destroy
   has_many :products, through: :invoice_items
+  has_many :credit_notes, foreign_key: :original_invoice_id, class_name: "CreditNote", dependent: :restrict_with_error
+  has_many :debit_notes, foreign_key: :original_invoice_id, class_name: "DebitNote", dependent: :restrict_with_error
 
   accepts_nested_attributes_for :invoice_items, allow_destroy: true, reject_if: proc { |attrs| attrs["product_id"].blank? }
 

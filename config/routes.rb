@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     resources :cai_authorizations
   end
 
+  # SAR credit / debit notes (linked to original invoice)
+  resources :credit_notes, only: [ :new, :create, :show ]
+  resources :debit_notes, only: [ :new, :create, :show ]
+
   # Invoices and invoice items
   resources :invoices do
     resources :invoice_items, shallow: true
