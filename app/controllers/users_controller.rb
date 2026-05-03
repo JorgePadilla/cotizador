@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       @session = @user.sessions.create!
       cookies.signed.permanent[:session_token] = { value: @session.id, httponly: true }
 
-      redirect_to root_path, notice: t('users.messages.signup_welcome')
+      redirect_to root_path, notice: t("users.messages.signup_welcome")
     else
       # Clean up organization if user fails to save
       organization.destroy if organization.persisted?

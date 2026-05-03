@@ -27,7 +27,7 @@ class QuotesController < ApplicationController
     @quote = Quote.new(quote_params.merge(organization: Current.organization))
 
     if @quote.save
-      redirect_to @quote, notice: t('quotes.messages.created')
+      redirect_to @quote, notice: t("quotes.messages.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class QuotesController < ApplicationController
 
   def update
     if @quote.update(quote_params)
-      redirect_to @quote, notice: t('quotes.messages.updated')
+      redirect_to @quote, notice: t("quotes.messages.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,7 +46,7 @@ class QuotesController < ApplicationController
 
   def destroy
     @quote.destroy
-    redirect_to quotes_url, notice: t('quotes.messages.deleted')
+    redirect_to quotes_url, notice: t("quotes.messages.deleted")
   end
 
   def pdf

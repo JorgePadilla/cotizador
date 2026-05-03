@@ -20,7 +20,7 @@ class InvoiceItemsController < ApplicationController
     @invoice_item = @invoice.invoice_items.build(invoice_item_params)
 
     if @invoice_item.save
-      redirect_to invoice_url(@invoice), notice: t('invoice_items.messages.created')
+      redirect_to invoice_url(@invoice), notice: t("invoice_items.messages.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class InvoiceItemsController < ApplicationController
 
   def update
     if @invoice_item.update(invoice_item_params)
-      redirect_to invoice_url(@invoice_item.invoice), notice: t('invoice_items.messages.updated')
+      redirect_to invoice_url(@invoice_item.invoice), notice: t("invoice_items.messages.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class InvoiceItemsController < ApplicationController
   def destroy
     invoice = @invoice_item.invoice
     @invoice_item.destroy
-    redirect_to invoice_url(invoice), notice: t('invoice_items.messages.deleted')
+    redirect_to invoice_url(invoice), notice: t("invoice_items.messages.deleted")
   end
 
   private

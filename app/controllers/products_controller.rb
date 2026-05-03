@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params.merge(organization: Current.organization))
 
     if @product.save
-      redirect_to @product, notice: t('products.messages.created')
+      redirect_to @product, notice: t("products.messages.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to @product, notice: t('products.messages.updated')
+      redirect_to @product, notice: t("products.messages.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to products_url, notice: t('products.messages.deleted')
+    redirect_to products_url, notice: t("products.messages.deleted")
   end
 
   private

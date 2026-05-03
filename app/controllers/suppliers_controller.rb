@@ -19,7 +19,7 @@ class SuppliersController < ApplicationController
     @supplier = Supplier.new(supplier_params.merge(organization: Current.organization))
 
     if @supplier.save
-      redirect_to @supplier, notice: t('suppliers.messages.created')
+      redirect_to @supplier, notice: t("suppliers.messages.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class SuppliersController < ApplicationController
 
   def update
     if @supplier.update(supplier_params)
-      redirect_to @supplier, notice: t('suppliers.messages.updated')
+      redirect_to @supplier, notice: t("suppliers.messages.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class SuppliersController < ApplicationController
 
   def destroy
     @supplier.destroy
-    redirect_to suppliers_url, notice: t('suppliers.messages.deleted')
+    redirect_to suppliers_url, notice: t("suppliers.messages.deleted")
   end
 
   private

@@ -10,7 +10,7 @@ class QuoteItemsController < ApplicationController
     @quote_item = @quote.quote_items.build(quote_item_params)
 
     if @quote_item.save
-      redirect_to quote_url(@quote), notice: t('quote_items.messages.added')
+      redirect_to quote_url(@quote), notice: t("quote_items.messages.added")
     else
       render :new, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class QuoteItemsController < ApplicationController
 
   def update
     if @quote_item.update(quote_item_params)
-      redirect_to quote_url(@quote_item.quote), notice: t('quote_items.messages.updated')
+      redirect_to quote_url(@quote_item.quote), notice: t("quote_items.messages.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class QuoteItemsController < ApplicationController
   def destroy
     quote = @quote_item.quote
     @quote_item.destroy
-    redirect_to quote_url(quote), notice: t('quote_items.messages.removed')
+    redirect_to quote_url(quote), notice: t("quote_items.messages.removed")
   end
 
   private
