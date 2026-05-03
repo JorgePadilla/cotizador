@@ -308,6 +308,15 @@ en:
       created: "Debit note created."
       original_required: "An original invoice is required to create a debit note."
 
+  mailers:
+    cai_alert:
+      subject: "CAI nearing expiration: %{cai}"
+      heading: "CAI authorization warning"
+      greeting: "Hello %{name},"
+      body_html: "Your CAI authorization <strong>%{cai}</strong> needs attention. It expires on <strong>%{deadline}</strong> (%{days} days remaining) and you have <strong>%{remaining}</strong> of <strong>%{range_final}</strong> correlative numbers left."
+      body_text: "Your CAI authorization %{cai} needs attention. It expires on %{deadline} (%{days} days remaining) and you have %{remaining} of %{range_final} correlative numbers left."
+      footer: "Please request a new CAI from SAR before the existing one expires or runs out, otherwise issuance will be blocked."
+
   # Quotes
   quotes:
     title: "Quotes"

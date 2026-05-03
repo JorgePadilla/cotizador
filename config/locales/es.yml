@@ -279,6 +279,15 @@ es:
       created: "Nota de débito creada."
       original_required: "Se requiere una factura original para crear una nota de débito."
 
+  mailers:
+    cai_alert:
+      subject: "CAI próximo a vencer: %{cai}"
+      heading: "Aviso de autorización CAI"
+      greeting: "Hola %{name},"
+      body_html: "Su autorización CAI <strong>%{cai}</strong> requiere atención. Vence el <strong>%{deadline}</strong> (%{days} días restantes) y le quedan <strong>%{remaining}</strong> de <strong>%{range_final}</strong> números correlativos."
+      body_text: "Su autorización CAI %{cai} requiere atención. Vence el %{deadline} (%{days} días restantes) y le quedan %{remaining} de %{range_final} números correlativos."
+      footer: "Por favor solicite un nuevo CAI al SAR antes de que el actual venza o se agote, de lo contrario la emisión será bloqueada."
+
   # Quotes
   quotes:
     title: "Cotizaciones"

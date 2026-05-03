@@ -1,0 +1,15 @@
+<h2><%= t("mailers.cai_alert.heading") %></h2>
+
+<p><%= t("mailers.cai_alert.greeting", name: @user.name) %></p>
+
+<p><%= t("mailers.cai_alert.body_html", cai: @cai.cai,
+        days: @days_remaining, deadline: @cai.fecha_limite_emision,
+        remaining: @restantes, range_final: @cai.rango_final).html_safe %></p>
+
+<p>
+  <strong><%= t("invoices.sar.cai") %>:</strong> <%= @cai.cai %><br>
+  <strong><%= t("sar.cai_authorizations.attributes.fecha_limite_emision") %>:</strong> <%= @cai.fecha_limite_emision %><br>
+  <strong><%= t("sar.cai_authorizations.attributes.restantes") %>:</strong> <%= @restantes %> / <%= @cai.rango_final %>
+</p>
+
+<p><%= t("mailers.cai_alert.footer") %></p>
