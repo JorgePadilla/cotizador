@@ -1,0 +1,39 @@
+<% content_for :title, t("settings.team.edit_role_title") %>
+
+<%= settings_card t("settings.team.edit_role_title") do %>
+  <%= form_with model: @user, url: settings_team_member_path(@user), method: :patch, class: "space-y-4" do |f| %>
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 text-sm">
+      <div>
+        <dt class="text-gray-500"><%= t("activerecord.attributes.user.email_address") %></dt>
+        <dd class="text-gray-900 font-medium"><%= @user.email_address %></dd>
+      </div>
+      <div>
+        <dt class="text-gray-500"><%= t("activerecord.attributes.user.name") %></dt>
+        <dd class="text-gray-900"><%= @user.name %></dd>
+      </div>
+      <div>
+        <dt class="text-gray-500"><%= t("settings.sidebar.organization") %></dt>
+        <dd class="text-gray-900"><%= @user.organization&.name || t("settings.team.no_organization") %></dd>
+      </div>
+    </dl>
+
+    <div>
+      <%= f.label :role, t("activerecord.attributes.user.role"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :role,
+                   options_for_select([
+                     [ t("organization_users.roles.owner"),  0 ],
+                     [ t("organization_users.roles.admin"),  1 ],
+                     [ t("organization_users.roles.member"), 2 ]
+                   ], @user.role),
+                   {},
+                   class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm py-2 px-3" %>
+    </div>
+
+    <div class="flex justify-end gap-3 pt-2">
+      <%= link_to t("actions.cancel"), settings_team_members_path,
+                  class: "px-4 py-2 border border-gray-300 rounded-md text-sm" %>
+      <%= f.submit t("settings.team.update_role"),
+                   class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium" %>
+    </div>
+  <% end %>
+<% end %>

@@ -652,6 +652,19 @@ es:
       rtn_help: "RTN de 14 dígitos asignado por el SAR."
       messages:
         updated: "Organización actualizada exitosamente."
+    team:
+      title: "Equipo"
+      members: "Miembros del equipo"
+      no_organization: "Sin organización"
+      edit_role: "Editar rol"
+      edit_role_title: "Editar rol del usuario"
+      update_role: "Actualizar rol"
+      table:
+        email: "Correo"
+        name: "Nombre"
+        organization: "Organización"
+        role: "Rol"
+        actions: "Acciones"
 
   # Configuración fiscal SAR (Acuerdo 481-2017)
   sar:

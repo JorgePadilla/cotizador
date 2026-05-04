@@ -681,6 +681,19 @@ en:
       rtn_help: "14-digit RTN assigned by SAR."
       messages:
         updated: "Organization updated."
+    team:
+      title: "Team"
+      members: "Team members"
+      no_organization: "No organization"
+      edit_role: "Edit role"
+      edit_role_title: "Edit user role"
+      update_role: "Update role"
+      table:
+        email: "Email"
+        name: "Name"
+        organization: "Organization"
+        role: "Role"
+        actions: "Actions"
 
   # SAR fiscal configuration (Acuerdo 481-2017)
   sar:
