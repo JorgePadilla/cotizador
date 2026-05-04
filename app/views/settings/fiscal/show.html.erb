@@ -1,0 +1,149 @@
+<% content_for :title, t("settings.fiscal.title") %>
+
+<div class="bg-white shadow-sm rounded-lg p-6 mb-6">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <h2 class="text-lg font-semibold text-gray-900"><%= t("settings.fiscal.title") %></h2>
+      <p class="text-sm text-gray-500 mt-1"><%= t("settings.fiscal.subtitle") %></p>
+    </div>
+    <%= link_to new_settings_establishment_path,
+                class: "shrink-0 inline-flex items-center gap-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md" do %>
+      <%= sidebar_icon("plus") %>
+      <%= t("settings.fiscal.new_establishment") %>
+    <% end %>
+  </div>
+</div>
+
+<% if @establishments.empty? %>
+  <div class="bg-white shadow-sm rounded-lg p-12 text-center">
+    <div class="mx-auto w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+      <%= sidebar_icon("building") %>
+    </div>
+    <h3 class="text-base font-semibold text-gray-900 mb-1"><%= t("settings.fiscal.empty_establishments") %></h3>
+    <p class="text-sm text-gray-500 mb-4"><%= t("settings.fiscal.empty_establishments_help") %></p>
+    <%= link_to t("settings.fiscal.new_establishment"), new_settings_establishment_path,
+                class: "inline-flex items-center gap-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md" %>
+  </div>
+<% else %>
+  <div class="space-y-4">
+    <% @establishments.each_with_index do |est, i| %>
+      <details class="bg-white shadow-sm rounded-lg" <%= "open" if i.zero? %>>
+        <summary class="cursor-pointer list-none px-6 py-4 flex items-center justify-between hover:bg-gray-50 rounded-t-lg">
+          <div class="flex items-center gap-3">
+            <span class="text-gray-400 transition-transform group-open:rotate-90">▸</span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-gray-900"><%= est.codigo %> — <%= est.nombre %></span>
+                <% unless est.active? %>
+                  <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded"><%= t("settings.fiscal.inactive") %></span>
+                <% end %>
+              </div>
+              <div class="text-xs text-gray-500"><%= est.address.presence || t("common.not_set") %></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <%= link_to t("actions.edit"), edit_settings_establishment_path(est),
+                        class: "text-blue-600 hover:text-blue-800",
+                        onclick: "event.stopPropagation()" %>
+            <%= button_to t("actions.delete"), settings_establishment_path(est), method: :delete,
+                          form: { class: "inline", data: { turbo_confirm: t("actions.confirm_delete") } },
+                          class: "text-red-600 hover:text-red-800",
+                          onclick: "event.stopPropagation()" %>
+          </div>
+        </summary>
+
+        <div class="border-t px-6 py-4 space-y-4">
+          <% if est.emission_points.empty? %>
+            <div class="text-center py-6 bg-gray-50 rounded-md">
+              <p class="text-sm text-gray-500 mb-3"><%= t("settings.fiscal.empty_emission_points") %></p>
+              <%= link_to t("settings.fiscal.new_emission_point"),
+                          new_settings_establishment_emission_point_path(est),
+                          class: "inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-md" %>
+            </div>
+          <% else %>
+            <% est.emission_points.each do |ep| %>
+              <details class="border border-gray-200 rounded-md" open>
+                <summary class="cursor-pointer list-none px-4 py-3 flex items-center justify-between hover:bg-gray-50 rounded-t-md">
+                  <div class="flex items-center gap-2">
+                    <span class="text-gray-400">▸</span>
+                    <span class="font-medium text-gray-800 text-sm"><%= est.codigo %>-<%= ep.codigo %></span>
+                    <span class="text-xs text-gray-500"><%= ep.descripcion %></span>
+                    <% unless ep.active? %>
+                      <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded"><%= t("settings.fiscal.inactive") %></span>
+                    <% end %>
+                  </div>
+                  <div class="flex items-center gap-2 text-xs">
+                    <%= link_to t("actions.edit"), edit_settings_establishment_emission_point_path(est, ep),
+                                class: "text-blue-600 hover:text-blue-800" %>
+                    <%= button_to t("actions.delete"), settings_establishment_emission_point_path(est, ep), method: :delete,
+                                  form: { class: "inline", data: { turbo_confirm: t("actions.confirm_delete") } },
+                                  class: "text-red-600 hover:text-red-800" %>
+                  </div>
+                </summary>
+
+                <div class="border-t px-4 py-3">
+                  <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-xs font-semibold text-gray-700 uppercase tracking-wide"><%= t("sar.cai_authorizations.title") %></h4>
+                    <%= link_to new_settings_cai_authorization_path(emission_point_id: ep.id),
+                                class: "inline-flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded" do %>
+                      <%= sidebar_icon("plus") %>
+                      <%= t("settings.fiscal.new_cai") %>
+                    <% end %>
+                  </div>
+
+                  <% if ep.cai_authorizations.empty? %>
+                    <p class="text-xs text-gray-500 text-center py-3"><%= t("settings.fiscal.empty_cais") %></p>
+                  <% else %>
+                    <ul class="space-y-2">
+                      <% ep.cai_authorizations.sort_by { |c| [ c.active? ? 0 : 1, c.document_type.code, c.fecha_limite_emision ] }.each do |cai| %>
+                        <li class="border border-gray-200 rounded p-3 text-sm">
+                          <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                              <div class="flex flex-wrap items-center gap-2 mb-1">
+                                <span class="font-semibold text-gray-900"><%= cai.document_type.name %></span>
+                                <% if !cai.active? %>
+                                  <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded"><%= t("settings.fiscal.inactive") %></span>
+                                <% else %>
+                                  <% if cai.dias_para_expirar.to_i <= 30 %>
+                                    <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded"><%= t("settings.fiscal.cai_expiring_soon") %></span>
+                                  <% end %>
+                                  <% if cai.restantes <= 100 %>
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded"><%= t("settings.fiscal.cai_low_remaining") %></span>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                              <div class="font-mono text-xs text-gray-700 break-all"><%= cai.cai %></div>
+                              <div class="text-xs text-gray-500 mt-1">
+                                <%= t("settings.fiscal.range_used", used: cai.correlativo_actual, total: cai.rango_final) %>
+                                · <%= t("sar.cai_authorizations.attributes.fecha_limite_emision") %>: <%= cai.fecha_limite_emision %>
+                              </div>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                              <%= link_to t("actions.edit"), edit_settings_cai_authorization_path(cai),
+                                          class: "text-blue-600 hover:text-blue-800 text-xs" %>
+                              <% if cai.correlativo_actual.zero? %>
+                                <%= button_to t("actions.delete"), settings_cai_authorization_path(cai), method: :delete,
+                                              form: { class: "inline", data: { turbo_confirm: t("actions.confirm_delete") } },
+                                              class: "text-red-600 hover:text-red-800 text-xs" %>
+                              <% end %>
+                            </div>
+                          </div>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                </div>
+              </details>
+            <% end %>
+
+            <%= link_to new_settings_establishment_emission_point_path(est),
+                        class: "inline-flex items-center gap-1 px-3 py-1.5 border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-medium rounded-md" do %>
+              <%= sidebar_icon("plus") %>
+              <%= t("settings.fiscal.new_emission_point") %>
+            <% end %>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+  </div>
+<% end %>

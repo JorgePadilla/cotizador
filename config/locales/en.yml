@@ -694,6 +694,20 @@ en:
         organization: "Organization"
         role: "Role"
         actions: "Actions"
+    fiscal:
+      title: "SAR invoicing"
+      subtitle: "Establishments, emission points, and CAI authorizations"
+      empty_establishments: "Start by configuring your first establishment"
+      empty_establishments_help: "SAR requires at least one 3-digit establishment to issue legal invoices."
+      empty_emission_points: "No emission points yet for this establishment"
+      empty_cais: "No CAI authorizations yet for this emission point"
+      new_establishment: "New establishment"
+      new_emission_point: "New emission point"
+      new_cai: "New CAI"
+      cai_expiring_soon: "Expiring soon"
+      cai_low_remaining: "Low numbers remaining"
+      inactive: "Inactive"
+      range_used: "%{used} / %{total} issued"
 
   # SAR fiscal configuration (Acuerdo 481-2017)
   sar:

@@ -665,6 +665,20 @@ es:
         organization: "Organización"
         role: "Rol"
         actions: "Acciones"
+    fiscal:
+      title: "Facturación SAR"
+      subtitle: "Establecimientos, puntos de emisión y autorizaciones CAI"
+      empty_establishments: "Empieza configurando tu primer establecimiento"
+      empty_establishments_help: "El SAR exige al menos un establecimiento (3 dígitos) para emitir facturas legales."
+      empty_emission_points: "Aún no hay puntos de emisión en este establecimiento"
+      empty_cais: "Aún no hay autorizaciones CAI en este punto de emisión"
+      new_establishment: "Nuevo establecimiento"
+      new_emission_point: "Nuevo punto de emisión"
+      new_cai: "Nuevo CAI"
+      cai_expiring_soon: "Vence pronto"
+      cai_low_remaining: "Quedan pocos números"
+      inactive: "Inactivo"
+      range_used: "%{used} / %{total} emitidos"
 
   # Configuración fiscal SAR (Acuerdo 481-2017)
   sar:
