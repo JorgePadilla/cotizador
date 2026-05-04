@@ -233,6 +233,60 @@ es:
     no_items: "No hay artículos agregados a esta factura"
     delete: "Eliminar Factura"
     delete_confirm: "¿Está seguro de que desea eliminar esta factura?"
+    sar:
+      legend: "La factura es beneficio de todos, ¡exíjala!"
+      kinds:
+        invoice: "FACTURA"
+        credit_note: "NOTA DE CRÉDITO"
+        debit_note: "NOTA DE DÉBITO"
+      issuer: "Emisor"
+      cai: "CAI"
+      correlativo: "No. Correlativo"
+      fecha_limite: "Fecha límite de emisión"
+      rango_autorizado: "Rango autorizado"
+      original_document: "Documento original"
+      fiscal_section: "Información fiscal"
+      fiscal_mode_title: "Modo fiscal activo"
+      fiscal_mode_help: "Esta factura se emitirá bajo su CAI activo. El número correlativo se asigna al guardar y no puede modificarse después."
+      next_correlativo_preview: "Próximo correlativo será"
+      establishment: "Establecimiento"
+      emission_point: "Punto de emisión"
+      document_type: "Tipo de documento"
+      importe_exento: "Importe exento"
+      importe_exonerado: "Importe exonerado"
+      gravado_15: "Gravado 15%"
+      gravado_18: "Gravado 18%"
+      isv_15: "ISV 15%"
+      isv_18: "ISV 18%"
+      descuento: "Descuento"
+      total_a_pagar: "Total a pagar"
+      immutable_warning: "Esta factura ya fue emitida. Solo se pueden cambiar estado y forma de pago."
+      cannot_destroy_create_credit_note: "Las facturas emitidas no se pueden eliminar. Cree una nota de crédito en su lugar."
+
+  credit_notes:
+    new: "Nueva nota de crédito"
+    create: "Crear nota de crédito"
+    creating_from: "Creando nota de crédito para la factura"
+    messages:
+      created: "Nota de crédito creada."
+      original_required: "Se requiere una factura original para crear una nota de crédito."
+
+  debit_notes:
+    new: "Nueva nota de débito"
+    create: "Crear nota de débito"
+    creating_from: "Creando nota de débito para la factura"
+    messages:
+      created: "Nota de débito creada."
+      original_required: "Se requiere una factura original para crear una nota de débito."
+
+  mailers:
+    cai_alert:
+      subject: "CAI próximo a vencer: %{cai}"
+      heading: "Aviso de autorización CAI"
+      greeting: "Hola %{name},"
+      body_html: "Su autorización CAI <strong>%{cai}</strong> requiere atención. Vence el <strong>%{deadline}</strong> (%{days} días restantes) y le quedan <strong>%{remaining}</strong> de <strong>%{range_final}</strong> números correlativos."
+      body_text: "Su autorización CAI %{cai} requiere atención. Vence el %{deadline} (%{days} días restantes) y le quedan %{remaining} de %{range_final} números correlativos."
+      footer: "Por favor solicite un nuevo CAI al SAR antes de que el actual venza o se agote, de lo contrario la emisión será bloqueada."
 
   # Quotes
   quotes:
@@ -335,7 +389,9 @@ es:
       name: "Nombre"
       email: "Correo electrónico"
       phone: "Teléfono"
-      tax_id: "RTN"
+      rtn: "RTN"
+      nombre_comercial: "Nombre comercial"
+      casa_matriz_address: "Dirección de casa matriz"
       currency: "Moneda"
       language: "Idioma"
       address: "Dirección"
@@ -553,3 +609,210 @@ es:
       less_than: "debe ser menor que %{count}"
       less_than_or_equal_to: "debe ser menor o igual a %{count}"
       prohibited_save: "%{count} error(es) impidieron que este registro se guardara:"
+
+  # Configuración fiscal SAR (Acuerdo 481-2017)
+  sar:
+    nav: "Configuración fiscal"
+    establishments:
+      title: "Establecimientos"
+      new: "Nuevo establecimiento"
+      edit: "Editar establecimiento"
+      empty: "Aún no hay establecimientos."
+      codigo_help: "Código de 3 dígitos asignado por SAR (ej. 001)."
+      attributes:
+        codigo: "Código"
+        nombre: "Nombre"
+        address: "Dirección"
+        phone: "Teléfono"
+        active: "Activo"
+      messages:
+        created: "Establecimiento creado."
+        updated: "Establecimiento actualizado."
+        deleted: "Establecimiento eliminado."
+    emission_points:
+      title: "Puntos de emisión"
+      new: "Nuevo punto de emisión"
+      edit: "Editar punto de emisión"
+      empty: "Aún no hay puntos de emisión."
+      attributes:
+        codigo: "Código"
+        descripcion: "Descripción"
+        active: "Activo"
+      messages:
+        created: "Punto de emisión creado."
+        updated: "Punto de emisión actualizado."
+        deleted: "Punto de emisión eliminado."
+    cai_authorizations:
+      title: "Autorizaciones CAI"
+      new: "Nueva autorización CAI"
+      edit: "Editar autorización CAI"
+      empty: "Aún no hay autorizaciones CAI."
+      cai_help: "CAI de 37 caracteres asignado por SAR (formato XXXXXX-XXXXXX-...-X)."
+      days: "días"
+      attributes:
+        emission_point: "Punto de emisión"
+        document_type: "Tipo de documento"
+        cai: "CAI"
+        rango_inicial: "Número inicial"
+        rango_final: "Número final"
+        range: "Rango usado"
+        correlativo_actual: "Último emitido"
+        restantes: "Restantes"
+        fecha_limite_emision: "Fecha límite de emisión"
+        fecha_resolucion: "Fecha de resolución"
+        numero_resolucion: "Número de resolución"
+        active: "Activo"
+      messages:
+        created: "Autorización CAI creada."
+        updated: "Autorización CAI actualizada."
+        deleted: "Autorización CAI eliminada."
+        cannot_delete_used: "Este CAI ya emitió documentos y no se puede eliminar."
+
+  # Rails activerecord/helpers attribute labels — used by form.label without explicit text
+  activerecord:
+    models:
+      invoice: { one: "Factura", other: "Facturas" }
+      invoice_item: { one: "Artículo de factura", other: "Artículos de factura" }
+      credit_note: { one: "Nota de crédito", other: "Notas de crédito" }
+      debit_note: { one: "Nota de débito", other: "Notas de débito" }
+      quote: { one: "Cotización", other: "Cotizaciones" }
+      quote_item: { one: "Artículo de cotización", other: "Artículos de cotización" }
+      client: { one: "Cliente", other: "Clientes" }
+      product: { one: "Producto", other: "Productos" }
+      supplier: { one: "Proveedor", other: "Proveedores" }
+      organization: { one: "Organización", other: "Organizaciones" }
+      establishment: { one: "Establecimiento", other: "Establecimientos" }
+      emission_point: { one: "Punto de emisión", other: "Puntos de emisión" }
+      cai_authorization: { one: "Autorización CAI", other: "Autorizaciones CAI" }
+      user: { one: "Usuario", other: "Usuarios" }
+    attributes:
+      invoice:
+        invoice_number: "Número de factura"
+        invoice_date: "Fecha de factura"
+        client_id: "Cliente"
+        subtotal: "Subtotal"
+        tax: "ISV"
+        total: "Total"
+        status: "Estado"
+        payment_method: "Forma de pago"
+        establishment_id: "Establecimiento"
+        emission_point_id: "Punto de emisión"
+        document_type_id: "Tipo de documento"
+        cai_authorization_id: "Autorización CAI"
+        descuento_total: "Descuento"
+        correlativo: "Correlativo"
+      invoice_item:
+        product_id: "Producto"
+        description: "Descripción"
+        quantity: "Cantidad"
+        unit_price: "Precio unitario"
+        total: "Total"
+        tipo_isv_override: "Tipo ISV"
+      quote:
+        quote_number: "Número de cotización"
+        client_id: "Cliente"
+        valid_until: "Válido hasta"
+        subtotal: "Subtotal"
+        tax: "ISV"
+        total: "Total"
+        status: "Estado"
+      quote_item:
+        product_id: "Producto"
+        description: "Descripción"
+        quantity: "Cantidad"
+        unit_price: "Precio unitario"
+        total: "Total"
+      client:
+        name: "Nombre"
+        rtn: "RTN"
+        address: "Dirección"
+        phone: "Teléfono"
+        email: "Correo electrónico"
+        agente_retencion: "Agente de retención"
+        exonerado: "Exonerado"
+        numero_exoneracion: "Número de exoneración"
+      product:
+        name: "Nombre"
+        sku: "SKU"
+        description: "Descripción"
+        price: "Precio"
+        cost: "Costo"
+        stock: "Existencia"
+        supplier_id: "Proveedor"
+        tipo_isv: "Tipo de ISV"
+      supplier:
+        name: "Nombre"
+        rtn: "RTN"
+        contact_name: "Persona de contacto"
+        phone: "Teléfono"
+        email: "Correo electrónico"
+        address: "Dirección"
+      organization:
+        name: "Razón social"
+        rtn: "RTN"
+        nombre_comercial: "Nombre comercial"
+        casa_matriz_address: "Dirección de casa matriz"
+        address: "Dirección"
+        phone: "Teléfono"
+        email: "Correo electrónico"
+        currency: "Moneda"
+        language: "Idioma"
+      establishment:
+        codigo: "Código"
+        nombre: "Nombre"
+        address: "Dirección"
+        phone: "Teléfono"
+        active: "Activo"
+      emission_point:
+        codigo: "Código"
+        descripcion: "Descripción"
+        active: "Activo"
+      cai_authorization:
+        cai: "CAI"
+        rango_inicial: "Número inicial"
+        rango_final: "Número final"
+        correlativo_actual: "Último emitido"
+        fecha_limite_emision: "Fecha límite de emisión"
+        fecha_resolucion: "Fecha de resolución"
+        numero_resolucion: "Número de resolución"
+        emission_point_id: "Punto de emisión"
+        document_type_id: "Tipo de documento"
+        active: "Activo"
+      user:
+        email_address: "Correo electrónico"
+        password: "Contraseña"
+        password_confirmation: "Confirmar contraseña"
+        name: "Nombre"
+        language: "Idioma"
+        currency: "Moneda"
+        default_tax: "ISV por defecto"
+        role: "Rol"
+  helpers:
+    submit:
+      create: "Crear %{model}"
+      update: "Actualizar %{model}"
+      submit: "Guardar %{model}"
+      invoice:
+        create: "Crear factura"
+        update: "Actualizar factura"
+      quote:
+        create: "Crear cotización"
+        update: "Actualizar cotización"
+      client:
+        create: "Crear cliente"
+        update: "Actualizar cliente"
+      product:
+        create: "Crear producto"
+        update: "Actualizar producto"
+      supplier:
+        create: "Crear proveedor"
+        update: "Actualizar proveedor"
+      establishment:
+        create: "Crear establecimiento"
+        update: "Actualizar establecimiento"
+      emission_point:
+        create: "Crear punto de emisión"
+        update: "Actualizar punto de emisión"
+      cai_authorization:
+        create: "Crear autorización CAI"
+        update: "Actualizar autorización CAI"

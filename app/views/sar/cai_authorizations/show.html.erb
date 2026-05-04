@@ -1,0 +1,36 @@
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex justify-between items-start mb-6">
+    <div>
+      <h1 class="text-xl font-bold text-gray-900 font-mono"><%= @cai_authorization.cai %></h1>
+      <p class="text-sm text-gray-600">
+        <%= @cai_authorization.emission_point.establishment.codigo %>-<%= @cai_authorization.emission_point.codigo %>
+        — <%= @cai_authorization.document_type.name %>
+      </p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to t("actions.edit"), edit_sar_cai_authorization_path(@cai_authorization),
+                  class: "px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm" %>
+      <%= button_to t("actions.delete"), sar_cai_authorization_path(@cai_authorization), method: :delete,
+                    data: { turbo_confirm: t("actions.confirm_delete") },
+                    class: "px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-sm" %>
+    </div>
+  </div>
+
+  <dl class="bg-white shadow sm:rounded-md p-6 space-y-3">
+    <div class="flex justify-between"><dt class="text-gray-600"><%= t("sar.cai_authorizations.attributes.range") %></dt>
+      <dd><%= @cai_authorization.rango_inicial %> – <%= @cai_authorization.rango_final %></dd></div>
+    <div class="flex justify-between"><dt class="text-gray-600"><%= t("sar.cai_authorizations.attributes.correlativo_actual") %></dt>
+      <dd><%= @cai_authorization.correlativo_actual %></dd></div>
+    <div class="flex justify-between"><dt class="text-gray-600"><%= t("sar.cai_authorizations.attributes.restantes") %></dt>
+      <dd><%= @cai_authorization.restantes %></dd></div>
+    <div class="flex justify-between"><dt class="text-gray-600"><%= t("sar.cai_authorizations.attributes.fecha_limite_emision") %></dt>
+      <dd class="<%= @cai_authorization.dias_para_expirar.to_i <= 30 ? 'text-red-600 font-medium' : '' %>">
+        <%= @cai_authorization.fecha_limite_emision %>
+        (<%= @cai_authorization.dias_para_expirar %> <%= t("sar.cai_authorizations.days") %>)
+      </dd></div>
+    <div class="flex justify-between"><dt class="text-gray-600"><%= t("sar.cai_authorizations.attributes.numero_resolucion") %></dt>
+      <dd><%= @cai_authorization.numero_resolucion || t("common.not_set") %></dd></div>
+    <div class="flex justify-between"><dt class="text-gray-600"><%= t("sar.cai_authorizations.attributes.fecha_resolucion") %></dt>
+      <dd><%= @cai_authorization.fecha_resolucion || t("common.not_set") %></dd></div>
+  </dl>
+</div>

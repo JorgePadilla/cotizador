@@ -3,7 +3,20 @@
 
 # Clear existing data to avoid duplicates
 puts "Cleaning database..."
-[ InvoiceItem, Invoice, Quote, Product, Client, Supplier, User, Organization ].each(&:delete_all)
+[ InvoiceItem, Invoice, Quote, Product, Client, Supplier,
+  CaiAuthorization, EmissionPoint, Establishment,
+  Session, User, Organization ].each(&:delete_all)
+
+# Seed SAR document types (idempotent — they are referential, not org-scoped)
+puts "Seeding SAR document types..."
+[
+  [ "01", "Factura" ],
+  [ "02", "Nota de Débito" ],
+  [ "03", "Nota de Crédito" ],
+  [ "04", "Recibo" ]
+].each do |code, name|
+  DocumentType.find_or_create_by!(code: code) { |dt| dt.name = name }
+end
 
 # Create Organizations
 puts "Creating organizations..."
@@ -13,7 +26,8 @@ organization = Organization.create!(
   address: "123 Calle Principal, Tegucigalpa, Honduras",
   phone: "+504 2234-5678",
   email: "info@miempresa.com",
-  tax_id: "08019999000001"
+  rtn: "08019999000001",
+  nombre_comercial: "Mi Empresa S. de R.L."
 )
 
 # Create Users
@@ -39,6 +53,45 @@ end
 
 # Set current organization for seed data
 Current.organization = organization
+
+# Seed SAR fiscal configuration so dev users can issue real fiscal invoices
+puts "Seeding SAR fiscal configuration (Establishment + EmissionPoint + active CAI)..."
+establishment = organization.establishments.create!(
+  codigo: "001",
+  nombre: "Casa Matriz",
+  address: organization.address,
+  phone: organization.phone,
+  active: true
+)
+emission_point = establishment.emission_points.create!(
+  codigo: "001",
+  descripcion: "Punto de emisión principal",
+  active: true
+)
+emission_point.cai_authorizations.create!(
+  document_type: DocumentType.invoice,
+  cai: "ABC123-DEF456-GHI789-JKL012-MNO345-PQR678-STU901-V",
+  rango_inicial: 1,
+  rango_final: 1000,
+  fecha_limite_emision: 1.year.from_now.to_date,
+  active: true
+)
+emission_point.cai_authorizations.create!(
+  document_type: DocumentType.credit_note,
+  cai: "ABC123-DEF456-GHI789-JKL012-MNO345-PQR678-STU901-W",
+  rango_inicial: 1,
+  rango_final: 500,
+  fecha_limite_emision: 1.year.from_now.to_date,
+  active: true
+)
+emission_point.cai_authorizations.create!(
+  document_type: DocumentType.debit_note,
+  cai: "ABC123-DEF456-GHI789-JKL012-MNO345-PQR678-STU901-X",
+  rango_inicial: 1,
+  rango_final: 500,
+  fecha_limite_emision: 1.year.from_now.to_date,
+  active: true
+)
 
 # Create Clients (20 records)
 puts "Creating 20 clients..."
@@ -123,8 +176,9 @@ products = [
   { name: "Cloud Storage", description: "1TB cloud storage subscription", sku: "CLD-1TB-020", price: 9.99, cost: 2.99, stock: 999, supplier: Supplier.find_by(name: "Cloud Services Inc") }
 ]
 
-products.each do |product_attrs|
-  Product.create!(product_attrs.merge(organization: organization))
+tipo_isv_cycle = %w[gravado_15 gravado_15 gravado_15 gravado_18 exento exonerado]
+products.each_with_index do |product_attrs, i|
+  Product.create!(product_attrs.merge(organization: organization, tipo_isv: tipo_isv_cycle[i % tipo_isv_cycle.size]))
 end
 
 # Create Invoices (20 records)

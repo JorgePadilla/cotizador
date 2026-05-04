@@ -25,6 +25,7 @@
           <% end %>
           
           <% if helpers.authenticated? && (Current.user&.admin? || Current.user&.owner?) %>
+            <%= link_to t('sar.nav'), sar_establishments_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
             <%= link_to t('nav.admin'), admin_users_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
           <% end %>
           

@@ -1,0 +1,29 @@
+factura_active:
+  emission_point: main
+  document_type: factura
+  cai: "ABC123-DEF456-GHI789-JKL012-MNO345-PQR678-STU901-V"
+  rango_inicial: 1
+  rango_final: 1000
+  correlativo_actual: 0
+  fecha_limite_emision: <%= 1.year.from_now.to_date.to_fs(:db) %>
+  active: true
+
+credit_note_active:
+  emission_point: main
+  document_type: credit_note
+  cai: "ABC123-DEF456-GHI789-JKL012-MNO345-PQR678-STU901-W"
+  rango_inicial: 1
+  rango_final: 500
+  correlativo_actual: 0
+  fecha_limite_emision: <%= 1.year.from_now.to_date.to_fs(:db) %>
+  active: true
+
+debit_note_active:
+  emission_point: main
+  document_type: debit_note
+  cai: "ABC123-DEF456-GHI789-JKL012-MNO345-PQR678-STU901-X"
+  rango_inicial: 1
+  rango_final: 500
+  correlativo_actual: 0
+  fecha_limite_emision: <%= 1.year.from_now.to_date.to_fs(:db) %>
+  active: true

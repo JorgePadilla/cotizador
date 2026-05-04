@@ -30,6 +30,18 @@ Rails.application.routes.draw do
     resources :users, only: [ :index, :edit, :update ]
   end
 
+  # SAR fiscal configuration (Acuerdo 481-2017)
+  namespace :sar, path: "configuracion-fiscal" do
+    resources :establishments do
+      resources :emission_points, except: [ :index ]
+    end
+    resources :cai_authorizations
+  end
+
+  # SAR credit / debit notes (linked to original invoice)
+  resources :credit_notes, only: [ :new, :create, :show ]
+  resources :debit_notes, only: [ :new, :create, :show ]
+
   # Invoices and invoice items
   resources :invoices do
     resources :invoice_items, shallow: true

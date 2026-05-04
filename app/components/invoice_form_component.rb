@@ -1,16 +1,21 @@
 class InvoiceFormComponent < ViewComponent::Base
   include ApplicationHelper
 
-  def initialize(invoice:, clients:, current_user: nil)
+  def initialize(invoice:, clients:, current_user: nil, establishments: nil, document_types: nil)
     @invoice = invoice
     @clients = clients
     @current_user = current_user
+    @establishments = establishments || []
+    @document_types = document_types || []
+  end
+
+  def fiscal_mode?
+    @establishments.any? && @document_types.any?
   end
 
   def default_tax_amount
     return 0 unless @current_user&.default_tax
 
-    # If invoice is new and has no tax set, use the user's default
     if @invoice.new_record? && @invoice.tax.nil?
       (@invoice.subtotal || 0) * @current_user.default_tax
     else
@@ -18,7 +23,13 @@ class InvoiceFormComponent < ViewComponent::Base
     end
   end
 
+  def correlativo_preview
+    return nil unless @invoice.cai_authorization
+
+    @invoice.cai_authorization.next_correlativo_preview
+  end
+
   private
 
-  attr_reader :invoice, :clients, :current_user
+  attr_reader :invoice, :clients, :current_user, :establishments, :document_types
 end

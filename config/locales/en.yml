@@ -262,6 +262,60 @@ en:
     no_items: "No items added to this invoice"
     delete: "Delete Invoice"
     delete_confirm: "Are you sure you want to delete this invoice?"
+    sar:
+      legend: "La factura es beneficio de todos, ¡exíjala!"
+      kinds:
+        invoice: "FACTURA"
+        credit_note: "NOTA DE CRÉDITO"
+        debit_note: "NOTA DE DÉBITO"
+      issuer: "Issuer"
+      cai: "CAI"
+      correlativo: "Correlative number"
+      fecha_limite: "Issuance deadline"
+      rango_autorizado: "Authorized range"
+      original_document: "Original document"
+      fiscal_section: "Fiscal information"
+      fiscal_mode_title: "Fiscal mode active"
+      fiscal_mode_help: "This invoice will be issued under your active CAI authorization. The correlative number is assigned at the moment of saving and cannot be changed afterwards."
+      next_correlativo_preview: "Next correlative will be"
+      establishment: "Establishment"
+      emission_point: "Emission point"
+      document_type: "Document type"
+      importe_exento: "Exempt amount"
+      importe_exonerado: "Exonerated amount"
+      gravado_15: "Taxable 15%"
+      gravado_18: "Taxable 18%"
+      isv_15: "ISV 15%"
+      isv_18: "ISV 18%"
+      descuento: "Discount"
+      total_a_pagar: "Total to pay"
+      immutable_warning: "This invoice has already been issued. Only status and payment method can be changed."
+      cannot_destroy_create_credit_note: "Issued invoices cannot be deleted. Create a credit note instead."
+
+  credit_notes:
+    new: "New credit note"
+    create: "Create credit note"
+    creating_from: "Creating credit note for invoice"
+    messages:
+      created: "Credit note created."
+      original_required: "An original invoice is required to create a credit note."
+
+  debit_notes:
+    new: "New debit note"
+    create: "Create debit note"
+    creating_from: "Creating debit note for invoice"
+    messages:
+      created: "Debit note created."
+      original_required: "An original invoice is required to create a debit note."
+
+  mailers:
+    cai_alert:
+      subject: "CAI nearing expiration: %{cai}"
+      heading: "CAI authorization warning"
+      greeting: "Hello %{name},"
+      body_html: "Your CAI authorization <strong>%{cai}</strong> needs attention. It expires on <strong>%{deadline}</strong> (%{days} days remaining) and you have <strong>%{remaining}</strong> of <strong>%{range_final}</strong> correlative numbers left."
+      body_text: "Your CAI authorization %{cai} needs attention. It expires on %{deadline} (%{days} days remaining) and you have %{remaining} of %{range_final} correlative numbers left."
+      footer: "Please request a new CAI from SAR before the existing one expires or runs out, otherwise issuance will be blocked."
 
   # Quotes
   quotes:
@@ -364,7 +418,9 @@ en:
       name: "Name"
       email: "Email"
       phone: "Phone"
-      tax_id: "Tax ID"
+      rtn: "RTN"
+      nombre_comercial: "Trade name"
+      casa_matriz_address: "Headquarters address"
       currency: "Currency"
       language: "Language"
       address: "Address"
@@ -582,3 +638,210 @@ en:
       less_than: "must be less than %{count}"
       less_than_or_equal_to: "must be less than or equal to %{count}"
       prohibited_save: "%{count} error(s) prohibited this record from being saved:"
+
+  # SAR fiscal configuration (Acuerdo 481-2017)
+  sar:
+    nav: "Fiscal configuration"
+    establishments:
+      title: "Establishments"
+      new: "New establishment"
+      edit: "Edit establishment"
+      empty: "No establishments yet."
+      codigo_help: "3-digit SAR code (e.g. 001)."
+      attributes:
+        codigo: "Code"
+        nombre: "Name"
+        address: "Address"
+        phone: "Phone"
+        active: "Active"
+      messages:
+        created: "Establishment created."
+        updated: "Establishment updated."
+        deleted: "Establishment deleted."
+    emission_points:
+      title: "Emission points"
+      new: "New emission point"
+      edit: "Edit emission point"
+      empty: "No emission points yet."
+      attributes:
+        codigo: "Code"
+        descripcion: "Description"
+        active: "Active"
+      messages:
+        created: "Emission point created."
+        updated: "Emission point updated."
+        deleted: "Emission point deleted."
+    cai_authorizations:
+      title: "CAI authorizations"
+      new: "New CAI authorization"
+      edit: "Edit CAI authorization"
+      empty: "No CAI authorizations yet."
+      cai_help: "37-character CAI assigned by SAR (format XXXXXX-XXXXXX-...-X)."
+      days: "days"
+      attributes:
+        emission_point: "Emission point"
+        document_type: "Document type"
+        cai: "CAI"
+        rango_inicial: "Initial number"
+        rango_final: "Final number"
+        range: "Range used"
+        correlativo_actual: "Last issued"
+        restantes: "Remaining"
+        fecha_limite_emision: "Issuance deadline"
+        fecha_resolucion: "Resolution date"
+        numero_resolucion: "Resolution number"
+        active: "Active"
+      messages:
+        created: "CAI authorization created."
+        updated: "CAI authorization updated."
+        deleted: "CAI authorization deleted."
+        cannot_delete_used: "This CAI has already issued documents and cannot be deleted."
+
+  # Rails activerecord/helpers attribute labels — used by form.label without explicit text
+  activerecord:
+    models:
+      invoice: { one: "Invoice", other: "Invoices" }
+      invoice_item: { one: "Invoice item", other: "Invoice items" }
+      credit_note: { one: "Credit note", other: "Credit notes" }
+      debit_note: { one: "Debit note", other: "Debit notes" }
+      quote: { one: "Quote", other: "Quotes" }
+      quote_item: { one: "Quote item", other: "Quote items" }
+      client: { one: "Client", other: "Clients" }
+      product: { one: "Product", other: "Products" }
+      supplier: { one: "Supplier", other: "Suppliers" }
+      organization: { one: "Organization", other: "Organizations" }
+      establishment: { one: "Establishment", other: "Establishments" }
+      emission_point: { one: "Emission point", other: "Emission points" }
+      cai_authorization: { one: "CAI authorization", other: "CAI authorizations" }
+      user: { one: "User", other: "Users" }
+    attributes:
+      invoice:
+        invoice_number: "Invoice number"
+        invoice_date: "Invoice date"
+        client_id: "Client"
+        subtotal: "Subtotal"
+        tax: "Tax"
+        total: "Total"
+        status: "Status"
+        payment_method: "Payment method"
+        establishment_id: "Establishment"
+        emission_point_id: "Emission point"
+        document_type_id: "Document type"
+        cai_authorization_id: "CAI authorization"
+        descuento_total: "Discount"
+        correlativo: "Correlative"
+      invoice_item:
+        product_id: "Product"
+        description: "Description"
+        quantity: "Quantity"
+        unit_price: "Unit price"
+        total: "Total"
+        tipo_isv_override: "ISV type"
+      quote:
+        quote_number: "Quote number"
+        client_id: "Client"
+        valid_until: "Valid until"
+        subtotal: "Subtotal"
+        tax: "Tax"
+        total: "Total"
+        status: "Status"
+      quote_item:
+        product_id: "Product"
+        description: "Description"
+        quantity: "Quantity"
+        unit_price: "Unit price"
+        total: "Total"
+      client:
+        name: "Name"
+        rtn: "RTN"
+        address: "Address"
+        phone: "Phone"
+        email: "Email"
+        agente_retencion: "Withholding agent"
+        exonerado: "Exempt"
+        numero_exoneracion: "Exemption number"
+      product:
+        name: "Name"
+        sku: "SKU"
+        description: "Description"
+        price: "Price"
+        cost: "Cost"
+        stock: "Stock"
+        supplier_id: "Supplier"
+        tipo_isv: "ISV type"
+      supplier:
+        name: "Name"
+        rtn: "RTN"
+        contact_name: "Contact person"
+        phone: "Phone"
+        email: "Email"
+        address: "Address"
+      organization:
+        name: "Legal name"
+        rtn: "RTN"
+        nombre_comercial: "Trade name"
+        casa_matriz_address: "Headquarters address"
+        address: "Address"
+        phone: "Phone"
+        email: "Email"
+        currency: "Currency"
+        language: "Language"
+      establishment:
+        codigo: "Code"
+        nombre: "Name"
+        address: "Address"
+        phone: "Phone"
+        active: "Active"
+      emission_point:
+        codigo: "Code"
+        descripcion: "Description"
+        active: "Active"
+      cai_authorization:
+        cai: "CAI"
+        rango_inicial: "Initial number"
+        rango_final: "Final number"
+        correlativo_actual: "Last issued"
+        fecha_limite_emision: "Issuance deadline"
+        fecha_resolucion: "Resolution date"
+        numero_resolucion: "Resolution number"
+        emission_point_id: "Emission point"
+        document_type_id: "Document type"
+        active: "Active"
+      user:
+        email_address: "Email"
+        password: "Password"
+        password_confirmation: "Confirm password"
+        name: "Name"
+        language: "Language"
+        currency: "Currency"
+        default_tax: "Default ISV"
+        role: "Role"
+  helpers:
+    submit:
+      create: "Create %{model}"
+      update: "Update %{model}"
+      submit: "Save %{model}"
+      invoice:
+        create: "Create invoice"
+        update: "Update invoice"
+      quote:
+        create: "Create quote"
+        update: "Update quote"
+      client:
+        create: "Create client"
+        update: "Update client"
+      product:
+        create: "Create product"
+        update: "Update product"
+      supplier:
+        create: "Create supplier"
+        update: "Update supplier"
+      establishment:
+        create: "Create establishment"
+        update: "Update establishment"
+      emission_point:
+        create: "Create emission point"
+        update: "Update emission point"
+      cai_authorization:
+        create: "Create CAI authorization"
+        update: "Update CAI authorization"
