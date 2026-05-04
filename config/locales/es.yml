@@ -622,6 +622,25 @@ es:
       organization: "Organización"
       team: "Equipo"
       fiscal: "Facturación SAR"
+    account:
+      title: "Mi cuenta"
+      edit_title: "Editar cuenta"
+      personal_data: "Datos personales"
+      security: "Seguridad"
+      security_help: "Cambia tu contraseña periódicamente para mantener tu cuenta segura."
+      change_password: "Cambiar contraseña"
+      session: "Sesión"
+      sign_out: "Cerrar sesión"
+      messages:
+        updated: "Cuenta actualizada exitosamente."
+    preferences:
+      title: "Preferencias"
+      subtitle: "Idioma, moneda e ISV por defecto"
+      language: "Idioma"
+      currency: "Moneda"
+      default_isv: "ISV por defecto"
+      default_isv_help: "Se usará al crear nuevas facturas y cotizaciones (porcentaje 0–100)."
+      saved: "Preferencias guardadas."
 
   # Configuración fiscal SAR (Acuerdo 481-2017)
   sar:

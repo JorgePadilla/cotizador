@@ -1,0 +1,46 @@
+<% content_for :title, t("settings.preferences.title") %>
+
+<%= settings_card t("settings.preferences.title"), subtitle: t("settings.preferences.subtitle") do %>
+  <%= form_with model: Current.user, url: settings_preferences_path, method: :patch, local: true, class: "space-y-4" do |f| %>
+    <% if Current.user.errors.any? %>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
+        <ul class="list-disc list-inside">
+          <% Current.user.errors.full_messages.each { |m| %><li><%= m %></li><% } %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :language, t("settings.preferences.language"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :language,
+                   [
+                     [ t("languages.en"), "en" ],
+                     [ t("languages.es"), "es" ]
+                   ],
+                   {},
+                   class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+    </div>
+
+    <div>
+      <%= f.label :currency, t("settings.preferences.currency"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :currency,
+                   [ [ "HNL", "HNL" ], [ "USD", "USD" ], [ "EUR", "EUR" ] ],
+                   {},
+                   class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+    </div>
+
+    <% if admin_or_owner? %>
+      <div>
+        <%= f.label :default_tax, t("settings.preferences.default_isv"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.number_field :default_tax, step: "0.01", min: 0, max: 100,
+                           class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+        <p class="text-xs text-gray-500 mt-1"><%= t("settings.preferences.default_isv_help") %></p>
+      </div>
+    <% end %>
+
+    <div class="flex justify-end pt-2">
+      <%= f.submit t("actions.save"),
+                   class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm" %>
+    </div>
+  <% end %>
+<% end %>
