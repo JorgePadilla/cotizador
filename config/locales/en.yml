@@ -89,7 +89,6 @@ en:
     language: "Language"
     admin: "Admin"
     settings: "Settings"
-    home: "Home"
     open_main_menu: "Open main menu"
 
   # Actions
@@ -644,6 +643,17 @@ en:
   # Settings hub
   settings:
     title: "Settings"
+    home:
+      title: "Main menu"
+      subtitle: "Quick access to all account and configuration options"
+      items:
+        dashboard: "Dashboard"
+        account: "Account"
+        preferences: "Preferences"
+        organization: "Organization"
+        team: "Team"
+        fiscal: "SAR invoicing"
+        sign_out: "Sign out"
     sidebar:
       personal: "Personal"
       company: "Company"
