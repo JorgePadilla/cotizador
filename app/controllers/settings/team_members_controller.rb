@@ -23,9 +23,9 @@ class Settings::TeamMembersController < Settings::BaseController
     if [ 0, 1, 2 ].include?(requested_role) && !authorized_to_assign_role?(requested_role)
       message = if !Current.user.owner? && requested_role == 0
                   t("admin_messages.cannot_assign_owner")
-                else
+      else
                   t("admin_messages.not_authorized_role")
-                end
+      end
       redirect_to settings_team_members_path, alert: message
       return
     end
