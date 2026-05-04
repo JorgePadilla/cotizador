@@ -696,3 +696,152 @@ en:
         updated: "CAI authorization updated."
         deleted: "CAI authorization deleted."
         cannot_delete_used: "This CAI has already issued documents and cannot be deleted."
+
+  # Rails activerecord/helpers attribute labels — used by form.label without explicit text
+  activerecord:
+    models:
+      invoice: { one: "Invoice", other: "Invoices" }
+      invoice_item: { one: "Invoice item", other: "Invoice items" }
+      credit_note: { one: "Credit note", other: "Credit notes" }
+      debit_note: { one: "Debit note", other: "Debit notes" }
+      quote: { one: "Quote", other: "Quotes" }
+      quote_item: { one: "Quote item", other: "Quote items" }
+      client: { one: "Client", other: "Clients" }
+      product: { one: "Product", other: "Products" }
+      supplier: { one: "Supplier", other: "Suppliers" }
+      organization: { one: "Organization", other: "Organizations" }
+      establishment: { one: "Establishment", other: "Establishments" }
+      emission_point: { one: "Emission point", other: "Emission points" }
+      cai_authorization: { one: "CAI authorization", other: "CAI authorizations" }
+      user: { one: "User", other: "Users" }
+    attributes:
+      invoice:
+        invoice_number: "Invoice number"
+        invoice_date: "Invoice date"
+        client_id: "Client"
+        subtotal: "Subtotal"
+        tax: "Tax"
+        total: "Total"
+        status: "Status"
+        payment_method: "Payment method"
+        establishment_id: "Establishment"
+        emission_point_id: "Emission point"
+        document_type_id: "Document type"
+        cai_authorization_id: "CAI authorization"
+        descuento_total: "Discount"
+        correlativo: "Correlative"
+      invoice_item:
+        product_id: "Product"
+        description: "Description"
+        quantity: "Quantity"
+        unit_price: "Unit price"
+        total: "Total"
+        tipo_isv_override: "ISV type"
+      quote:
+        quote_number: "Quote number"
+        client_id: "Client"
+        valid_until: "Valid until"
+        subtotal: "Subtotal"
+        tax: "Tax"
+        total: "Total"
+        status: "Status"
+      quote_item:
+        product_id: "Product"
+        description: "Description"
+        quantity: "Quantity"
+        unit_price: "Unit price"
+        total: "Total"
+      client:
+        name: "Name"
+        rtn: "RTN"
+        address: "Address"
+        phone: "Phone"
+        email: "Email"
+        agente_retencion: "Withholding agent"
+        exonerado: "Exempt"
+        numero_exoneracion: "Exemption number"
+      product:
+        name: "Name"
+        sku: "SKU"
+        description: "Description"
+        price: "Price"
+        cost: "Cost"
+        stock: "Stock"
+        supplier_id: "Supplier"
+        tipo_isv: "ISV type"
+      supplier:
+        name: "Name"
+        rtn: "RTN"
+        contact_name: "Contact person"
+        phone: "Phone"
+        email: "Email"
+        address: "Address"
+      organization:
+        name: "Legal name"
+        rtn: "RTN"
+        nombre_comercial: "Trade name"
+        casa_matriz_address: "Headquarters address"
+        address: "Address"
+        phone: "Phone"
+        email: "Email"
+        currency: "Currency"
+        language: "Language"
+      establishment:
+        codigo: "Code"
+        nombre: "Name"
+        address: "Address"
+        phone: "Phone"
+        active: "Active"
+      emission_point:
+        codigo: "Code"
+        descripcion: "Description"
+        active: "Active"
+      cai_authorization:
+        cai: "CAI"
+        rango_inicial: "Initial number"
+        rango_final: "Final number"
+        correlativo_actual: "Last issued"
+        fecha_limite_emision: "Issuance deadline"
+        fecha_resolucion: "Resolution date"
+        numero_resolucion: "Resolution number"
+        emission_point_id: "Emission point"
+        document_type_id: "Document type"
+        active: "Active"
+      user:
+        email_address: "Email"
+        password: "Password"
+        password_confirmation: "Confirm password"
+        name: "Name"
+        language: "Language"
+        currency: "Currency"
+        default_tax: "Default ISV"
+        role: "Role"
+  helpers:
+    submit:
+      create: "Create %{model}"
+      update: "Update %{model}"
+      submit: "Save %{model}"
+      invoice:
+        create: "Create invoice"
+        update: "Update invoice"
+      quote:
+        create: "Create quote"
+        update: "Update quote"
+      client:
+        create: "Create client"
+        update: "Update client"
+      product:
+        create: "Create product"
+        update: "Update product"
+      supplier:
+        create: "Create supplier"
+        update: "Update supplier"
+      establishment:
+        create: "Create establishment"
+        update: "Update establishment"
+      emission_point:
+        create: "Create emission point"
+        update: "Update emission point"
+      cai_authorization:
+        create: "Create CAI authorization"
+        update: "Update CAI authorization"

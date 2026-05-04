@@ -667,3 +667,152 @@ es:
         updated: "Autorización CAI actualizada."
         deleted: "Autorización CAI eliminada."
         cannot_delete_used: "Este CAI ya emitió documentos y no se puede eliminar."
+
+  # Rails activerecord/helpers attribute labels — used by form.label without explicit text
+  activerecord:
+    models:
+      invoice: { one: "Factura", other: "Facturas" }
+      invoice_item: { one: "Artículo de factura", other: "Artículos de factura" }
+      credit_note: { one: "Nota de crédito", other: "Notas de crédito" }
+      debit_note: { one: "Nota de débito", other: "Notas de débito" }
+      quote: { one: "Cotización", other: "Cotizaciones" }
+      quote_item: { one: "Artículo de cotización", other: "Artículos de cotización" }
+      client: { one: "Cliente", other: "Clientes" }
+      product: { one: "Producto", other: "Productos" }
+      supplier: { one: "Proveedor", other: "Proveedores" }
+      organization: { one: "Organización", other: "Organizaciones" }
+      establishment: { one: "Establecimiento", other: "Establecimientos" }
+      emission_point: { one: "Punto de emisión", other: "Puntos de emisión" }
+      cai_authorization: { one: "Autorización CAI", other: "Autorizaciones CAI" }
+      user: { one: "Usuario", other: "Usuarios" }
+    attributes:
+      invoice:
+        invoice_number: "Número de factura"
+        invoice_date: "Fecha de factura"
+        client_id: "Cliente"
+        subtotal: "Subtotal"
+        tax: "ISV"
+        total: "Total"
+        status: "Estado"
+        payment_method: "Forma de pago"
+        establishment_id: "Establecimiento"
+        emission_point_id: "Punto de emisión"
+        document_type_id: "Tipo de documento"
+        cai_authorization_id: "Autorización CAI"
+        descuento_total: "Descuento"
+        correlativo: "Correlativo"
+      invoice_item:
+        product_id: "Producto"
+        description: "Descripción"
+        quantity: "Cantidad"
+        unit_price: "Precio unitario"
+        total: "Total"
+        tipo_isv_override: "Tipo ISV"
+      quote:
+        quote_number: "Número de cotización"
+        client_id: "Cliente"
+        valid_until: "Válido hasta"
+        subtotal: "Subtotal"
+        tax: "ISV"
+        total: "Total"
+        status: "Estado"
+      quote_item:
+        product_id: "Producto"
+        description: "Descripción"
+        quantity: "Cantidad"
+        unit_price: "Precio unitario"
+        total: "Total"
+      client:
+        name: "Nombre"
+        rtn: "RTN"
+        address: "Dirección"
+        phone: "Teléfono"
+        email: "Correo electrónico"
+        agente_retencion: "Agente de retención"
+        exonerado: "Exonerado"
+        numero_exoneracion: "Número de exoneración"
+      product:
+        name: "Nombre"
+        sku: "SKU"
+        description: "Descripción"
+        price: "Precio"
+        cost: "Costo"
+        stock: "Existencia"
+        supplier_id: "Proveedor"
+        tipo_isv: "Tipo de ISV"
+      supplier:
+        name: "Nombre"
+        rtn: "RTN"
+        contact_name: "Persona de contacto"
+        phone: "Teléfono"
+        email: "Correo electrónico"
+        address: "Dirección"
+      organization:
+        name: "Razón social"
+        rtn: "RTN"
+        nombre_comercial: "Nombre comercial"
+        casa_matriz_address: "Dirección de casa matriz"
+        address: "Dirección"
+        phone: "Teléfono"
+        email: "Correo electrónico"
+        currency: "Moneda"
+        language: "Idioma"
+      establishment:
+        codigo: "Código"
+        nombre: "Nombre"
+        address: "Dirección"
+        phone: "Teléfono"
+        active: "Activo"
+      emission_point:
+        codigo: "Código"
+        descripcion: "Descripción"
+        active: "Activo"
+      cai_authorization:
+        cai: "CAI"
+        rango_inicial: "Número inicial"
+        rango_final: "Número final"
+        correlativo_actual: "Último emitido"
+        fecha_limite_emision: "Fecha límite de emisión"
+        fecha_resolucion: "Fecha de resolución"
+        numero_resolucion: "Número de resolución"
+        emission_point_id: "Punto de emisión"
+        document_type_id: "Tipo de documento"
+        active: "Activo"
+      user:
+        email_address: "Correo electrónico"
+        password: "Contraseña"
+        password_confirmation: "Confirmar contraseña"
+        name: "Nombre"
+        language: "Idioma"
+        currency: "Moneda"
+        default_tax: "ISV por defecto"
+        role: "Rol"
+  helpers:
+    submit:
+      create: "Crear %{model}"
+      update: "Actualizar %{model}"
+      submit: "Guardar %{model}"
+      invoice:
+        create: "Crear factura"
+        update: "Actualizar factura"
+      quote:
+        create: "Crear cotización"
+        update: "Actualizar cotización"
+      client:
+        create: "Crear cliente"
+        update: "Actualizar cliente"
+      product:
+        create: "Crear producto"
+        update: "Actualizar producto"
+      supplier:
+        create: "Crear proveedor"
+        update: "Actualizar proveedor"
+      establishment:
+        create: "Crear establecimiento"
+        update: "Actualizar establecimiento"
+      emission_point:
+        create: "Crear punto de emisión"
+        update: "Actualizar punto de emisión"
+      cai_authorization:
+        create: "Crear autorización CAI"
+        update: "Actualizar autorización CAI"
