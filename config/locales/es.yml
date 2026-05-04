@@ -59,6 +59,7 @@ es:
     register: "Registrarse"
     language: "Idioma"
     admin: "Administración"
+    settings: "Configuración"
     open_main_menu: "Abrir menú principal"
 
   # Actions
