@@ -60,6 +60,7 @@ es:
     language: "Idioma"
     admin: "Administración"
     settings: "Configuración"
+    home: "Inicio"
     open_main_menu: "Abrir menú principal"
 
   # Actions

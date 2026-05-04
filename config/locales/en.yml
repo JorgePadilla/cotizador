@@ -89,6 +89,7 @@ en:
     language: "Language"
     admin: "Admin"
     settings: "Settings"
+    home: "Home"
     open_main_menu: "Open main menu"
 
   # Actions
