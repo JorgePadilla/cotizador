@@ -610,6 +610,19 @@ es:
       less_than_or_equal_to: "debe ser menor o igual a %{count}"
       prohibited_save: "%{count} error(es) impidieron que este registro se guardara:"
 
+  # Settings hub
+  settings:
+    title: "Configuración"
+    sidebar:
+      personal: "Personal"
+      company: "Empresa"
+      administration: "Administración"
+      account: "Mi cuenta"
+      preferences: "Preferencias"
+      organization: "Organización"
+      team: "Equipo"
+      fiscal: "Facturación SAR"
+
   # Configuración fiscal SAR (Acuerdo 481-2017)
   sar:
     nav: "Configuración fiscal"

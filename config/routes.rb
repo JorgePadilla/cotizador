@@ -38,6 +38,20 @@ Rails.application.routes.draw do
     resources :cai_authorizations
   end
 
+  # Settings hub — unifies account, preferences, organization, team, and SAR fiscal config
+  namespace :settings, path: "configuracion" do
+    root to: "accounts#show"
+    resource :account,      only: [ :show, :edit, :update ], controller: "accounts"
+    resource :preferences,  only: [ :show, :update ],         controller: "preferences"
+    resource :organization, only: [ :show, :edit, :update ],  controller: "organization"
+    resources :team_members, only: [ :index, :edit, :update ]
+    get "fiscal", to: "fiscal#show", as: :fiscal
+    resources :establishments do
+      resources :emission_points, except: [ :index ]
+    end
+    resources :cai_authorizations
+  end
+
   # SAR credit / debit notes (linked to original invoice)
   resources :credit_notes, only: [ :new, :create, :show ]
   resources :debit_notes, only: [ :new, :create, :show ]

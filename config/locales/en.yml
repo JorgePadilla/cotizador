@@ -639,6 +639,19 @@ en:
       less_than_or_equal_to: "must be less than or equal to %{count}"
       prohibited_save: "%{count} error(s) prohibited this record from being saved:"
 
+  # Settings hub
+  settings:
+    title: "Settings"
+    sidebar:
+      personal: "Personal"
+      company: "Company"
+      administration: "Administration"
+      account: "Account"
+      preferences: "Preferences"
+      organization: "Organization"
+      team: "Team"
+      fiscal: "SAR invoicing"
+
   # SAR fiscal configuration (Acuerdo 481-2017)
   sar:
     nav: "Fiscal configuration"
