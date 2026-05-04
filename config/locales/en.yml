@@ -88,6 +88,7 @@ en:
     register: "Register"
     language: "Language"
     admin: "Admin"
+    settings: "Settings"
     open_main_menu: "Open main menu"
 
   # Actions
@@ -638,6 +639,76 @@ en:
       less_than: "must be less than %{count}"
       less_than_or_equal_to: "must be less than or equal to %{count}"
       prohibited_save: "%{count} error(s) prohibited this record from being saved:"
+
+  # Settings hub
+  settings:
+    title: "Settings"
+    sidebar:
+      personal: "Personal"
+      company: "Company"
+      administration: "Administration"
+      account: "Account"
+      preferences: "Preferences"
+      organization: "Organization"
+      team: "Team"
+      fiscal: "SAR invoicing"
+    account:
+      title: "Account"
+      edit_title: "Edit account"
+      personal_data: "Personal data"
+      security: "Security"
+      security_help: "Update your password periodically to keep your account secure."
+      change_password: "Change password"
+      session: "Session"
+      sign_out: "Sign out"
+      messages:
+        updated: "Account updated."
+    preferences:
+      title: "Preferences"
+      subtitle: "Language, currency, and default ISV"
+      language: "Language"
+      currency: "Currency"
+      default_isv: "Default ISV"
+      default_isv_help: "Applied when creating new invoices and quotes (percentage 0–100)."
+      saved: "Preferences saved."
+    organization:
+      title: "Organization"
+      edit_title: "Edit organization"
+      no_organization: "You don't belong to an organization yet."
+      fiscal_identity: "Fiscal identity"
+      fiscal_identity_help: "These details appear on every invoice issued under the SAR regime."
+      contact_info: "Contact information"
+      regional: "Regional settings"
+      rtn_help: "14-digit RTN assigned by SAR."
+      messages:
+        updated: "Organization updated."
+    team:
+      title: "Team"
+      members: "Team members"
+      no_organization: "No organization"
+      edit_role: "Edit role"
+      edit_role_title: "Edit user role"
+      update_role: "Update role"
+      table:
+        email: "Email"
+        name: "Name"
+        organization: "Organization"
+        role: "Role"
+        actions: "Actions"
+    fiscal:
+      title: "SAR invoicing"
+      subtitle: "Establishments, emission points, and CAI authorizations"
+      empty_establishments: "Start by configuring your first establishment"
+      empty_establishments_help: "SAR requires at least one 3-digit establishment to issue legal invoices."
+      empty_emission_points: "No emission points yet for this establishment"
+      empty_cais: "No CAI authorizations yet for this emission point"
+      new_establishment: "New establishment"
+      new_emission_point: "New emission point"
+      new_cai: "New CAI"
+      cai_expiring_soon: "Expiring soon"
+      cai_low_remaining: "Low numbers remaining"
+      inactive: "Inactive"
+      range_used: "%{used} / %{total} issued"
 
   # SAR fiscal configuration (Acuerdo 481-2017)
   sar:

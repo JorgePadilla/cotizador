@@ -5,12 +5,12 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
 
-  # User profile
-  get "profile", to: "profiles#show"
-  get "profile/edit", to: "profiles#edit"
-  patch "profile", to: "profiles#update"
-  patch "profile/language", to: "profiles#update_language"
-  patch "profile/preferences", to: "profiles#update_preferences"
+  # User profile — legacy paths, kept as redirects to the settings hub
+  get "profile",         to: redirect("/configuracion/account",      status: 301), as: :profile
+  get "profile/edit",    to: redirect("/configuracion/account/edit", status: 301)
+  patch "profile",       to: redirect("/configuracion/account",      status: 308)
+  patch "profile/language",    to: redirect("/configuracion/preferences", status: 308)
+  patch "profile/preferences", to: redirect("/configuracion/preferences", status: 308)
 
   # Main resources
   resources :clients
@@ -25,13 +25,20 @@ Rails.application.routes.draw do
   # Invitation acceptance
   get "invitations/accept/:token", to: "invitations#accept", as: :accept_invitation
 
-  # Admin interface
-  namespace :admin do
-    resources :users, only: [ :index, :edit, :update ]
-  end
+  # Legacy paths — redirect into the settings hub
+  get "/admin/users",                              to: redirect("/configuracion/team_members", status: 301)
+  get "/configuracion-fiscal",                     to: redirect("/configuracion/fiscal", status: 301)
+  get "/configuracion-fiscal/establishments",     to: redirect("/configuracion/fiscal", status: 301)
+  get "/configuracion-fiscal/cai_authorizations", to: redirect("/configuracion/fiscal", status: 301)
 
-  # SAR fiscal configuration (Acuerdo 481-2017)
-  namespace :sar, path: "configuracion-fiscal" do
+  # Settings hub — unifies account, preferences, organization, team, and SAR fiscal config
+  namespace :settings, path: "configuracion" do
+    root to: "accounts#show"
+    resource :account,      only: [ :show, :edit, :update ], controller: "accounts"
+    resource :preferences,  only: [ :show, :update ],         controller: "preferences"
+    resource :organization, only: [ :show, :edit, :update ],  controller: "organization"
+    resources :team_members, only: [ :index, :edit, :update ]
+    get "fiscal", to: "fiscal#show", as: :fiscal
     resources :establishments do
       resources :emission_points, except: [ :index ]
     end
