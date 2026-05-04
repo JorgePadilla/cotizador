@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   # Settings hub — unifies account, preferences, organization, team, and SAR fiscal config
   namespace :settings, path: "configuracion" do
-    root to: "accounts#show"
+    root to: "home#index"
     resource :account,      only: [ :show, :edit, :update ], controller: "accounts"
     resource :preferences,  only: [ :show, :update ],         controller: "preferences"
     resource :organization, only: [ :show, :edit, :update ],  controller: "organization"

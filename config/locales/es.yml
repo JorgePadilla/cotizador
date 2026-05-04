@@ -60,7 +60,6 @@ es:
     language: "Idioma"
     admin: "Administración"
     settings: "Configuración"
-    home: "Inicio"
     open_main_menu: "Abrir menú principal"
 
   # Actions
@@ -615,6 +614,17 @@ es:
   # Settings hub
   settings:
     title: "Configuración"
+    home:
+      title: "Menú principal"
+      subtitle: "Acceso rápido a todas las opciones de tu cuenta y configuración"
+      items:
+        dashboard: "Panel de control"
+        account: "Mi cuenta"
+        preferences: "Preferencias"
+        organization: "Organización"
+        team: "Equipo"
+        fiscal: "Facturación SAR"
+        sign_out: "Cerrar sesión"
     sidebar:
       personal: "Personal"
       company: "Empresa"
