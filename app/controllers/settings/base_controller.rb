@@ -1,5 +1,6 @@
 class Settings::BaseController < ApplicationController
   before_action :require_authentication
+  before_action :ensure_current_organization
   before_action :set_active_section
 
   layout "settings"
@@ -14,6 +15,12 @@ class Settings::BaseController < ApplicationController
 
   def set_active_section
     @active_section = self.class.name.demodulize.sub("Controller", "").underscore.to_sym
+  end
+
+  # ApplicationController#set_current_organization runs before require_authentication
+  # so it sees Current.user as nil on cookie-resumed requests. Re-resolve here.
+  def ensure_current_organization
+    Current.organization ||= Current.user&.organization
   end
 
   def admin_or_owner?

@@ -1,4 +1,6 @@
 class SettingsSidebarComponent < ViewComponent::Base
+  include SettingsHelper
+
   def initialize(active_section:, current_user:)
     @active_section = active_section
     @current_user = current_user
