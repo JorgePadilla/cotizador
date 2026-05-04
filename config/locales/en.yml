@@ -670,6 +670,17 @@ en:
       default_isv: "Default ISV"
       default_isv_help: "Applied when creating new invoices and quotes (percentage 0–100)."
       saved: "Preferences saved."
+    organization:
+      title: "Organization"
+      edit_title: "Edit organization"
+      no_organization: "You don't belong to an organization yet."
+      fiscal_identity: "Fiscal identity"
+      fiscal_identity_help: "These details appear on every invoice issued under the SAR regime."
+      contact_info: "Contact information"
+      regional: "Regional settings"
+      rtn_help: "14-digit RTN assigned by SAR."
+      messages:
+        updated: "Organization updated."
 
   # SAR fiscal configuration (Acuerdo 481-2017)
   sar:
