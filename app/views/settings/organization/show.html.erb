@@ -1,0 +1,59 @@
+<% content_for :title, t("settings.organization.title") %>
+
+<%= settings_card t("settings.organization.fiscal_identity"), subtitle: t("settings.organization.fiscal_identity_help") do %>
+  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 text-sm">
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.name") %></dt>
+      <dd class="text-gray-900 font-medium"><%= @organization.name %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.nombre_comercial") %></dt>
+      <dd class="text-gray-900"><%= @organization.nombre_comercial.presence || t("common.not_set") %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.rtn") %></dt>
+      <dd class="text-gray-900 font-mono"><%= @organization.rtn.presence || t("common.not_set") %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.casa_matriz_address") %></dt>
+      <dd class="text-gray-900"><%= @organization.casa_matriz_address.presence || t("common.not_set") %></dd>
+    </div>
+  </dl>
+<% end %>
+
+<%= settings_card t("settings.organization.contact_info") do %>
+  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 text-sm">
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.address") %></dt>
+      <dd class="text-gray-900"><%= @organization.address.presence || t("common.not_set") %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.phone") %></dt>
+      <dd class="text-gray-900"><%= @organization.phone.presence || t("common.not_set") %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.email") %></dt>
+      <dd class="text-gray-900"><%= @organization.email.presence || t("common.not_set") %></dd>
+    </div>
+  </dl>
+<% end %>
+
+<%= settings_card t("settings.organization.regional") do %>
+  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 text-sm">
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.currency") %></dt>
+      <dd class="text-gray-900"><%= @organization.currency.presence || t("common.not_set") %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.organization.language") %></dt>
+      <dd class="text-gray-900"><%= @organization.language.presence || t("common.not_set") %></dd>
+    </div>
+  </dl>
+<% end %>
+
+<% if admin_or_owner? %>
+  <div class="flex justify-end">
+    <%= link_to t("actions.edit"), edit_settings_organization_path,
+                class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md" %>
+  </div>
+<% end %>

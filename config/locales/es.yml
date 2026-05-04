@@ -59,6 +59,8 @@ es:
     register: "Registrarse"
     language: "Idioma"
     admin: "Administración"
+    settings: "Configuración"
+    home: "Inicio"
     open_main_menu: "Abrir menú principal"
 
   # Actions
@@ -609,6 +611,76 @@ es:
       less_than: "debe ser menor que %{count}"
       less_than_or_equal_to: "debe ser menor o igual a %{count}"
       prohibited_save: "%{count} error(es) impidieron que este registro se guardara:"
+
+  # Settings hub
+  settings:
+    title: "Configuración"
+    sidebar:
+      personal: "Personal"
+      company: "Empresa"
+      administration: "Administración"
+      account: "Mi cuenta"
+      preferences: "Preferencias"
+      organization: "Organización"
+      team: "Equipo"
+      fiscal: "Facturación SAR"
+    account:
+      title: "Mi cuenta"
+      edit_title: "Editar cuenta"
+      personal_data: "Datos personales"
+      security: "Seguridad"
+      security_help: "Cambia tu contraseña periódicamente para mantener tu cuenta segura."
+      change_password: "Cambiar contraseña"
+      session: "Sesión"
+      sign_out: "Cerrar sesión"
+      messages:
+        updated: "Cuenta actualizada exitosamente."
+    preferences:
+      title: "Preferencias"
+      subtitle: "Idioma, moneda e ISV por defecto"
+      language: "Idioma"
+      currency: "Moneda"
+      default_isv: "ISV por defecto"
+      default_isv_help: "Se usará al crear nuevas facturas y cotizaciones (porcentaje 0–100)."
+      saved: "Preferencias guardadas."
+    organization:
+      title: "Organización"
+      edit_title: "Editar organización"
+      no_organization: "No tenés ninguna organización asociada."
+      fiscal_identity: "Identidad fiscal"
+      fiscal_identity_help: "Estos datos aparecen en cada factura emitida bajo el régimen SAR."
+      contact_info: "Información de contacto"
+      regional: "Configuración regional"
+      rtn_help: "RTN de 14 dígitos asignado por el SAR."
+      messages:
+        updated: "Organización actualizada exitosamente."
+    team:
+      title: "Equipo"
+      members: "Miembros del equipo"
+      no_organization: "Sin organización"
+      edit_role: "Editar rol"
+      edit_role_title: "Editar rol del usuario"
+      update_role: "Actualizar rol"
+      table:
+        email: "Correo"
+        name: "Nombre"
+        organization: "Organización"
+        role: "Rol"
+        actions: "Acciones"
+    fiscal:
+      title: "Facturación SAR"
+      subtitle: "Establecimientos, puntos de emisión y autorizaciones CAI"
+      empty_establishments: "Empieza configurando tu primer establecimiento"
+      empty_establishments_help: "El SAR exige al menos un establecimiento (3 dígitos) para emitir facturas legales."
+      empty_emission_points: "Aún no hay puntos de emisión en este establecimiento"
+      empty_cais: "Aún no hay autorizaciones CAI en este punto de emisión"
+      new_establishment: "Nuevo establecimiento"
+      new_emission_point: "Nuevo punto de emisión"
+      new_cai: "Nuevo CAI"
+      cai_expiring_soon: "Vence pronto"
+      cai_low_remaining: "Quedan pocos números"
+      inactive: "Inactivo"
+      range_used: "%{used} / %{total} emitidos"
 
   # Configuración fiscal SAR (Acuerdo 481-2017)
   sar:

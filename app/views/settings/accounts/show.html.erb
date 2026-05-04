@@ -1,0 +1,39 @@
+<% content_for :title, t("settings.account.title") %>
+
+<%= settings_card t("settings.account.personal_data") do %>
+  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 text-sm">
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.user.name") %></dt>
+      <dd class="text-gray-900 font-medium"><%= @user.name %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("activerecord.attributes.user.email_address") %></dt>
+      <dd class="text-gray-900 font-medium"><%= @user.email_address %></dd>
+    </div>
+    <div>
+      <dt class="text-gray-500"><%= t("users.attributes.role") %></dt>
+      <dd class="text-gray-900"><%= t("users.roles.#{@user.role_string}") %></dd>
+    </div>
+    <% if @user.organization %>
+      <div>
+        <dt class="text-gray-500"><%= t("settings.sidebar.organization") %></dt>
+        <dd class="text-gray-900"><%= @user.organization.name %></dd>
+      </div>
+    <% end %>
+  </dl>
+  <div class="mt-4">
+    <%= link_to t("actions.edit"), edit_settings_account_path,
+                class: "inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md" %>
+  </div>
+<% end %>
+
+<%= settings_card t("settings.account.security") do %>
+  <p class="text-sm text-gray-600 mb-3"><%= t("settings.account.security_help") %></p>
+  <%= link_to t("settings.account.change_password"), new_password_path,
+              class: "inline-flex items-center px-3 py-2 border border-gray-300 hover:bg-gray-50 text-sm font-medium rounded-md" %>
+<% end %>
+
+<%= settings_card t("settings.account.session") do %>
+  <%= button_to t("settings.account.sign_out"), session_path, method: :delete,
+                class: "inline-flex items-center px-3 py-2 bg-red-50 hover:bg-red-100 text-red-700 text-sm font-medium rounded-md" %>
+<% end %>

@@ -1,0 +1,40 @@
+<% content_for :title, t("settings.team.title") %>
+
+<%= settings_card t("settings.team.members") do %>
+  <div class="overflow-x-auto -mx-6 -mb-6">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("settings.team.table.email") %></th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("settings.team.table.name") %></th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("settings.team.table.organization") %></th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("settings.team.table.role") %></th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("settings.team.table.actions") %></th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @users.each do |user| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-3 text-sm text-gray-900"><%= user.email_address %></td>
+            <td class="px-6 py-3 text-sm text-gray-900"><%= user.name %></td>
+            <td class="px-6 py-3 text-sm text-gray-700"><%= user.organization&.name || t("settings.team.no_organization") %></td>
+            <td class="px-6 py-3 text-sm">
+              <% role_badge_color = case user.role_string
+                                    when "owner"  then "bg-purple-100 text-purple-800"
+                                    when "admin"  then "bg-blue-100 text-blue-800"
+                                    else "bg-gray-100 text-gray-700"
+                                    end %>
+              <span class="<%= role_badge_color %> px-2 py-1 rounded-full text-xs font-medium">
+                <%= t("organization_users.roles.#{user.role_string}", default: user.role_string.capitalize) %>
+              </span>
+            </td>
+            <td class="px-6 py-3 text-right text-sm">
+              <%= link_to t("settings.team.edit_role"), edit_settings_team_member_path(user),
+                          class: "text-blue-600 hover:text-blue-800 font-medium" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

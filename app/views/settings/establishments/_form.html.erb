@@ -1,0 +1,43 @@
+<%= form_with model: [ :settings, establishment ], local: true, class: "space-y-4" do |f| %>
+  <% if establishment.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4">
+      <ul class="text-sm text-red-700 list-disc list-inside">
+        <% establishment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :codigo, t("sar.establishments.attributes.codigo"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :codigo, maxlength: 3, required: true, pattern: "\\d{3}",
+                     class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+    <p class="text-xs text-gray-500"><%= t("sar.establishments.codigo_help") %></p>
+  </div>
+
+  <div>
+    <%= f.label :nombre, t("sar.establishments.attributes.nombre"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :nombre, required: true, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= f.label :address, t("sar.establishments.attributes.address"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :address, rows: 2, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= f.label :phone, t("sar.establishments.attributes.phone"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :phone, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div class="flex items-center">
+    <%= f.check_box :active, class: "h-4 w-4 text-blue-600 border-gray-300 rounded" %>
+    <%= f.label :active, t("sar.establishments.attributes.active"), class: "ml-2 block text-sm text-gray-700" %>
+  </div>
+
+  <div class="flex justify-end gap-3 pt-4">
+    <%= link_to t("actions.cancel"), settings_fiscal_path, class: "px-4 py-2 border border-gray-300 rounded-md text-sm" %>
+    <%= f.submit t("actions.save"), class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm" %>
+  </div>
+<% end %>
